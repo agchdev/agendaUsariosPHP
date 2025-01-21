@@ -14,6 +14,23 @@
             $this->nombre = $n;
             $this->fecha_nac = $fn;
         }
+
+        public function getAmigos($usuario) {
+            $consulta = "SELECT * FROM amisusuarios, usuarios WHERE id_usuario = usarios.id AND usuario = ?";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('s', $usuario);
+            $sentencia->execute();
+
+            $amigosUsu = array();
+            while($sentencia->fetch()){
+                $amigosUsu[] = array(
+                    "id" => $this->id,
+                    "nombre" => $this->nombre,
+                    "fecha_nac" => $this->fecha_nac
+                );
+            }
+            return $amigosUsu;
+        }
     }
 
 ?>

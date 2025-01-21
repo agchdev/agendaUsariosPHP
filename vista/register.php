@@ -21,7 +21,7 @@
     ?>
     <main id="inicio" class="modal">
         <h2>LOGIN</h2>
-        <form class="formInicio" action="" method="post">
+        <form class="formInicio" action="index.php" method="post">
             <label for="usuario">Usuario:</label>
             <input type="text" name="usuario" id="usuario" placeholder="Introduce tu usuario" required>
             <label for="contrasenia">Contraseña:</label>

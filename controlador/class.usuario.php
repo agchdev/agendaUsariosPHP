@@ -13,19 +13,18 @@ class usuario{
         $this->contrasenia = $c;
     }
 
-    function login() {
+    public function login() {
         $consulta = "SELECT * FROM usuarios WHERE usuario = ? AND contrasenia = ?";
         $sentencia = $this->conn->getConn()->prepare($consulta);
         $sentencia->bind_param("ss", $this->usuario, $this->contrasenia);
         $sentencia->execute();
-        $sentencia->get_result();
-        $cuenta = $sentencia->num_rows();
-        if($cuenta > 0) return true;
+        $resultado = $sentencia->get_result();
+        if($resultado->num_rows > 0) return true;
         else return false;
     }
 
-    function registrarUsuario(){
-        $consulta = "INSERT INTO `usuarios` (`usuario`, `contrasenia`) VALUES (?,?);";
+    public function registrarUsuario(){
+        $consulta = "INSERT INTO usuarios (usuario, contrasenia) VALUES (?,?);";
         $sentencia = $this->conn->getConn()->prepare($consulta);
         $sentencia->bind_param("ss", $this->usuario, $this->contrasenia);
         if($sentencia->execute()) return true;

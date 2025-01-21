@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         setTimeout(() => {
             popUp.remove();
-        }, 500);
+        }, 400);
         
     })
 })

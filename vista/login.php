@@ -21,13 +21,21 @@
     ?>
     <main id="inicio" class="modal">
         <h2>LOGIN</h2>
-        <form class="formInicio" action="" method="post">
+        <form class="formInicio" action="index.php" method="post">
             <label for="usuario">Usuario:</label>
-            <input type="text" name="usuario" id="usuario" placeholder="Introduce tu usuario" required>
+            <input type="text" name="usuario" id="usuario" placeholder="Introduce tu usuario" value="<?php
+                if(isset($_COOKIE["usuario"])) echo $_COOKIE["usuario"];
+            ?>" required>
             <label for="contrasenia">Contraseña:</label>
             <input type="password" name="contrasenia" id="contrasenia" placeholder="Introduce tu contraseña" required>
+            <div>
+                <input type="checkbox" name="rec" <?php if(isset($_COOKIE["usuario"])) echo "checked"; ?>>
+                <label for="recordar">Recordarme</label>
+            </div>
+            
             <input type="submit" class="btn" value="Iniciar sesión">
             <input type="hidden" name="action" value="login">
+            
             <p>No tienes cuenta? <a href="index.php?action=register">Regístrate</a></p>
         </form>
     </main>
