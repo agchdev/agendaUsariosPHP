@@ -15,7 +15,8 @@
             <label for="contrasenia">Contraseña:</label>
             <input type="password" name="contrasenia" placeholder="Introduce tu contraseña" required>
             <input type="password" name="contrasenia2" placeholder="Repite tu contraseña" required>
-            <input type="submit" name="action" class="btn" value="Registrarse">
+            <input type="submit" class="btn" value="Registrarse">
+            <input type="hidden" name="action" value="registarUsuario">
             <p>Ya tienes cuenta? <a href="index.php">Inicia sesión</a></p>
         </form>
     </main>

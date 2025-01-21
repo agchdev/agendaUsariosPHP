@@ -51,7 +51,7 @@ table {
 
 /* CSS EMPIEZA AQUI */
 
-/* header */
+/* LOGIN AND REGISTER */
 body {
     font-family: "system-ui", sans-serif;
 }
@@ -67,6 +67,26 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.popup{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: #121212;
+    color: white;
+    border: 1px solid #1ED760;
+    box-shadow: 0 0 20px black;
+    animation: start .5s ease;
+}
+.popupCerrar{
+    animation: close .5s ease;
+}
+.popup > p{
+    font-weight: bolder;
+    font-size: 1.5rem;
 }
 .modal{
     display: flex;
@@ -137,4 +157,24 @@ body {
     color: white;
     cursor: pointer;
     transform: scale(1.1);
+}
+
+@keyframes start {
+    0%{
+        scale: 0;
+    }
+    100%{
+        scale: 1;
+    }
+}
+@keyframes close {
+    0%{
+        scale: 1;
+    }
+    25%{
+        scale: 1.25;
+    }
+    100%{
+        scale: 0;
+    }
 }

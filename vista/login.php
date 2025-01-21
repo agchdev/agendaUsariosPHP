@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body id="bodyInicio">
+    <?php
+        if(isset($error)){
+            ?>
+            <div class="popup">
+                <?php
+                    echo $error;
+                ?>
+                <button class="btn">Cerrar</button>
+            </div>
+            <?php
+        }
+    ?>
     <main id="inicio" class="modal">
         <h2>LOGIN</h2>
         <form class="formInicio" action="" method="post">
@@ -19,5 +31,6 @@
             <p>No tienes cuenta? <a href="index.php?action=register">Regístrate</a></p>
         </form>
     </main>
+    <script src="../scripts/main.js"></script>
 </body>
 </html>
