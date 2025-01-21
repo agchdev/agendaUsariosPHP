@@ -1,5 +1,5 @@
 <?php
-
+require_once('class.db.php');
 class usuario{
     private $conn;
     private $id;
@@ -15,10 +15,12 @@ class usuario{
 
     function login() {
         $consulta = "SELECT * FROM usuario WHERE usuario = ? AND contrasenia = ?";
-        $sentencia = $this->con->getConn()->prepare($consulta);
+        $sentencia = $this->conn->getConn()->prepare($consulta);
         $sentencia->bind_param("ss", $this->usuario, $this->contrasenia);
         $sentencia->execute();
-        
+        $cuenta = $sentencia->rowCount();
+        if($cuenta > 0) return true;
+        else return false;
     }
 }
 

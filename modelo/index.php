@@ -6,7 +6,8 @@
             $u = $_POST["usuario"];
             $c = $_POST["contrasenia"];
             $user = new usuario(0, $u, $c);
-            $user->login();
+            if($user->login()) echo "<p>SESIÓN INICIADA</p>";
+            else echo "<p>error</p>";
         }else{
             $error = "<p class='error'>El usuario o la contrase&ntilde;a son incorrectos</p>";
             require_once('../vista/login.html');

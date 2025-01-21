@@ -1,4 +1,5 @@
 <?php
+    require_once('class.db.php');
     class juego{
         private $conn;
         private $usuario;

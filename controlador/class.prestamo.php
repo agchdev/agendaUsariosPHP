@@ -1,4 +1,5 @@
 <?php
+require_once('class.db.php');
     class prestamo{
 
         private $conn;
@@ -17,5 +18,5 @@
             $this->fecha_prestamo = $fp;
             $this->devuelto = $d;
         }
-
+    }
 ?>
