@@ -137,7 +137,6 @@
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe
             $idUsu = get_session("usuario"); // Creamos la variable de sesion
-            $usuario = get_session("usuario");
             require_once('../vista/home.php'); // Redirigimos al login
         }else{
             require_once('../vista/login.php'); // Redirigimos al login

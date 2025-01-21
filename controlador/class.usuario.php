@@ -23,6 +23,12 @@ class usuario{
         else return false;
     }
 
+    public function getIdUsu($usuario){
+        $consulta = "SELECT id FROM usuarios WHERE usuario = ?";
+        $sentencia = $this->conn->getConn()->prepare($consulta);
+        $sentencia->bind_param("s", $usuario);
+        $sentencia->execute();
+    }
     public function registrarUsuario(){
         $consulta = "INSERT INTO usuarios (usuario, contrasenia) VALUES (?,?);";
         $sentencia = $this->conn->getConn()->prepare($consulta);
