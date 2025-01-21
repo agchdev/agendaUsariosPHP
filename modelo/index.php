@@ -79,7 +79,9 @@
     // AMIGOS.PHP
     function amigos(){
         require_once('../controlador/class.amisusu.php');
-        $usuario = $_POST["usuario"];
+        $idUsu = $_POST["usuario"];
+        $usuario = get_session("usuario");
+        echo $idUsu;
         $amis = new amiUsus();
         $amigosUsu = $amis->getAmigos($usuario);
         require_once('../vista/amigos.php');
@@ -134,7 +136,8 @@
         $action(); // Ejecutamos la accion
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe
-            $nUsu = get_session("usuario"); // Creamos la variable de sesion
+            $idUsu = get_session("usuario"); // Creamos la variable de sesion
+            $usuario = get_session("usuario");
             require_once('../vista/home.php'); // Redirigimos al login
         }else{
             require_once('../vista/login.php'); // Redirigimos al login
