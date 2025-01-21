@@ -12,6 +12,14 @@ class usuario{
         $this->usuario = $u;
         $this->contraseña = $c;
     }
+
+    function login() {
+        $consulta = "SELECT * FROM usuario WHERE usuario = ? AND contrasenia = ?";
+        $sentencia = $this->con->getConn()->prepare($consulta);
+        $sentencia->bind_param("ss", $this->usuario, $this->contrasenia);
+        $sentencia->execute();
+        
+    }
 }
 
 ?>
