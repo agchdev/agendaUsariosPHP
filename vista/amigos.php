@@ -14,16 +14,12 @@
                 echo "NO TIENE AMIGOS ACTUALMENTE";
             }else{
                 echo "<form action='index.php' method='post'>";
-                echo "<input type='hidden' name='alumno' value='" . $amig["id_usuario"] . "'>"; 
+                echo "<input type='hidden' name='id_usuario' value='" . $amig["id_usuario"] . "'>"; 
                 echo "<table>";
                     echo "<tr><th>NOMBRE</th><th>APELLIDOS</th><th>FECHA NACIMIENTO</th></tr>";
                     echo "<tr>";
                     foreach ($amigosUsu as $amig) {
-                        echo "<input type='hidden' name='alumno' value='" . $amig["id"] . "'>"; 
-                        echo "<input type='hidden' name='dniAlum' value='" . $amig["nombre"] . "'>"; 
-                        echo "<input type='hidden' name='dniAlum' value='" . $amig["apellidos"] . "'>"; 
-                        echo "<input type='hidden' name='nomAlum' value='" . $amig["fecha_nac"] . "'>";
-                        
+                        echo "<input type='hidden' name='id' value='" . $amig["id"] . "'>"; 
                         echo "</td>" . $amig["nombre"] . "</td>";
                         echo "</td>" . $amig["apellidos"] . "</td>";
                         echo "</td>" . $amig["fecha_nac"] . "</td>";
