@@ -8,11 +8,11 @@
 </head>
 <body id="bodyInicio">
     <?php
-        if(isset($error)){
+        if(isset($msg)){
             ?>
             <div class="popup">
                 <?php
-                    echo $error;
+                    echo $msg;
                 ?>
                 <button class="btn">Cerrar</button>
             </div>

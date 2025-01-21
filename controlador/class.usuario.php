@@ -23,6 +23,14 @@ class usuario{
         if($cuenta > 0) return true;
         else return false;
     }
+
+    function registrarUsuario(){
+        $consulta = "INSERT INTO `usuarios` (`usuario`, `contrasenia`) VALUES (?,?);";
+        $sentencia = $this->conn->getConn()->prepare($consulta);
+        $sentencia->bind_param("ss", $this->usuario, $this->contrasenia);
+        if($sentencia->execute()) return true;
+        else return false;
+    }
 }
 
 ?>
