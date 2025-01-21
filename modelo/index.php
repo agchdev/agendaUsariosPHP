@@ -19,7 +19,19 @@
 
     function registarUsuario(){
         require_once('../controlador/class.usuario.php');
-        
+
+        if(isset($_POST["usuario"]) && isset($_POST["contrasenia"]) && isset($_POST["contrasenia2"])){
+            $c1 = $_POST["contrasenia"];
+            $c2 = $_POST["contrasenia2"];
+            compContraseñaRegister($c1, $c2);
+        }
+    }
+
+    function compContraseñaRegister($c1, $c2){
+        if ($c1 != $c2) {
+            $error = "<p class='error'>Las contraseñas no coinciden</p>";
+            require_once('../vista/register.php');
+        }
     }
 
     function register(){
