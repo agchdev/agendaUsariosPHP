@@ -6,7 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body>
+<body id="bodyAmigos">
     <section>
         <h2>Amigos de <?php if(isset($usuario)) echo $usuario ?></h2>
         <?php

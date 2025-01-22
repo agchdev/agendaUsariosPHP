@@ -51,6 +51,32 @@ table {
 
 /* CSS EMPIEZA AQUI */
 
+/* HEADER */
+header{
+    position: absolute;
+    background-color: #313131;
+    width: 100%;
+    display: flex;
+}
+header > nav{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+header > nav > div{
+    display: flex;
+    align-items: center;
+}
+header > nav > div > nav{
+    display: flex;
+    list-style: none;
+}
+header > nav > div > nav a{
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+}
+
 /* LOGIN AND REGISTER */
 body {
     font-family: "system-ui", sans-serif;
@@ -212,6 +238,13 @@ input[type="checkbox"] {
     box-shadow: 0 0 10px rgba(255, 56, 56, 0.4) !important;
 }
 
+/* CSS DE AMIGOS */
+#bodyAmigos{
+    background-color: black;
+    display: flex;
+    height: 100vh;
+    color: white;
+}
 
 @keyframes start {
     0%{
