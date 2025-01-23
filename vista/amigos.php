@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body id="bodyAmigos">
-    <section>
-        <h2>Amigos de <?php if(isset($usuario)) echo $usuario ?></h2>
+<div id="bodyAmigos">
+    <section class="amigos">
+        <h2>Amigos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
         <?php
             if (count($amigosUsu) == 0) {
                 echo "NO TIENE AMIGOS ACTUALMENTE";
             }else{
+                ?>
+                <input class="busca" type="text" id="buscador" placeholder="Buscar...">
+                <?php
                 echo "<form action='index.php' method='post'>"; 
                 echo "<table>";
                     echo "<tr><th>NOMBRE</th><th>APELLIDOS</th><th>FECHA NACIMIENTO</th></tr>";
@@ -32,5 +27,6 @@
             }
             ?>
     </section>
+</div>
 </body>
 </html>

@@ -86,6 +86,7 @@
         $amigosUsu = $amis->getAmigos($usuario);
         require_once('../vista/componentes/header.html');
         require_once('../vista/amigos.php');
+        require_once('../vista/footer.php');
     }
     /////////////////////////////////// INICIO /////////////////////////////////////////
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////

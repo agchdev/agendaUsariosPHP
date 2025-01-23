@@ -57,6 +57,10 @@ header{
     background-color: #313131;
     width: 100%;
     display: flex;
+    height: 50px;
+    padding: 1rem;
+    color: white;
+
 }
 header > nav{
     display: flex;
@@ -70,11 +74,18 @@ header > nav > div{
 header > nav > div > nav{
     display: flex;
     list-style: none;
+    gap: 1rem;
 }
 header > nav > div > nav a{
     text-decoration: none;
     color: white;
     display: inline-block;
+}
+.off{
+    background-color: #636363 !important;
+}
+.off:hover{
+    background-color: #3aff7f !important;
 }
 
 /* LOGIN AND REGISTER */
@@ -244,6 +255,53 @@ input[type="checkbox"] {
     display: flex;
     height: 100vh;
     color: white;
+    justify-content: center;
+    align-items: center;
+}
+
+.amigos{
+    border: 1px solid #3aff7f;
+    background-color: #313131;
+    padding: 2rem;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.amigos h2{
+    font-weight: bolder;
+    text-transform: uppercase;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.amigos h2 span{
+    color: #3aff7f;
+    text-shadow: 0 0 5px #3aff7fa9;
+}
+.amigos .busca{
+    background-color: #2A2A2A;
+    padding: .5rem;
+    border-radius: 1rem;
+    border: none;
+    color: white;
+    margin-bottom: 1rem;
+}
+.amigos table{
+    background-color: #313131;
+    border-radius: 1rem;
+    filter: drop-shadow(0 0 10px black);
+}
+.amigos th,td{
+    padding: 1rem;
+}
+.amigos tr:nth-child(2n){
+    background-color: #636363;
+}
+.amigos th{
+    font-weight: bolder;
 }
 
 @keyframes start {
