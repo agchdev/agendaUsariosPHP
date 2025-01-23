@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-01-2025 a las 13:37:00
+-- Tiempo de generación: 23-01-2025 a las 12:49:19
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -34,6 +34,14 @@ CREATE TABLE `amisusuarios` (
   `fecha_nac` date NOT NULL,
   `id_usuario` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `amisusuarios`
+--
+
+INSERT INTO `amisusuarios` (`id`, `nombre`, `apellido`, `fecha_nac`, `id_usuario`) VALUES
+(1, 'Manuel', 'Romero', '2005-05-25', 2),
+(2, 'Erica', 'Palomino', '1997-04-10', 2);
 
 -- --------------------------------------------------------
 
@@ -74,8 +82,16 @@ CREATE TABLE `prestamos` (
 CREATE TABLE `usuarios` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `usuario` varchar(20) NOT NULL,
-  `contraseña` varchar(20) NOT NULL
+  `contrasenia` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `usuario`, `contrasenia`) VALUES
+(1, 'admin', 'admin'),
+(2, 'agch', 'agch');
 
 --
 -- Índices para tablas volcadas
@@ -122,7 +138,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `amisusuarios`
 --
 ALTER TABLE `amisusuarios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `juegos`
@@ -140,7 +156,7 @@ ALTER TABLE `prestamos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
