@@ -90,6 +90,10 @@
         require_once('../vista/amigos.php');
         require_once('../vista/componentes/footer.html');
     }
+    function insertAmigo(){
+        require_once('../controlador/class.amisusu.php');
+        
+    }
     /////////////////////////////////// INICIO /////////////////////////////////////////
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////
     function unsetCookie(String $nom) { // Esta funcion elimina una cookie
@@ -137,6 +141,7 @@
         if($action == "Juegos") $action = "juegos";
         if($action == "Prestamos") $action = "prestamos";
         if($action == "Cerrar Sesion") $action = "cerrarSesion";
+        if($action == "Insertar Amigo") $action = "insertAmigo";
         $action(); // Ejecutamos la accion
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe

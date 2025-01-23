@@ -28,10 +28,14 @@
                     }
                     
                 echo "</table>";
+                echo "<input style='margin-top:1.5rem;' type='submit' class='btn' name='action' value='Insertar Amigo'>";
                 echo "</form>";
             }
             ?>
     </section>
+    <div class="insertarUsuario">
+            
+    </div>
 </div>
 </body>
 </html>
