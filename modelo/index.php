@@ -83,10 +83,12 @@
         $usuario = get_session("usuario");
         echo $idUsu;
         $amis = new amiUsus();
-        $amigosUsu = $amis->getAmigos($usuario);
+        $buscador = "";
+        if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
+        $amigosUsu = $amis->getAmigos($usuario, $buscador);
         require_once('../vista/componentes/header.html');
         require_once('../vista/amigos.php');
-        require_once('../vista/footer.php');
+        require_once('../vista/componentes/footer.html');
     }
     /////////////////////////////////// INICIO /////////////////////////////////////////
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////

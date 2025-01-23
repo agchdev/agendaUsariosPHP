@@ -17,15 +17,30 @@
             $this->fecha_nac = $fn;
         }
 
-        public function getAmigos($usuario) {
-            $consulta = "SELECT amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac FROM amisusuarios, usuarios WHERE id_usuario = usuarios.id AND  usuarios.usuario = ?";
-            $sentencia = $this->conn->getConn()->prepare($consulta);
-            $sentencia->bind_param('s', $usuario);
+        public function getAmigos($usuario, $buscador = "") {
+            if ($buscador != "") {
+                $consulta = "SELECT amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac 
+                             FROM amisusuarios, usuarios 
+                             WHERE id_usuario = usuarios.id AND usuarios.usuario = ? AND 
+                             (amisusuarios.nombre LIKE ? OR amisusuarios.apellido LIKE ?)";
+                $sentencia = $this->conn->getConn()->prepare($consulta);
+        
+                // Añade los comodines '%' al valor del buscador
+                $buscador = "%" . $buscador . "%";
+                $sentencia->bind_param('sss', $usuario, $buscador, $buscador);
+            } else {
+                $consulta = "SELECT amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac 
+                             FROM amisusuarios, usuarios 
+                             WHERE id_usuario = usuarios.id AND usuarios.usuario = ?";
+                $sentencia = $this->conn->getConn()->prepare($consulta);
+                $sentencia->bind_param('s', $usuario);
+            }
+        
             $sentencia->execute();
             $sentencia->bind_result($this->id, $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac);
-
+        
             $amigosUsu = array();
-            while($sentencia->fetch()){
+            while ($sentencia->fetch()) {
                 $amigosUsu[] = array(
                     "id" => $this->id,
                     "id_usuario" => $this->id_usuario,
@@ -34,6 +49,7 @@
                     "fecha_nac" => $this->fecha_nac
                 );
             }
+            $sentencia->close();
             return $amigosUsu;
         }
     }

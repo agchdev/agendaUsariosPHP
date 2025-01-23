@@ -287,7 +287,6 @@ input[type="checkbox"] {
     border-radius: 1rem;
     border: none;
     color: white;
-    margin-bottom: 1rem;
 }
 .amigos table{
     background-color: #313131;
@@ -302,6 +301,14 @@ input[type="checkbox"] {
 }
 .amigos th{
     font-weight: bolder;
+}
+
+.buscador{
+    display: flex;
+    justify-content: center;
+    gap: 1.4rem;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
 @keyframes start {
