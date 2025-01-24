@@ -100,17 +100,36 @@
         
     }
     function añadirAmigos(){
-        require_once('../controlador/class.amisusu.php');
-        require_once('../controlador/class.usuario.php');
-        $usuario = $_POST["usuario"];
-        $usu = new usuario(0, $usuario);
-        $idUsu = $usu->getIdUsu();
-        $amis = new amiUsus(0, $idUsu, $_POST["nombre"], $_POST["apellido"], $_POST["fecha"]);
-        $amis->insertarAmigo();
-        $amisUsu = $amis->getAmigos($usuario);
-        require_once('../vista/componentes/header.html');
-        require_once('../vista/amigos.php');
-        require_once('../vista/componentes/footer.html');
+        if(isset($_POST["usuario"]) && isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["fecha"])){
+            // Obtenemos la fecha de hoy
+            $fechaHoy = date("Y-m-d"); // Formato de fecha YYYY-MM-DD
+            // Obtenemos la fecha proporcionada por el usuario
+            $fechaUsuario = $_POST["fecha"];
+            // Comparamos las fechas
+            if (strtotime($fechaUsuario) >= strtotime($fechaHoy)) {
+                $error = "<p class='msg'>La fecha debe ser anterior a hoy.</p>"; // Mostramos un mensaje
+                require_once('../vista/componentes/header.html');
+                require_once('../vista/insertarAmigos.php');
+                require_once('../vista/componentes/footer.html');
+                return;
+            }
+            require_once('../controlador/class.amisusu.php');
+            require_once('../controlador/class.usuario.php');
+            $usuario = $_POST["usuario"];
+            $usu = new usuario(0, $usuario);
+            $idUsu = $usu->getIdUsu();
+            $amis = new amiUsus(0, $idUsu, $_POST["nombre"], $_POST["apellido"], $_POST["fecha"]);
+            $amis->insertarAmigo();
+            $amisUsu = $amis->getAmigos($usuario);
+            require_once('../vista/componentes/header.html');
+            require_once('../vista/amigos.php');
+            require_once('../vista/componentes/footer.html');
+        }else{
+            $error = "<p class='msg'>Error al rellenar todos los campos</p>";
+            require_once('../vista/componentes/header.html');
+            require_once('../vista/insertarAmigos.php');
+            require_once('../vista/componentes/footer.html');
+        }
     }
     // BUSCAR AMIGOS
     function buscarAmigos(){

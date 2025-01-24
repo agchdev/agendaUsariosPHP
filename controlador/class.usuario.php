@@ -23,10 +23,10 @@ class usuario{
         else return false;
     }
 
-    public function getIdUsu($usuario){
+    public function getIdUsu(){
         $consulta = "SELECT id FROM usuarios WHERE usuario = ?";
         $sentencia = $this->conn->getConn()->prepare($consulta);
-        $sentencia->bind_param("s", $usuario);
+        $sentencia->bind_param("s", $this->usuario);
         $sentencia->execute();
         $sentencia->bind_result($this->id);
         $sentencia->fetch();

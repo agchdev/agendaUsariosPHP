@@ -1,5 +1,17 @@
 <!-- VISTA DE BUSCAR USUARIOS :( -->
 <div id="bodyAmigos">
+    <?php
+        if(isset($msg)){
+            ?>
+            <div class="popup">
+                <?php
+                    echo $msg;
+                ?>
+                <button class="btn">Cerrar</button>
+            </div>
+            <?php
+        }
+    ?>
     <section class="amigos">
         <h2>Insertar amigos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
         <form class="insertar" action="index.php" method='post'>    
