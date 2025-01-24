@@ -78,10 +78,12 @@
 
     // AMIGOS.PHP
     function amigos(){
+        require_once('../controlador/class.usuario.php');
         require_once('../controlador/class.amisusu.php');
-        $idUsu = $_POST["usuario"];
+        $user = $_POST["usuario"];
+        $usu = new usuario(0, 0, $user);
+        $idUsu = $usu->getIdUsu();
         $usuario = get_session("usuario");
-        echo $idUsu;
         $amis = new amiUsus();
         $buscador = "";
         if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
@@ -99,38 +101,55 @@
         require_once('../vista/componentes/footer.html');
         
     }
-    function añadirAmigos(){
-        if(isset($_POST["usuario"]) && isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["fecha"])){
-            // Obtenemos la fecha de hoy
-            $fechaHoy = date("Y-m-d"); // Formato de fecha YYYY-MM-DD
-            // Obtenemos la fecha proporcionada por el usuario
-            $fechaUsuario = $_POST["fecha"];
-            // Comparamos las fechas
-            if (strtotime($fechaUsuario) >= strtotime($fechaHoy)) {
-                $error = "<p class='msg'>La fecha debe ser anterior a hoy.</p>"; // Mostramos un mensaje
+    function añadirAmigos() {
+        $usuario = $_POST["usuario"];
+        if (isset($_POST["nombre"], $_POST["apellido"], $_POST["fecha"])) {
+            // Validar que los campos no estén vacíos
+            if (empty($_POST["nombre"]) || empty($_POST["apellido"]) || empty($_POST["fecha"])) {
+                $error = "<p class='msg'>Todos los campos son obligatorios.</p>";
                 require_once('../vista/componentes/header.html');
                 require_once('../vista/insertarAmigos.php');
                 require_once('../vista/componentes/footer.html');
                 return;
             }
+    
+            // Obtener la fecha proporcionada y la fecha actual
+            $fechaUsuario = new DateTime($_POST["fecha"]); // Asume formato YYYY-MM-DD del input type="date"
+            $fechaHoy = new DateTime();
+    
+            // Comprobar si la fecha es válida y anterior a hoy
+            if ($fechaUsuario >= $fechaHoy) {
+                $error = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
+                require_once('../vista/componentes/header.html');
+                require_once('../vista/insertarAmigos.php');
+                require_once('../vista/componentes/footer.html');
+                return;
+            }
+    
+            // Insertar amigo en la base de datos
             require_once('../controlador/class.amisusu.php');
             require_once('../controlador/class.usuario.php');
+    
             $usuario = $_POST["usuario"];
             $usu = new usuario(0, $usuario);
             $idUsu = $usu->getIdUsu();
-            $amis = new amiUsus(0, $idUsu, $_POST["nombre"], $_POST["apellido"], $_POST["fecha"]);
+            $amis = new amiUsus(0, $idUsu, $_POST["nombre"], $_POST["apellido"], $fechaUsuario->format('Y-m-d'));
             $amis->insertarAmigo();
             $amisUsu = $amis->getAmigos($usuario);
+    
+            // Mostrar vista de amigos
             require_once('../vista/componentes/header.html');
             require_once('../vista/amigos.php');
             require_once('../vista/componentes/footer.html');
-        }else{
+        } else {
+            // Mostrar error si faltan datos
             $error = "<p class='msg'>Error al rellenar todos los campos</p>";
             require_once('../vista/componentes/header.html');
             require_once('../vista/insertarAmigos.php');
             require_once('../vista/componentes/footer.html');
         }
     }
+    
     // BUSCAR AMIGOS
     function buscarAmigos(){
         $usuario = $_POST["usuario"];
