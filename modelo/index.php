@@ -92,7 +92,25 @@
     }
     function insertAmigo(){
         require_once('../controlador/class.amisusu.php');
+        $usuario = $_POST["usuario"];
+        $amis = new amiUsus();
+        require_once('../vista/componentes/header.html');
+        require_once('../vista/insertarAmigos.php');
+        require_once('../vista/componentes/footer.html');
         
+    }
+    function añadirAmigos(){
+        require_once('../controlador/class.amisusu.php');
+        require_once('../controlador/class.usuario.php');
+        $usuario = $_POST["usuario"];
+        $usu = new usuario(0, $usuario);
+        $idUsu = $usu->getIdUsu();
+        $amis = new amiUsus(0, $idUsu, $_POST["nombre"], $_POST["apellido"], $_POST["fecha"]);
+        $amis->insertarAmigo();
+        $amisUsu = $amis->getAmigos($usuario);
+        require_once('../vista/componentes/header.html');
+        require_once('../vista/amigos.php');
+        require_once('../vista/componentes/footer.html');
     }
     // BUSCAR AMIGOS
     function buscarAmigos(){
@@ -150,6 +168,7 @@
         if($action == "Cerrar Sesion") $action = "cerrarSesion";
         if($action == "Insertar Amigo") $action = "insertAmigo";
         if($action == "Buscar Amigos") $action = "buscarAmigos";
+        if($action == "Añadir amigo") $action = "añadirAmigos";
         $action(); // Ejecutamos la accion
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe

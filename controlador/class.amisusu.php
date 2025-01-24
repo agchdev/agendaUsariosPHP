@@ -52,6 +52,14 @@
             $sentencia->close();
             return $amigosUsu;
         }
+
+        public function insertarAmigo() {
+            $consulta = "INSERT INTO amisusuarios (id_usuario, nombre, apellido, fecha_nac) VALUES (?, ?, ?, ?)";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('ssss', $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac);
+            $sentencia->execute();
+            $sentencia->close();
+        }
     }
 
 ?>

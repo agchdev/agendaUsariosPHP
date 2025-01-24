@@ -28,6 +28,9 @@ class usuario{
         $sentencia = $this->conn->getConn()->prepare($consulta);
         $sentencia->bind_param("s", $usuario);
         $sentencia->execute();
+        $sentencia->bind_result($this->id);
+        $sentencia->fetch();
+        return $this->id;
     }
     public function registrarUsuario(){
         $consulta = "INSERT INTO usuarios (usuario, contrasenia) VALUES (?,?);";
