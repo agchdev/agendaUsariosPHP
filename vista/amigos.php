@@ -9,8 +9,8 @@
                 ?>
                 <?php
                 echo "<form action='index.php' method='post'>"; 
-                echo "<table>";
-                    echo "<tr><th>NOMBRE</th><th>APELLIDOS</th><th>FECHA NACIMIENTO</th></tr>";
+                echo "<table class='table'>";
+                    echo "<tr><th>NOMBRE</th><th>APELLIDOS</th><th>FECHA NACIMIENTO</th><th></th></tr>";
                     
                     foreach ($amigosUsu as $amig) {
                         echo "<tr>";
@@ -19,6 +19,7 @@
                         echo "<td class='nombre'>" . $amig["nombre"] . "</td>";
                         echo "<td class='apellidos'>" . $amig["apellidos"] . "</td>";
                         echo "<td>" . $amig["fecha_nac"] . "</td>";
+                        echo "<td><input type='submit' class='btn off' name='action' value='Modificar'></td>";
                         echo "</tr>";
                     }
                     
