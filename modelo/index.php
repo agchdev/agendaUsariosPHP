@@ -94,6 +94,13 @@
         require_once('../controlador/class.amisusu.php');
         
     }
+    // BUSCAR AMIGOS
+    function buscarAmigos(){
+        $usuario = $_POST["usuario"];
+        require_once('../vista/componentes/header.html');
+        require_once('../vista/buscarAmigos.php');
+        require_once('../vista/componentes/footer.html');
+    }
     /////////////////////////////////// INICIO /////////////////////////////////////////
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////
     function unsetCookie(String $nom) { // Esta funcion elimina una cookie
@@ -142,6 +149,7 @@
         if($action == "Prestamos") $action = "prestamos";
         if($action == "Cerrar Sesion") $action = "cerrarSesion";
         if($action == "Insertar Amigo") $action = "insertAmigo";
+        if($action == "Buscar Amigos") $action = "buscarAmigos";
         $action(); // Ejecutamos la accion
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe

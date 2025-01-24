@@ -1,3 +1,4 @@
+<!-- VISTA DE AMIGOS :) -->
 <div id="bodyAmigos">
     <section class="amigos">
         <h2>Amigos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
@@ -6,12 +7,6 @@
                 echo "NO TIENE AMIGOS ACTUALMENTE";
             }else{
                 ?>
-                <form class="buscador" action="index.php" method='post'>    
-                    <input class="busca" type="text" name="buscador" placeholder="Buscar...">
-                    <input type="submit" class="btn" value="Enviar">
-                    <input type="hidden" name="usuario" value="<?php $usuario ?>">
-                    <input type="hidden" name="action" value="amigos">
-                </form>
                 <?php
                 echo "<form action='index.php' method='post'>"; 
                 echo "<table>";
@@ -28,14 +23,18 @@
                     }
                     
                 echo "</table>";
+                echo " <input type='submit' class='btn' value='Enviar'>
+                    <input type='hidden' name='usuario' value='".$usuario."'>
+                    <input type='hidden' name='action' value='Buscar Amigos'>";
                 echo "<input style='margin-top:1.5rem;' type='submit' class='btn' name='action' value='Insertar Amigo'>";
                 echo "</form>";
             }
-            ?>
-    </section>
-    <div class="insertarUsuario">
             
-    </div>
+            ?>
+            <form class="buscador" action="index.php" method='post'>    
+            </form>
+    </section>
+    
 </div>
 </body>
 </html>
