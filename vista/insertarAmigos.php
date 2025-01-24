@@ -19,7 +19,7 @@
             <input class="busca" type="text" name="apellido" placeholder="apellido del usuario..." required>
             <input class="busca" type="date" name="fecha" required>
             <input type="submit" class="btn" name="action" value="Añadir amigo">
-            <input type="hidden" name="usuario" value="<?php $usuario ?>">
+            <input type="hidden" name="usuario" value="<?php echo $usuario ?>">
         </form>
     </section>
 </div>

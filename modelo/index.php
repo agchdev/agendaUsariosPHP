@@ -13,7 +13,7 @@
     function login(){
         
         if(isset($_POST["usuario"]) && isset($_POST["contrasenia"])) { // Si se ha pulsado el boton
-            $u = $_POST["usuario"]; // Guardamos el usuario
+            $usuario = $_POST["usuario"]; // Guardamos el usuario
             $c = $_POST["contrasenia"]; // Guardamos la contraseña
             
             if(!isset($_POST["rec"]) && isset($_COOKIE["usuario"])){
@@ -21,14 +21,14 @@
             }
             
             require_once('../controlador/class.usuario.php'); // Importamos la clase
-            $user = new usuario(0, $u, $c); // Creamos el objeto
+            $user = new usuario(0, $usuario, $c); // Creamos el objeto
             
             if($user->login()){
                 if(isset($_POST["rec"])){ 
-                    _setcookie("usuario", $u);// Si se ha pulsado el checkbox establecemos la cookie
+                    _setcookie("usuario", $usuario);// Si se ha pulsado el checkbox establecemos la cookie
                 } 
                 
-                set_session("usuario", $u); // Establecemos la sesion
+                set_session("usuario", $usuario); // Establecemos la sesion
                 require_once('../vista/home.php'); // Mostramos la pagina
 
             } // Si el login es correcto
@@ -103,7 +103,6 @@
     }
     function añadirAmigos() {
         $usuario = $_POST["usuario"];
-        echo "<p>ESTOY DENTRO</p>";
         if (isset($_POST["nombre"], $_POST["apellido"], $_POST["fecha"])) {
             // Validar que los campos no estén vacíos
             if (empty($_POST["nombre"]) || empty($_POST["apellido"]) || empty($_POST["fecha"])) {
@@ -132,18 +131,14 @@
             require_once('../controlador/class.usuario.php');
     
             $usuario = $_POST["usuario"];
-            echo "<p>" . $usuario . "</p>";
             $usu = new usuario(0, $usuario);
             $idUsu = $usu->getIdUsu();
-            echo "<p>" . $idUsu . "</p>";
             $amis = new amiUsus(0, $idUsu, $_POST["nombre"], $_POST["apellido"], $fechaUsuario->format('Y-m-d'));
             $amis->insertarAmigo();
             $amisUsu = $amis->getAmigos($usuario);
     
             // Mostrar vista de amigos
-            require_once('../vista/componentes/header.html');
-            require_once('../vista/amigos.php');
-            require_once('../vista/componentes/footer.html');
+            amigos();
         } else {
             // Mostrar msg si faltan datos
             $msg = "<p class='msg'>Error al rellenar todos los campos</p>";

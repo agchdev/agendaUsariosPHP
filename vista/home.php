@@ -10,7 +10,7 @@
     <section class="home">
         <h2>Bienvenid@ <?php if(isset($usuario)) echo $usuario ?></h2>
         <form action="index.php" method="post">
-            <input type="hidden" name="usuario" value="<?php if(isset($usuario)) echo $usuario ?>">
+            <input type="hidden" name="usuario" value="<?php echo $usuario ?>">
             <input type="submit" class="btn" name="action" value="Amigos">
             <input type="submit" class="btn" name="action" value="Juegos">
             <input type="submit" class="btn" name="action" value="Prestamos">
