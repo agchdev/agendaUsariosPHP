@@ -103,15 +103,11 @@
     }
     function añadirAmigos() {
         $usuario = $_POST["usuario"];
-        // Mostrar error si faltan datos
-        $error = "<p class='msg'>Error al rellenar todos los campos</p>";
-        require_once('../vista/componentes/header.html');
-        require_once('../vista/insertarAmigos.php');
-        require_once('../vista/componentes/footer.html');
+        echo "<p>ESTOY DENTRO</p>";
         if (isset($_POST["nombre"], $_POST["apellido"], $_POST["fecha"])) {
             // Validar que los campos no estén vacíos
             if (empty($_POST["nombre"]) || empty($_POST["apellido"]) || empty($_POST["fecha"])) {
-                $error = "<p class='msg'>Todos los campos son obligatorios.</p>";
+                $msg = "<p class='msg'>Todos los campos son obligatorios.</p>";
                 require_once('../vista/componentes/header.html');
                 require_once('../vista/insertarAmigos.php');
                 require_once('../vista/componentes/footer.html');
@@ -124,7 +120,7 @@
     
             // Comprobar si la fecha es válida y anterior a hoy
             if ($fechaUsuario >= $fechaHoy) {
-                $error = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
+                $msg = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
                 require_once('../vista/componentes/header.html');
                 require_once('../vista/insertarAmigos.php');
                 require_once('../vista/componentes/footer.html');
@@ -135,9 +131,11 @@
             require_once('../controlador/class.amisusu.php');
             require_once('../controlador/class.usuario.php');
     
-            $usuario = $_POST["usuario"] || get_session("usuario");
+            $usuario = $_POST["usuario"];
+            echo "<p>" . $usuario . "</p>";
             $usu = new usuario(0, $usuario);
             $idUsu = $usu->getIdUsu();
+            echo "<p>" . $idUsu . "</p>";
             $amis = new amiUsus(0, $idUsu, $_POST["nombre"], $_POST["apellido"], $fechaUsuario->format('Y-m-d'));
             $amis->insertarAmigo();
             $amisUsu = $amis->getAmigos($usuario);
@@ -147,8 +145,8 @@
             require_once('../vista/amigos.php');
             require_once('../vista/componentes/footer.html');
         } else {
-            // Mostrar error si faltan datos
-            $error = "<p class='msg'>Error al rellenar todos los campos</p>";
+            // Mostrar msg si faltan datos
+            $msg = "<p class='msg'>Error al rellenar todos los campos</p>";
             require_once('../vista/componentes/header.html');
             require_once('../vista/insertarAmigos.php');
             require_once('../vista/componentes/footer.html');

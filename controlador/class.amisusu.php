@@ -57,8 +57,8 @@
             $consulta = "INSERT INTO amisusuarios (id_usuario, nombre, apellido, fecha_nac) VALUES (?, ?, ?, ?)";
             $sentencia = $this->conn->getConn()->prepare($consulta);
             $sentencia->bind_param('ssss', $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac);
-            $sentencia->execute();
-            $sentencia->close();
+            if($sentencia->execute()) return true;
+            else return false;
         }
     }
 
