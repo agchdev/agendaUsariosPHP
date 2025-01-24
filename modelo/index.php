@@ -103,6 +103,11 @@
     }
     function añadirAmigos() {
         $usuario = $_POST["usuario"];
+        // Mostrar error si faltan datos
+        $error = "<p class='msg'>Error al rellenar todos los campos</p>";
+        require_once('../vista/componentes/header.html');
+        require_once('../vista/insertarAmigos.php');
+        require_once('../vista/componentes/footer.html');
         if (isset($_POST["nombre"], $_POST["apellido"], $_POST["fecha"])) {
             // Validar que los campos no estén vacíos
             if (empty($_POST["nombre"]) || empty($_POST["apellido"]) || empty($_POST["fecha"])) {
@@ -130,7 +135,7 @@
             require_once('../controlador/class.amisusu.php');
             require_once('../controlador/class.usuario.php');
     
-            $usuario = $_POST["usuario"];
+            $usuario = $_POST["usuario"] || get_session("usuario");
             $usu = new usuario(0, $usuario);
             $idUsu = $usu->getIdUsu();
             $amis = new amiUsus(0, $idUsu, $_POST["nombre"], $_POST["apellido"], $fechaUsuario->format('Y-m-d'));
@@ -156,6 +161,12 @@
         require_once('../vista/componentes/header.html');
         require_once('../vista/buscarAmigos.php');
         require_once('../vista/componentes/footer.html');
+    }
+
+    // CERRAR SESION
+    function cerrarSesion(){
+        unset_session("usuario");
+        require_once('../vista/login.php');
     }
     /////////////////////////////////// INICIO /////////////////////////////////////////
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////
@@ -187,6 +198,11 @@
     function get_session(String $nom){ // Esta funcion obtiene una sesion
         start_session();
         return $_SESSION[$nom]; // Esta funcion obtiene una sesion
+    }
+    function unset_session(String $nom) { // Esta funcion elimina una sesion
+        start_session(); // Iniciamos la sesion
+        session_unset(); // Esta funcion elimina una sesion
+        session_destroy(); // Esta funcion destruye una sesion
     }
 
     function is_session(String $nom){ // Esta funcion comprueba si hay una sesion
