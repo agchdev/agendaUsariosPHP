@@ -23,11 +23,11 @@
                     }
                     
                 echo "</table>";
-                echo " <input type='submit' class='btn' value='Enviar'>
+                echo "<div style= 'display:flex; gap:1rem;margin-top: 1.5rem;'> <input type='submit' class='btn' value='Buscar Amigos'>
                     <input type='hidden' name='usuario' value='".$usuario."'>
                     <input type='hidden' name='action' value='Buscar Amigos'>";
-                echo "<input style='margin-top:1.5rem;' type='submit' class='btn' name='action' value='Insertar Amigo'>";
-                echo "</form>";
+                echo "<input type='submit' class='btn' name='action' value='Insertar Amigo'>";
+                echo "</div></form>";
             }
             
             ?>
