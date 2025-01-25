@@ -8,7 +8,7 @@
      * Establece la cookie de sesion si se ha pulsado el checkbox
      * Llama a la funcion login() de la clase usuario
      * Si el login es correcto muestra la pagina de inicio
-     * Si el login es incorrecto muestra la pagina de login con un mensaje de error
+     * Si el login es incorrecto muestra la pagina de login con un mensaje de error.
      */
     function login(){
         
