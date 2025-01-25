@@ -5,9 +5,9 @@
      * Comprueba si se ha pulsado el boton de login
      * Comprueba si se ha rellenado el campo de usuario y contraseña
      * Comprueba si la cookie de sesion existe y si se ha pulsado el checkbox
-     * Establece la cookie de sesion si se ha pulsado el checkbox
-     * Llama a la funcion login() de la clase usuario
-     * Si el login es correcto muestra la pagina de inicio
+     * Establece la cookie de sesion si se ha pulsado el checkbox.
+     * Llama a la funcion login() de la clase usuario.
+     * Si el login es correcto muestra la pagina de inicio.
      * Si el login es incorrecto muestra la pagina de login con un mensaje de error.
      */
     function login(){
