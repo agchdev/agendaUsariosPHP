@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-01-2025 a las 12:49:19
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 27-01-2025 a las 23:45:28
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,8 +40,11 @@ CREATE TABLE `amisusuarios` (
 --
 
 INSERT INTO `amisusuarios` (`id`, `nombre`, `apellido`, `fecha_nac`, `id_usuario`) VALUES
-(1, 'Manuel', 'Romero', '2005-05-25', 2),
-(2, 'Erica', 'Palomino', '1997-04-10', 2);
+(1, 'pepe', 'ruiz', '2002-10-14', 1),
+(2, 'Manuel', 'Romero', '2005-01-12', 1),
+(3, 'Maite', 'Correa', '2002-10-15', 2),
+(4, 'Manuel', 'Romero', '2005-05-11', 2),
+(5, 'Ana', 'Khalifa', '2003-06-04', 2);
 
 -- --------------------------------------------------------
 
@@ -54,9 +57,18 @@ CREATE TABLE `juegos` (
   `juego` varchar(20) NOT NULL,
   `plataforma` varchar(20) NOT NULL,
   `urlFoto` varchar(30) NOT NULL,
-  `año_lanzamiento` int(4) NOT NULL,
+  `anio_lanzamiento` int(4) NOT NULL,
   `id_usuario` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `juegos`
+--
+
+INSERT INTO `juegos` (`id`, `juego`, `plataforma`, `urlFoto`, `anio_lanzamiento`, `id_usuario`) VALUES
+(1, 'Fortnite', 'PC', '../imgs/Fortnite', 2017, 2),
+(2, 'GTAV', 'PC', './imgs/GTAV', 2013, 2),
+(3, 'MINECRAFT', 'PC', './imgs/MINECRAFT', 2009, 2);
 
 -- --------------------------------------------------------
 
@@ -138,13 +150,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `amisusuarios`
 --
 ALTER TABLE `amisusuarios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `juegos`
 --
 ALTER TABLE `juegos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `prestamos`
