@@ -150,12 +150,14 @@
 
     // MODIFICAR AMIGOS
     function modificar(){
-        $contador = $_POST["cont"];
+        $contador = $_REQUEST["action"];
+        $contador = explode(" ", $contador);
+        echo "<p>".$contador[1]."</p>";
         $i = "id";
-        $i = $i.$contador; 
+        $i = $i.$contador[1]; 
 
         $iU = "id_usuario";
-        $iU = $iU.$contador;
+        $iU = $iU.$contador[1];
         if(isset($_POST[$i])){
             $id = $_POST[$i];
             $id_usario = $_POST[$iU];
@@ -166,7 +168,7 @@
 
             require_once('../controlador/class.amisusu.php');
             $amis = new amiUsus();
-            $amigoUsu = $amis->getAmigosID($id_usario, $id);
+            $amigoUsu = $amis->getAmigosID($id, $id_usario);
             $usuario = $_POST["usuario"];
 
             require_once('../vista/componentes/header.html');
@@ -248,10 +250,13 @@
     }
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////
     /////////////////////////////////// FIN ////////////////////////////////////////////
-
+    function hola(){
+        echo "hola";
+    }
     // INICIO
     if(isset($_REQUEST["action"])) { // Si se ha pulsado algun boton
         $action = $_REQUEST["action"]; // Guardamos la accion
+        
         if($action == "Amigos") $action = "amigos";
         if($action == "Juegos") $action = "juegos";
         if($action == "Prestamos") $action = "prestamos";
@@ -259,7 +264,7 @@
         if($action == "Insertar Amigo") $action = "insertAmigo";
         if($action == "Buscar Amigos") $action = "buscarAmigos";
         if($action == "Añadir amigo") $action = "añadirAmigos";
-        if($action == "Modificar") $action = "modificar";
+        if (strpos($action, "Modificar") !== false) $action = "modificar";
         if($action == "Guardar Cambios") $action = "modificarAmigo";
         $action(); // Ejecutamos la accion
     }else{
