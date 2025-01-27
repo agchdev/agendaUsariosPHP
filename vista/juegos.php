@@ -1,7 +1,7 @@
-<!-- VISTA DE AMIGOS :) -->
+<!-- VISTA DE JUEGOS :) -->
 <div id="bodyAmigos">
     <section class="amigos">
-        <h2>Amigos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
+        <h2>Juegos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
         <?php
             if (count($amigosUsu) == 0) {
                 echo "NO TIENE AMIGOS ACTUALMENTE";
@@ -11,15 +11,16 @@
                 echo "<table class='table'>";
                     echo "<tr><th>NOMBRE</th><th>APELLIDOS</th><th>FECHA NACIMIENTO</th><th></th></tr>";
                     
-                    foreach ($amigosUsu as $amig) {
+                    foreach ($juegos as $juego) {
                         echo "<tr>";
-                        echo "<input type='hidden' name='id_usuario".$cont."' value='" . $amig["id_usuario"] . "'>";
-                        echo "<input type='hidden' name='id".$cont."' value='" . $amig["id"] . "'>"; 
+                        echo "<input type='hidden' name='id_usuario".$cont."' value='" . $juego["id_usuario"] . "'>";
+                        echo "<input type='hidden' name='id".$cont."' value='" . $juego["id"] . "'>"; 
                         echo "<input type='hidden' name='" . $cont . "' value='" . $cont . "'>"; 
-                        echo "<td>" . $amig["nombre"] . "</td>";
-                        echo "<td>" . $amig["apellidos"] . "</td>";
-                        echo "<td>" . $amig["fecha_nac"] . "</td>";
-                        echo "<td><input type='submit' class='btn off' name='action' value='Modificar ".$cont."'></td>";
+                        echo "<td><img src='" . $juego["url"] . "' width='50px'></td>";
+                        echo "<td>" . $juego["juego"] . "</td>";
+                        echo "<td>" . $juego["plataforma"] . "</td>";
+                        echo "<td>" . $juego["anio"] . "</td>";
+                        echo "<td><input type='submit' class='btn off' name='action' value='ModiJuego ".$cont."'></td>";
                         echo "</tr>";
                         $cont++;
                     }

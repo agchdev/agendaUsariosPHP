@@ -53,6 +53,8 @@ table {
 /* CSS EMPIEZA AQUI */
 /* FOOTER */
 footer{
+    position: absolute;
+    width: 100%;
     background-color: #313131;
     color: white;
     display: flex;
@@ -110,7 +112,7 @@ header > nav > div > nav a{
     display: inline-block;
 }
 .off{
-    background-color: #636363 !important;
+    background-color: #464646 !important;
 }
 .off:hover{
     background-color: #3aff7f !important;
@@ -281,7 +283,7 @@ input[type="checkbox"] {
 #bodyAmigos{
     background-color: black;
     display: flex;
-    height: 95vh;
+    height: 100vh;
     color: white;
     justify-content: center;
     align-items: center;

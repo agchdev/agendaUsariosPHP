@@ -201,6 +201,16 @@
         require_once('../vista/componentes/footer.html');
     }
 
+    // JUEGOS
+    function juegos(){
+        $usuario = $_POST["usuario"];
+        require_once('../controlador/class.juego.php');
+        $juego = new juego();
+        $juegos = $juego->getJuegos($usuario);
+        if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
+        $amigosUsu = $amis->getAmigos($usuario, $buscador);
+    }
+
     // CERRAR SESION
     function cerrarSesion(){
         unset_session("usuario");
