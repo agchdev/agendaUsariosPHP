@@ -310,6 +310,7 @@
             $nuevaUrl = $_POST["url"];
         }else {
             $ruta = "../imgs/";
+            $origen = $_FILES["img"]["tmp_name"];
             $destino = $ruta.$nomNuevo;
 
             move_uploaded_file($origen, $destino);
