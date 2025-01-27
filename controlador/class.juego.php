@@ -11,8 +11,8 @@
 
         public function __construct($i=0 ,String $ju="", String $pl="", String $url="", String $anio="", $idUsu="") {
             $this->conn = new db(); 
-            $this->juego = $ju;
             $this->id = $i;
+            $this->juego = $ju;
             $this->plataforma = $pl;
             $this->urlFoto = $url;
             $this->anio_lanzamiento = $anio;
@@ -47,6 +47,14 @@
                 );
             }
             return $juegos;
+        }
+
+        public function insertarJuego() {
+            $consulta = "INSERT INTO juegos (id, juego, plataforma, urlFoto, anio_lanzamiento, id_usuario) VALUES (?,?,?,?,?)";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('issssi', $this->id, $this->juego, $this->plataforma, $this->urlFoto, $this->anio_lanzamiento, $this->idUsuario);
+            if($sentencia->execute()) return true;
+            else return false;
         }
     }
 ?>
