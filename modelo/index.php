@@ -176,6 +176,7 @@
     function modificarAmigo(){
         $nuevoNom = $_POST["nuevoNom"];
         $nuevoApe = $_POST["nuevoApe"];
+        $nuevoApe = $_POST["nuevaFech"];
     }
     
     // BUSCAR AMIGOS
