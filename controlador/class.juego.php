@@ -56,5 +56,24 @@
             if($sentencia->execute()) return true;
             else return false;
         }
+
+        public function getJuegoID($id, $idUsu) {
+            $consulta = "SELECT juegos.id, juegos.juego, juegos.plataforma, juegos.urlFoto, juegos.anio_lanzamiento, juegos.id_usuario FROM juegos WHERE juegos.id = ? AND juegos.id_usuario = ?;";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('ii', $id, $idUsu);
+            $sentencia->bind_result($this->id, $this->juego, $this->plataforma, $this->urlFoto, $this->anio_lanzamiento, $this->idUsuario);
+            $sentencia->execute();
+
+            $juegos = array();
+            $sentencia->fetch();
+            $juegos["id"] = $this->id;
+            $juegos["juego"] = $this->juego;
+            $juegos["plataforma"] = $this->plataforma;
+            $juegos["url"] = $this->urlFoto;
+            $juegos["anio"] = $this->anio_lanzamiento;
+            $juegos["id_usuario"] = $this->idUsuario;
+            $sentencia->close();
+            return $juegos;
+        }
     }
 ?>

@@ -149,7 +149,7 @@
     }
 
     // MODIFICAR AMIGOS
-    function modificar(){
+    function modificarAmi(){
         $contador = $_REQUEST["action"];
         $contador = explode(" ", $contador);
         $i = "id";
@@ -226,7 +226,6 @@
     }
 
     function añadirJuego(){
-        $usuario = $_POST["usuario"];
         if(!isset($_POST["juego"])){
             $msg = "<p class='msg'>Inserta un nombre de juego</p>";
             require_once('../vista/componentes/header.php');
@@ -238,7 +237,7 @@
             require_once('../vista/insertarJuegos.php');
             require_once('../vista/componentes/footer.html');
         }elseif(empty($_FILES["img"]["tmp_name"])){
-            $msg = "<p class='msg'>Inserta una imagen</p>";
+            $msg = "<p class='msg'>".$_FILES["img"]["tmp_name"]."</p>";
             require_once('../vista/componentes/header.php');
             require_once('../vista/insertarJuegos.php');
             require_once('../vista/componentes/footer.html');
@@ -261,6 +260,9 @@
 
             move_uploaded_file($origen, $destino);
         }
+        require_once('../controlador/class.juego.php');
+        require_once('../controlador/class.usuario.php');
+        $usuario = $_POST["usuario"];
         $usu = new usuario(0, $usuario);
         $idUsu = $usu->getIdUsu();
         $tit = $_POST["juego"];
@@ -268,9 +270,31 @@
         $plataforma = $_POST["plataforma"];
         $juego = new juego(0, $tit, $plataforma, $destino,$anio, $idUsu);
         $juego->insertarJuego();
-        require_once('../vista/componentes/header.php');
-        require_once('../vista/insertarJuegos.php');
-        require_once('../vista/componentes/footer.html');
+
+        juegos();
+    }
+
+    function modificarJuego(){
+        $contador = $_REQUEST["action"];
+        $contador = explode(" ", $contador);
+        $i = "id";
+        $i = $i.$contador[1]; 
+
+        $iU = "id_usuario";
+        $iU = $iU.$contador[1];
+        if(isset($_POST[$i])){
+            $id = $_POST[$i];
+            $id_usario = $_POST[$iU];
+
+            require_once('../controlador/class.juego.php');
+            $juegos = new juego();
+            $juego = $juegos->getJuegoID($id, $id_usario);
+            $usuario = $_POST["usuario"];
+
+            require_once('../vista/componentes/header.php');
+            require_once('../vista/modificarAmigos.php');
+            require_once('../vista/componentes/footer.html');
+        }
     }
 
     // CERRAR SESION
@@ -336,7 +360,8 @@
         if($action == "Insertar Amigo") $action = "insertAmigo";
         if($action == "Buscar Amigos") $action = "buscarAmigos";
         if($action == "Añadir amigo") $action = "añadirAmigos";
-        if (strpos($action, "Modificar") !== false) $action = "modificar";
+        if (strpos($action, "ModificarAmigo") !== false) $action = "modificarAmi";
+        if (strpos($action, "ModificarJuego") !== false) $action = "modificarJuego";
         if($action == "Guardar Cambios") $action = "modificarAmigo";
         if($action == "Buscar Juegos") $action = "buscarJuegos";
         if($action == "Insertar Juegos") $action = "insertJuegos";
