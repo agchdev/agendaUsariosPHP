@@ -249,7 +249,7 @@
             require_once('../vista/componentes/footer.html');
             return;
         }else{
-            $ruta = "./imgs/";
+            $ruta = "../imgs/";
             if(!file_exists($ruta)){
                 mkdir($ruta);
             }
@@ -292,8 +292,27 @@
             $usuario = $_POST["usuario"];
 
             require_once('../vista/componentes/header.php');
-            require_once('../vista/modificarAmigos.php');
+            require_once('../vista/modificarJuego.php');
             require_once('../vista/componentes/footer.html');
+        }
+    }
+
+    function cambiosJuego(){
+        require_once('../controlador/class.juego.php');
+        $juegos = new juego();
+        $id = $_POST["id"];
+        $id_usario = $_POST["id_usario"];
+        $juego = $juegos->getJuegoID($id, $id_usario);
+        $nuevoNom = $_POST["nuevoNom"];
+        $nuevoAnio = $_POST["nuevoAnio"];
+        $nuevoPlataforma = $_POST["nuevoPlataforma"];
+        if(empty($_FILES["img"]["tmp_name"])){
+            $nuevaUrl = $_POST["url"];
+        }else {
+            $ruta = "../imgs/";
+            $destino = $ruta.$nomNuevo;
+
+            move_uploaded_file($origen, $destino);
         }
     }
 
