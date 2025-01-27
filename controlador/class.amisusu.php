@@ -54,6 +54,8 @@
         }
 
         public function getAmigosID($idU, $idAmi) {
+            echo $idAmi;
+            echo "<br>".$idU;
             $consulta = "SELECT * 
                         FROM amisusuarios 
                         WHERE id = ? AND id_usuario = ? ";
@@ -71,6 +73,16 @@
             $amigoUsu["id_usuario"] = $this->id_usuario;
             $sentencia->close();
             return $amigoUsu;
+        }
+
+        public function modificarAmigo($n, $ap, $fn, $id, $iu) {
+            $consulta = "UPDATE amisusuarios
+                        SET nombre = ?, apellido = ?, fecha_nac = ?
+                        WHERE id = ? AND id_usuario = ?;";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('sssii', $n, $ap, $fn, $id, $iu);
+            if($sentencia->execute()) return true;
+            else return false;
         }
 
         public function insertarAmigo() {

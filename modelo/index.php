@@ -150,33 +150,45 @@
 
     // MODIFICAR AMIGOS
     function modificar(){
-        $cont = $_POST["cont"];
-        for ($i=0; $i < $cont; $i++) {
-            $i = "id";
-            $i = $i.$cont; 
+        $contador = $_POST["cont"];
+        $i = "id";
+        $i = $i.$contador; 
 
-            $iU = "id_usuario";
-            $iU = $iU.$cont; 
-            if(isset($_POST[$i])){
-                $id = $_POST[$i];
-                $id_usario = $_POST[$iU];
+        $iU = "id_usuario";
+        $iU = $iU.$contador;
+        if(isset($_POST[$i])){
+            $id = $_POST[$i];
+            $id_usario = $_POST[$iU];
+            echo "<p>".$i."</p>";
+            echo "<p>".$iU."</p>";
+            echo "<p>".$id."</p>";
+            echo "<p>".$id_usario."</p>";
 
-                require_once('../controlador/class.amisusu.php');
-                $amis = new amiUsus();
-                $amigoUsu = $amis->getAmigosID($id, $id_usario);
-                $usuario = $_POST["usuario"];
+            require_once('../controlador/class.amisusu.php');
+            $amis = new amiUsus();
+            $amigoUsu = $amis->getAmigosID($id_usario, $id);
+            $usuario = $_POST["usuario"];
 
-                require_once('../vista/componentes/header.html');
-                require_once('../vista/modificarAmigos.php');
-                require_once('../vista/componentes/footer.html');
-            }
+            require_once('../vista/componentes/header.html');
+            require_once('../vista/modificarAmigos.php');
+            require_once('../vista/componentes/footer.html');
         }
     }
 
+    // CAMBIAR A LOS NUEVOS DATOS DEL AMIGO
     function modificarAmigo(){
         $nuevoNom = $_POST["nuevoNom"];
         $nuevoApe = $_POST["nuevoApe"];
-        $nuevoApe = $_POST["nuevaFech"];
+        $nuevaFech = $_POST["nuevaFech"];
+        $idAmi = $_POST["idAmi"];
+        $idUsu = $_POST["idUsu"];
+
+        require_once('../controlador/class.amisusu.php');
+        $amis = new amiUsus();
+        $amigoUsu = $amis->modificarAmigo($nuevoNom, $nuevoApe, $nuevaFech, $idAmi, $idUsu);
+        $usuario = $_POST["usuario"];
+        // Mostrar vista de amigos
+        amigos();
     }
     
     // BUSCAR AMIGOS
