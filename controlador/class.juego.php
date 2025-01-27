@@ -77,7 +77,7 @@
         }
 
         public function modificarJuego($j, $p, $u, $a, $id, $iu) {
-            $consulta = "UPDATE juegos SET juego = ?, plataforma = ?, urlFoto = ?, anio_lanzamiento = ? WHERE id = ? AND id_usuario = ?;";
+            $consulta = "UPDATE juegos SET juego = ?, plataforma = ? , urlFoto = ?, anio_lanzamiento = ? WHERE id = ? AND id_usuario = ?;";
             $sentencia = $this->conn->getConn()->prepare($consulta);
             $sentencia->bind_param('ssssii', $j, $p, $u, $a, $id, $iu);
             if($sentencia->execute()) return true;

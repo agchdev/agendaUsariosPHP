@@ -305,17 +305,17 @@
         $nuevoNom = $_POST["nuevoNom"];
         $nuevoAnio = $_POST["nuevoAnio"];
         $nuevoPlataforma = $_POST["plataforma"];
+        $ruta = "../imgs/";
+        $destino = $ruta.$nomNuevo;
+        $origen = "";
         if(empty($_FILES["img"]["tmp_name"])){
-            $nuevaUrl = $_POST["url"];
+            $destino = $_POST["url"];
         }else {
-            $ruta = "../imgs/";
             $origen = $_FILES["img"]["tmp_name"];
-            $destino = $ruta.$nomNuevo;
-
             move_uploaded_file($origen, $destino);
         }
 
-        $juego->modificarJuego($nuevoNom, $nuevoPlataforma, $nuevoAnio, $nuevaUrl, $id, $id_usario);
+        $juego->modificarJuego($nuevoNom, $nuevoPlataforma, $destino, $nuevoAnio, $id, $id_usario);
         $usuario = $_POST["usuario"];
         juegos();
     }
