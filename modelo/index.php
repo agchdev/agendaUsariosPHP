@@ -306,9 +306,10 @@
         $nuevoAnio = $_POST["nuevoAnio"];
         $nuevoPlataforma = $_POST["plataforma"];
         $ruta = "../imgs/";
-        $destino = $ruta.$nomNuevo;
+        $destino = $ruta.$nuevoNom;
         $origen = "";
-        if(empty($_FILES["img"]["tmp_name"])){
+        if(!empty($_FILES["img"]["tmp_name"])){
+            echo "<br>".$_FILES["img"]["tmp_name"];
             $destino = $_POST["url"];
         }else {
             $origen = $_FILES["img"]["tmp_name"];
