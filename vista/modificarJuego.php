@@ -15,7 +15,7 @@
                 </select>
                 <input type="file" name="img">
                 <input class="busca" type="number" name="nuevoAnio" value="<?php echo $juego["anio"] ?>">
-                <input type="hidden" name="idAmi" value="<?php echo $juego["id"] ?>">
+                <input type="hidden" name="idJuego" value="<?php echo $juego["id"] ?>">
                 <input type="hidden" name="idUsu" value="<?php echo $juego["id_usuario"] ?>">
                 <input type="hidden" name="url" value="<?php echo $juego["url"] ?>">
                 <input type="submit" class="btn" value="Guardar Cambios">

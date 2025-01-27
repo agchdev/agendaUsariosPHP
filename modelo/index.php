@@ -299,13 +299,12 @@
 
     function cambiosJuego(){
         require_once('../controlador/class.juego.php');
-        $juegos = new juego();
-        $id = $_POST["id"];
-        $id_usario = $_POST["id_usario"];
-        $juego = $juegos->getJuegoID($id, $id_usario);
+        $juego = new juego();
+        $id = $_POST["idJuego"];
+        $id_usario = $_POST["idUsu"];
         $nuevoNom = $_POST["nuevoNom"];
         $nuevoAnio = $_POST["nuevoAnio"];
-        $nuevoPlataforma = $_POST["nuevoPlataforma"];
+        $nuevoPlataforma = $_POST["plataforma"];
         if(empty($_FILES["img"]["tmp_name"])){
             $nuevaUrl = $_POST["url"];
         }else {
@@ -315,6 +314,10 @@
 
             move_uploaded_file($origen, $destino);
         }
+
+        $juego->modificarJuego($nuevoNom, $nuevoPlataforma, $nuevoAnio, $nuevaUrl, $id, $id_usario);
+        $usuario = $_POST["usuario"];
+        juegos();
     }
 
     // CERRAR SESION
