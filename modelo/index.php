@@ -261,10 +261,12 @@
 
             move_uploaded_file($origen, $destino);
         }
+        $usu = new usuario(0, $usuario);
+        $idUsu = $usu->getIdUsu();
         $tit = $_POST["juego"];
         $anio = $_POST["anio"];
         $plataforma = $_POST["plataforma"];
-        $juego = new juego(0, $tit, $plataforma, $destino,$anio, $usuario);
+        $juego = new juego(0, $tit, $plataforma, $destino,$anio, $idUsu);
         $juego->insertarJuego();
         require_once('../vista/componentes/header.php');
         require_once('../vista/insertarJuegos.php');

@@ -50,9 +50,9 @@
         }
 
         public function insertarJuego() {
-            $consulta = "INSERT INTO juegos (id, juego, plataforma, urlFoto, anio_lanzamiento, id_usuario) VALUES (?,?,?,?,?)";
+            $consulta = "INSERT INTO juegos (juego, plataforma, urlFoto, anio_lanzamiento, id_usuario) VALUES (?,?,?,?,?)";
             $sentencia = $this->conn->getConn()->prepare($consulta);
-            $sentencia->bind_param('issssi', $this->id, $this->juego, $this->plataforma, $this->urlFoto, $this->anio_lanzamiento, $this->idUsuario);
+            $sentencia->bind_param('issssi', $this->juego, $this->plataforma, $this->urlFoto, $this->anio_lanzamiento, $this->idUsuario);
             if($sentencia->execute()) return true;
             else return false;
         }
