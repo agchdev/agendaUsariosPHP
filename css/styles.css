@@ -323,6 +323,9 @@ input[type="checkbox"] {
     border-radius: 1rem;
     filter: drop-shadow(0 0 10px black);
 }
+.amigos tr{
+    margin: auto;
+}
 .amigos th,td{
     padding: 1rem;
 }
@@ -340,7 +343,20 @@ input[type="checkbox"] {
     align-items: center;
     margin-bottom: 1.5rem;
 }
-
+/* JUEGOS */
+.divImg{
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    background-color: #1ED760;
+}
+img{
+    max-width: 100%;
+}
 @keyframes start {
     0%{
         scale: 0;

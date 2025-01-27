@@ -152,7 +152,6 @@
     function modificar(){
         $contador = $_REQUEST["action"];
         $contador = explode(" ", $contador);
-        echo "<p>".$contador[1]."</p>";
         $i = "id";
         $i = $i.$contador[1]; 
 
@@ -161,10 +160,6 @@
         if(isset($_POST[$i])){
             $id = $_POST[$i];
             $id_usario = $_POST[$iU];
-            echo "<p>".$i."</p>";
-            echo "<p>".$iU."</p>";
-            echo "<p>".$id."</p>";
-            echo "<p>".$id_usario."</p>";
 
             require_once('../controlador/class.amisusu.php');
             $amis = new amiUsus();
@@ -205,10 +200,21 @@
     function juegos(){
         $usuario = $_POST["usuario"];
         require_once('../controlador/class.juego.php');
-        $juego = new juego();
-        $juegos = $juego->getJuegos($usuario);
+        $buscador = "";
         if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
-        $amigosUsu = $amis->getAmigos($usuario, $buscador);
+        $juego = new juego();
+        $juegos = $juego->getJuegos($usuario, $buscador);
+        require_once('../vista/componentes/header.html');
+        require_once('../vista/juegos.php');
+        require_once('../vista/componentes/footer.html');
+    }
+
+    // BUSCAR JUEGOS
+    function buscarJuegos(){
+        $usuario = $_POST["usuario"];
+        require_once('../vista/componentes/header.html');
+        require_once('../vista/buscarJuegos.php');
+        require_once('../vista/componentes/footer.html');
     }
 
     // CERRAR SESION
@@ -276,6 +282,7 @@
         if($action == "Añadir amigo") $action = "añadirAmigos";
         if (strpos($action, "Modificar") !== false) $action = "modificar";
         if($action == "Guardar Cambios") $action = "modificarAmigo";
+        if($action == "Buscar Juegos") $action = "buscarJuegos";
         $action(); // Ejecutamos la accion
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe
