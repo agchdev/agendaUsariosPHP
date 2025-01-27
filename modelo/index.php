@@ -88,7 +88,7 @@
         $buscador = "";
         if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
         $amigosUsu = $amis->getAmigos($usuario, $buscador);
-        require_once('../vista/componentes/header.html');
+        require_once('../vista/componentes/header.php');
         require_once('../vista/amigos.php');
         require_once('../vista/componentes/footer.html');
     }
@@ -96,7 +96,7 @@
         require_once('../controlador/class.amisusu.php');
         $usuario = $_POST["usuario"];
         $amis = new amiUsus();
-        require_once('../vista/componentes/header.html');
+        require_once('../vista/componentes/header.php');
         require_once('../vista/insertarAmigos.php');
         require_once('../vista/componentes/footer.html');
         
@@ -107,7 +107,7 @@
             // Validar que los campos no estén vacíos
             if (empty($_POST["nombre"]) || empty($_POST["apellido"]) || empty($_POST["fecha"])) {
                 $msg = "<p class='msg'>Todos los campos son obligatorios.</p>";
-                require_once('../vista/componentes/header.html');
+                require_once('../vista/componentes/header.php');
                 require_once('../vista/insertarAmigos.php');
                 require_once('../vista/componentes/footer.html');
                 return;
@@ -120,7 +120,7 @@
             // Comprobar si la fecha es válida y anterior a hoy
             if ($fechaUsuario >= $fechaHoy) {
                 $msg = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
-                require_once('../vista/componentes/header.html');
+                require_once('../vista/componentes/header.php');
                 require_once('../vista/insertarAmigos.php');
                 require_once('../vista/componentes/footer.html');
                 return;
@@ -142,7 +142,7 @@
         } else {
             // Mostrar msg si faltan datos
             $msg = "<p class='msg'>Error al rellenar todos los campos</p>";
-            require_once('../vista/componentes/header.html');
+            require_once('../vista/componentes/header.php');
             require_once('../vista/insertarAmigos.php');
             require_once('../vista/componentes/footer.html');
         }
@@ -166,7 +166,7 @@
             $amigoUsu = $amis->getAmigosID($id, $id_usario);
             $usuario = $_POST["usuario"];
 
-            require_once('../vista/componentes/header.html');
+            require_once('../vista/componentes/header.php');
             require_once('../vista/modificarAmigos.php');
             require_once('../vista/componentes/footer.html');
         }
@@ -191,7 +191,7 @@
     // BUSCAR AMIGOS
     function buscarAmigos(){
         $usuario = $_POST["usuario"];
-        require_once('../vista/componentes/header.html');
+        require_once('../vista/componentes/header.php');
         require_once('../vista/buscarAmigos.php');
         require_once('../vista/componentes/footer.html');
     }
@@ -204,16 +204,67 @@
         if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
         $juego = new juego();
         $juegos = $juego->getJuegos($usuario, $buscador);
-        require_once('../vista/componentes/header.html');
+        require_once('../vista/componentes/header.php');
         require_once('../vista/juegos.php');
+        require_once('../vista/componentes/footer.html');
+    }
+
+    // INSERTAR JUEGOS
+    function insertJuegos(){
+        $usuario = $_POST["usuario"];
+        require_once('../vista/componentes/header.php');
+        require_once('../vista/insertarJuegos.php');
         require_once('../vista/componentes/footer.html');
     }
 
     // BUSCAR JUEGOS
     function buscarJuegos(){
         $usuario = $_POST["usuario"];
-        require_once('../vista/componentes/header.html');
+        require_once('../vista/componentes/header.php');
         require_once('../vista/buscarJuegos.php');
+        require_once('../vista/componentes/footer.html');
+    }
+
+    function añadirJuego(){
+        $usuario = $_POST["usuario"];
+        if(!isset($_POST["juego"])){
+            $msg = "<p class='msg'>Inserta un nombre de juego</p>";
+            require_once('../vista/componentes/header.php');
+            require_once('../vista/insertarJuegos.php');
+            require_once('../vista/componentes/footer.html');
+        }elseif(!isset($_POST["anio"])){
+            $msg = "<p class='msg'>Inserta un año</p>";
+            require_once('../vista/componentes/header.php');
+            require_once('../vista/insertarJuegos.php');
+            require_once('../vista/componentes/footer.html');
+        }elseif(empty($_FILES["img"]["tmp_name"])){
+            $msg = "<p class='msg'>Inserta una imagen</p>";
+            require_once('../vista/componentes/header.php');
+            require_once('../vista/insertarJuegos.php');
+            require_once('../vista/componentes/footer.html');
+            return;
+        }elseif(($_FILES["img"]["size"]/(2**20)) >= 2){ 
+            $msg = "<p class='msg'>La imagen debe pesar menos de 2MB</p>";
+            require_once('../vista/componentes/header.php');
+            require_once('../vista/insertarJuegos.php');
+            require_once('../vista/componentes/footer.html');
+            return;
+        }else{
+            $ruta = "./imgs/";
+            if(!file_exists($ruta)){
+                mkdir($ruta);
+            }
+
+            $nomNuevo = $_POST["juego"];
+            $origen = $_FILES["img"]["tmp_name"];
+            $destino = $ruta.$nomNuevo;
+
+            move_uploaded_file($origen, $destino);
+        }
+
+        if(isset($_POST["imgJuego"])) $anio = $_POST["imgJuego"];
+        require_once('../vista/componentes/header.php');
+        require_once('../vista/insertarJuegos.php');
         require_once('../vista/componentes/footer.html');
     }
 
@@ -283,6 +334,8 @@
         if (strpos($action, "Modificar") !== false) $action = "modificar";
         if($action == "Guardar Cambios") $action = "modificarAmigo";
         if($action == "Buscar Juegos") $action = "buscarJuegos";
+        if($action == "Insertar Juegos") $action = "insertJuegos";
+        if($action == "Añadir juego") $action = "añadirJuego";
         $action(); // Ejecutamos la accion
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe

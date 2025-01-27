@@ -4,7 +4,7 @@
         <h2>Juegos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
         <?php
             if (count($juegos) == 0) {
-                echo "NO TIENE AMIGOS ACTUALMENTE";
+                echo "NO TIENE JUEGOS ACTUALMENTE";
             }else{
                 $cont = 0;
                 echo "<form action='index.php' method='post'>"; 
@@ -27,7 +27,7 @@
                 echo "</table>";
                 echo "<div style= 'display:flex; gap:1rem;margin-top: 1.5rem;'> <input type='submit' class='btn' name='action' value='Buscar Juegos'>
                     <input type='hidden' name='usuario' value='".$usuario."'>";
-                echo "<input type='submit' class='btn' name='action' value='Insertar Amigo'>";
+                echo "<input type='submit' class='btn' name='action' value='Insertar Juegos'>";
                 echo "</div></form>";
             }
             
