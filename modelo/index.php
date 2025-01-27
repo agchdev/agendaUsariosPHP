@@ -147,6 +147,36 @@
             require_once('../vista/componentes/footer.html');
         }
     }
+
+    // MODIFICAR AMIGOS
+    function modificar(){
+        $cont = $_POST["cont"];
+        for ($i=0; $i < $cont; $i++) {
+            $i = "id";
+            $i = $i.$cont; 
+
+            $iU = "id_usuario";
+            $iU = $iU.$cont; 
+            if(isset($_POST[$i])){
+                $id = $_POST[$i];
+                $id_usario = $_POST[$iU];
+
+                require_once('../controlador/class.amisusu.php');
+                $amis = new amiUsus();
+                $amigoUsu = $amis->getAmigosID($id, $id_usario);
+                $usuario = $_POST["usuario"];
+
+                require_once('../vista/componentes/header.html');
+                require_once('../vista/modificarAmigos.php');
+                require_once('../vista/componentes/footer.html');
+            }
+        }
+    }
+
+    function modificarAmigo(){
+        $nuevoNom = $_POST["nuevoNom"];
+        $nuevoApe = $_POST["nuevoApe"];
+    }
     
     // BUSCAR AMIGOS
     function buscarAmigos(){
@@ -216,6 +246,8 @@
         if($action == "Insertar Amigo") $action = "insertAmigo";
         if($action == "Buscar Amigos") $action = "buscarAmigos";
         if($action == "Añadir amigo") $action = "añadirAmigos";
+        if($action == "Modificar") $action = "modificar";
+        if($action == "Guardar Cambios") $action = "modificarAmigo";
         $action(); // Ejecutamos la accion
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe

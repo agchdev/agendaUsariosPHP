@@ -53,6 +53,26 @@
             return $amigosUsu;
         }
 
+        public function getAmigosID($idU, $idAmi) {
+            $consulta = "SELECT * 
+                        FROM amisusuarios 
+                        WHERE id = ? AND id_usuario = ? ";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('ii', $idU, $idAmi);
+            $sentencia->execute();
+            $sentencia->bind_result( $this->id, $this->nombre, $this->apellidos, $this->fecha_nac, $this->id_usuario,);
+        
+            $amigoUsu = array();
+            $sentencia->fetch();
+            $amigoUsu["id"] = $this->id;
+            $amigoUsu["nombre"] = $this->nombre;
+            $amigoUsu["apellidos"] = $this->apellidos;
+            $amigoUsu["fecha_nac"] = $this->fecha_nac;
+            $amigoUsu["id_usuario"] = $this->id_usuario;
+            $sentencia->close();
+            return $amigoUsu;
+        }
+
         public function insertarAmigo() {
             $consulta = "INSERT INTO amisusuarios (id_usuario, nombre, apellido, fecha_nac) VALUES (?, ?, ?, ?)";
             $sentencia = $this->conn->getConn()->prepare($consulta);
