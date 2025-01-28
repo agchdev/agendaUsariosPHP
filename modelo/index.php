@@ -322,6 +322,20 @@
         juegos();
     }
 
+    // PRESTAMOS
+
+    function prestamos(){
+        $usuario = $_POST["usuario"];
+        require_once('../controlador/class.prestamo.php');
+        $buscador = "";
+        if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
+        $pres = new prestamo();
+        $prestamos = $pres->getPrestamo($usuario, $buscador);
+        require_once('../vista/componentes/header.php');
+        require_once('../vista/prestamos.php');
+        require_once('../vista/componentes/footer.html');
+    }
+
     // CERRAR SESION
     function cerrarSesion(){
         unset_session("usuario");
