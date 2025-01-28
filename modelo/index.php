@@ -336,6 +336,19 @@
         require_once('../vista/componentes/footer.html');
     }
 
+    function InsertarPrestamo(){
+        $usuario = $_POST["usuario"];
+        require_once('../controlador/class.amisusu.php');
+        require_once('../controlador/class.juego.php');
+        require_once('../controlador/class.usuario.php');
+
+        $amiUsu = new amiUsus();
+        $juegos = new juego();
+
+        $amigosdeUsuario = $amiUsu->getAmigos();
+        $juegosdeUsuario = $juegos->getJuegos();
+    }
+
     // CERRAR SESION
     function cerrarSesion(){
         unset_session("usuario");
@@ -405,6 +418,7 @@
         if($action == "Buscar Juegos") $action = "buscarJuegos";
         if($action == "Insertar Juegos") $action = "insertJuegos";
         if($action == "Añadir juego") $action = "añadirJuego";
+        if($action == "Insertar Prestamos") $action = "InsertarPrestamo";
         $action(); // Ejecutamos la accion
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe
