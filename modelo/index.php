@@ -337,16 +337,20 @@
     }
 
     function InsertarPrestamo(){
-        $usuario = $_POST["usuario"];
         require_once('../controlador/class.amisusu.php');
         require_once('../controlador/class.juego.php');
         require_once('../controlador/class.usuario.php');
-
+        
+        $usuario = $_POST["usuario"];
         $amiUsu = new amiUsus();
         $juegos = new juego();
 
         $amigosdeUsuario = $amiUsu->getAmigos();
         $juegosdeUsuario = $juegos->getJuegos();
+
+        require_once('../vista/componentes/header.php');
+        require_once('../vista/prestamos.php');
+        require_once('../vista/componentes/footer.html');
     }
 
     // CERRAR SESION
