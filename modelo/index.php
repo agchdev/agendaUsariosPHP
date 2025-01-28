@@ -298,23 +298,24 @@
     }
 
     function cambiosJuego(){
-        require_once('../controlador/class.juego.php');
-        $juego = new juego();
+        
         $id = $_POST["idJuego"];
         $id_usario = $_POST["idUsu"];
         $nuevoNom = $_POST["nuevoNom"];
         $nuevoAnio = $_POST["nuevoAnio"];
         $nuevoPlataforma = $_POST["plataforma"];
-        $ruta = "../imgs/";
+        $ruta = "../img/";
         $destino = $ruta.$nuevoNom;
         $origen = "";
         if(!empty($_FILES["img"]["tmp_name"])){
-            echo "<br>".$_FILES["img"]["tmp_name"];
-            $destino = $_POST["url"];
-        }else {
             $origen = $_FILES["img"]["tmp_name"];
             move_uploaded_file($origen, $destino);
+        }else{
+            $destino = $_POST["url"];
         }
+        
+        require_once('../controlador/class.juego.php');
+        $juego = new juego();
 
         $juego->modificarJuego($nuevoNom, $nuevoPlataforma, $destino, $nuevoAnio, $id, $id_usario);
         $usuario = $_POST["usuario"];
