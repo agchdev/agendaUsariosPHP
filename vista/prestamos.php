@@ -1,26 +1,26 @@
 <!-- VISTA DE JUEGOS :) -->
 <div id="bodyAmigos">
     <section class="amigos">
-        <h2>Juegos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
+        <h2>Prestamos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
         <?php
             
             $cont = 0;
             echo "<form action='index.php' method='post'>"; 
-            if (count($juegos) == 0) {
+            if (count($prestamos) == 0) {
                 echo "NO TIENE JUEGOS ACTUALMENTE";
             }else{
                 echo "<table class='table'>";
-                    echo "<tr><th>JUEGO</th><th>TITULO</th><th>PLATAFORMA</th><th>AÑO</th><th></th></tr>";
+                    echo "<tr><th>AMIGO</th><th>JUEGO</th><th>IMG</th><th>FECHA</th><th>DEVUELTO</th><th></th></tr>";
                     
-                    foreach ($juegos as $juego) {
+                    foreach ($prestamos as $prestamo) {
                         echo "<tr>";
-                        echo "<input type='hidden' name='id_usuario".$cont."' value='" . $juego["id_usuario"] . "'>";
-                        echo "<input type='hidden' name='id".$cont."' value='" . $juego["id"] . "'>"; 
+                        echo "<input type='hidden' name='id_usuario".$cont."' value='" . $prestamos["id_usuario"] . "'>";
+                        echo "<input type='hidden' name='id".$cont."' value='" . $prestamos["id"] . "'>"; 
                         echo "<input type='hidden' name='" . $cont . "' value='" . $cont . "'>"; 
-                        echo "<td><div class='divImg'><img src='" . $juego["url"] . "'></div></td>";
-                        echo "<td>" . $juego["juego"] . "</td>";
-                        echo "<td>" . $juego["plataforma"] . "</td>";
-                        echo "<td>" . $juego["anio"] . "</td>";
+                        echo "<td>" . $prestamos["prestamos"] . "</td>";
+                        echo "<td><div class='divImg'><img src='" . $prestamos["url"] . "'></div></td>";
+                        echo "<td>" . $prestamos["plataforma"] . "</td>";
+                        echo "<td>" . $prestamos["anio"] . "</td>";
                         echo "<td><input type='submit' class='btn off' name='action' value='ModificarJuego ".$cont."'></td>";
                         echo "</tr>";
                         $cont++;
