@@ -3,15 +3,16 @@ require_once('class.db.php');
     class prestamo{
 
         private $conn;
+        private $id;
         private $id_usuario;
         private $id_juego;
         private $id_amisusu;
         private $fecha_prestamo;
         private $devuelto;
 
-        public function __construct(int $id=0, int $iu=0, int $ij=0, int $ia=0, String $fp="", bool $d=false) {
+        public function __construct(int $i=0, int $iu=0, int $ij=0, int $ia=0, String $fp="", bool $d=false) {
             $this->conn = new db();
-            $this->id = $id;
+            $this->id = $i;
             $this->id_usuario = $iu;
             $this->id_juego = $ij;
             $this->id_amisusu = $ia;
@@ -25,8 +26,8 @@ require_once('class.db.php');
             $urlFoto = "";
             if ($buscador != "") {
                 $consulta = "SELECT prestamos.id, usuarios.id , amisusuarios.nombre, juegos.juego, juegos.urlFoto, prestamos.fecha_inicio, prestamos.devuelta
-                             FROM amisusuarios, juegos, prestamos 
-                             WHERE prestamos.id_usuario = usuarios.id AND prestamos.id_ami = amisusuarios.id AND usuarios.usuario = ? AND 
+                             FROM amisusuarios, juegos, prestamos, usuarios
+                             WHERE prestamos.id_usuario = usuarios.id AND prestamos.id_ami = amisusuarios.id AND prestamos.id_juego = juegos.id AND usuarios.usuario = ? AND 
                              (amisusuarios.nombre LIKE ? OR juegos.juego LIKE ?)";
                 $sentencia = $this->conn->getConn()->prepare($consulta);
         
@@ -35,8 +36,8 @@ require_once('class.db.php');
                 $sentencia->bind_param('sss', $usuario, $buscador, $buscador);
             } else {
                 $consulta = "SELECT prestamos.id, prestamos.id_usuario, prestamos.id_ami, amisusuarios.nombre, juegos.juego, juegos.urlFoto, prestamos.fecha_inicio, prestamos.devuelta
-                             FROM amisusuarios, juegos, prestamos 
-                             WHERE prestamos.id_usuario = usuarios.id AND prestamos.id_ami = amisusuarios.id AND usuarios.usuario = ?";
+                             FROM amisusuarios, juegos, prestamos, usuarios
+                             WHERE prestamos.id_usuario = usuarios.id AND prestamos.id_ami = amisusuarios.id AND prestamos.id_juego = juegos.id AND usuarios.usuario = ?";
                 $sentencia = $this->conn->getConn()->prepare($consulta);
                 $sentencia->bind_param('s', $usuario);
             }

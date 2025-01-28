@@ -1,4 +1,4 @@
-<!-- VISTA DE BUSCAR USUARIOS :( -->
+<!-- VISTA DE INSERTAR USUARIOS :) -->
 <div id="bodyAmigos">
     <?php
         if(isset($msg)){
@@ -23,5 +23,3 @@
         </form>
     </section>
 </div>
-</body>
-</html>

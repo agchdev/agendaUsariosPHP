@@ -36,5 +36,3 @@
     </section>
     
 </div>
-</body>
-</html>

@@ -1,4 +1,4 @@
-<!-- VISTA DE JUEGOS :) -->
+<!-- VISTA DE PRESTAMOS :) -->
 <div id="bodyAmigos">
     <section class="amigos">
         <h2>Prestamos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
@@ -14,14 +14,16 @@
                     
                     foreach ($prestamos as $prestamo) {
                         echo "<tr>";
-                        echo "<input type='hidden' name='id_usuario".$cont."' value='" . $prestamos["id_usuario"] . "'>";
-                        echo "<input type='hidden' name='id".$cont."' value='" . $prestamos["id"] . "'>"; 
-                        echo "<input type='hidden' name='" . $cont . "' value='" . $cont . "'>"; 
-                        echo "<td>" . $prestamos["prestamos"] . "</td>";
-                        echo "<td><div class='divImg'><img src='" . $prestamos["url"] . "'></div></td>";
-                        echo "<td>" . $prestamos["plataforma"] . "</td>";
-                        echo "<td>" . $prestamos["anio"] . "</td>";
-                        echo "<td><input type='submit' class='btn off' name='action' value='ModificarJuego ".$cont."'></td>";
+                        echo "<input type='hidden' name='id_prestamo".$cont."' value='" . $prestamo["id"] . "'>";
+                        echo "<input type='hidden' name='id_usuario".$cont."' value='" . $prestamo["id_usuario"] . "'>"; 
+                        echo "<input type='hidden' name='id_amigo".$cont."' value='" . $prestamo["id_amigo"] . "'>"; 
+                        echo "<td>" . $prestamo["nombreAmigo"] . "</td>";
+                        echo "<td>" . $prestamo["nombreJuego"] . "</td>";
+                        echo "<td><div class='divImg'><img src='" . $prestamo["urlFoto"] . "'></div></td>";
+                        echo "<td>" . $prestamo["fecha_prestamo"] . "</td>";
+                        if($prestamo    ["devuelto"] == 1) echo "<td>SI</td>";
+                        else echo "<td>NO</td>";
+                        echo "<td><input type='submit' class='btn off' name='action' value='ModificarPrestamo ".$cont."'></td>";
                         echo "</tr>";
                         $cont++;
                     }
@@ -29,7 +31,7 @@
             }
                 echo "<div style= 'display:flex; gap:1rem;margin-top: 1.5rem;'> <input type='submit' class='btn' name='action' value='Buscar Juegos'>
                     <input type='hidden' name='usuario' value='".$usuario."'>";
-                echo "<input type='submit' class='btn' name='action' value='Insertar Juegos'>";
+                echo "<input type='submit' class='btn' name='action' value='Insertar Prestamos'>";
                 echo "</div></form>";
             
             

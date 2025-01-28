@@ -1,4 +1,4 @@
-<!-- VISTA DE INSERTAR JUEGOS :) -->
+<!-- VISTA DE INSERTAR PRESTAMOS :) -->
 <div id="bodyAmigos">
     <?php
         if(isset($msg)){

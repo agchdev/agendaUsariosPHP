@@ -1,4 +1,4 @@
-<!-- VISTA DE BUSCAR USUARIOS :( -->
+<!-- VISTA DE BUSCAR JUEGOS :) -->
 <div id="bodyAmigos">
     <section class="amigos">
         <h2>Juegos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
@@ -10,5 +10,3 @@
             </form>
     </section>
 </div>
-</body>
-</html>
