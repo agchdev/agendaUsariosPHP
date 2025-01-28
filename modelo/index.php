@@ -345,11 +345,11 @@
         $amiUsu = new amiUsus();
         $juegos = new juego();
 
-        $amigosdeUsuario = $amiUsu->getAmigos();
-        $juegosdeUsuario = $juegos->getJuegos();
+        $amigosdeUsuario = $amiUsu->getAmigos($usuario);
+        $juegosdeUsuario = $juegos->getJuegos($usuario);
 
         require_once('../vista/componentes/header.php');
-        require_once('../vista/prestamos.php');
+        require_once('../vista/insertarPrestamos.php');
         require_once('../vista/componentes/footer.html');
     }
 
