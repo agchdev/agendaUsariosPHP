@@ -433,6 +433,20 @@
         
     }
 
+    function modificarPrestamo(){
+        $contador = $_REQUEST["action"];
+        $contador = explode(" ", $contador);
+        $i = "id";
+        $i = $i.$contador[1]; 
+        if(isset($_POST[$i])){
+        $id = $_POST[$i];
+            $id_usario = $_POST[$iU];
+
+            require_once('../controlador/class.prestamo.php');
+            $prestamo = new prestamo();
+            $prestamo->modificarPrestamo($id);
+    }
+
     // CERRAR SESION
     function cerrarSesion(){
         unset_session("usuario");
@@ -498,6 +512,7 @@
         if($action == "Añadir amigo") $action = "añadirAmigos";
         if (strpos($action, "ModificarAmigo") !== false) $action = "modificarAmi";
         if (strpos($action, "ModificarJuego") !== false) $action = "modificarJuego";
+        if (strpos($action, "ModificarPrestamo") !== false) $action = "modificarPrestamo";
         if($action == "Guardar Cambios") $action = "modificarAmigo";
         if($action == "Buscar Juegos") $action = "buscarJuegos";
         if($action == "Insertar Juegos") $action = "insertJuegos";
