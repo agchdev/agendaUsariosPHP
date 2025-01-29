@@ -69,5 +69,13 @@ require_once('class.db.php');
             $sentencia->close();
             return $prestamos;
         }
+
+        public function modificarPrestamo($id){
+            $consulta = "UPDATE prestamos SET devuelta = 1 WHERE id = ?";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param("i", $id);
+            if($sentencia->execute()) return true;
+            else return false;
+        }
     }
 ?>

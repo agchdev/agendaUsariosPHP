@@ -21,9 +21,12 @@
                         echo "<td>" . $prestamo["nombreJuego"] . "</td>";
                         echo "<td><div class='divImg'><img src='" . $prestamo["urlFoto"] . "'></div></td>";
                         echo "<td>" . $prestamo["fecha_prestamo"] . "</td>";
-                        if($prestamo    ["devuelto"] == 1) echo "<td>SI</td>";
+                        if($prestamo    ["devuelto"] == 1){
+                            echo "<td>SI</td>";
+                            echo "<input type='hidden' name='devuelta".$cont."' value='" . $prestamo["devuelto"] . "'>";
+                        }
                         else echo "<td>NO</td>";
-                        echo "<td><input type='submit' class='btn off' name='action' value='ModificarPrestamo ".$cont."'></td>";
+                        echo "<td><input type='submit' class='btn off' name='action' value='Devolver ".$cont."'></td>";
                         echo "</tr>";
                         $cont++;
                     }

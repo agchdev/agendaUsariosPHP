@@ -436,15 +436,22 @@
     function modificarPrestamo(){
         $contador = $_REQUEST["action"];
         $contador = explode(" ", $contador);
-        $i = "id";
+        $i = "id_prestamo";
         $i = $i.$contador[1]; 
-        if(isset($_POST[$i])){
-        $id = $_POST[$i];
-            $id_usario = $_POST[$iU];
 
+        if(isset($_POST[$i])){
+            $id = $_POST[$i];
             require_once('../controlador/class.prestamo.php');
             $prestamo = new prestamo();
-            $prestamo->modificarPrestamo($id);
+            if($prestamo->modificarPrestamo($id)){
+                prestamos();
+            }else{
+                $msg = "<p class='msg'>Error al realizar el prestamo</p>";
+                prestamos(); 
+            }
+        }else{
+            prestamos();
+        }
     }
 
     // CERRAR SESION
@@ -512,7 +519,7 @@
         if($action == "Añadir amigo") $action = "añadirAmigos";
         if (strpos($action, "ModificarAmigo") !== false) $action = "modificarAmi";
         if (strpos($action, "ModificarJuego") !== false) $action = "modificarJuego";
-        if (strpos($action, "ModificarPrestamo") !== false) $action = "modificarPrestamo";
+        if (strpos($action, "Devolver") !== false) $action = "modificarPrestamo";
         if($action == "Guardar Cambios") $action = "modificarAmigo";
         if($action == "Buscar Juegos") $action = "buscarJuegos";
         if($action == "Insertar Juegos") $action = "insertJuegos";
