@@ -310,7 +310,7 @@
         if(!empty($_FILES["img"]["tmp_name"])){
             $formato = $_FILES["img"]["type"];
             $formato = explode("/", $formato);
-            $destino = $destino.$formato[1];
+            $destino = $destino.".".$formato[1];
             $origen = $_FILES["img"]["tmp_name"];
             move_uploaded_file($origen, $destino);
         }else{
@@ -354,6 +354,43 @@
         require_once('../vista/componentes/header.php');
         require_once('../vista/insertarPrestamos.php');
         require_once('../vista/componentes/footer.html');
+    }
+
+    function añadirPrestamo(){
+        $usuario = $_POST["usuario"];
+        if(!isset($_FILES["img"]["tmp_name"])){
+            $msg = "<p class='msg'>Debes insertar una imagen</p>";
+            require_once('../vista/componentes/header.php');
+            require_once('../vista/insertarPrestamos.php');
+            require_once('../vista/componentes/footer.html');
+        }elseif(($_FILES["img"]["size"]/(2**20)) >= 2){
+            $msg = "<p class='msg'>La imagen debe pesar menos de 2MB</p>";
+            require_once('../vista/componentes/header.php');
+            require_once('../vista/insertarPrestamos.php');
+            require_once('../vista/componentes/footer.html');
+        }elseif(isset($_POST["fech"])){
+            $msg = "<p class='msg'>Debes insertar una fecha</p>";
+            require_once('../vista/componentes/header.php');
+            require_once('../vista/insertarPrestamos.php');
+            require_once('../vista/componentes/footer.html');
+        }else{
+            // Obtener la fecha proporcionada y la fecha actual
+            $fechaUsuario = new DateTime($_POST["fecha"]); // Asume formato YYYY-MM-DD del input type="date"
+            $fechaHoy = new DateTime();
+    
+            // Comprobar si la fecha es válida y anterior a hoy
+            if ($fechaUsuario >= $fechaHoy) {
+                $msg = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
+                require_once('../vista/componentes/header.php');
+                require_once('../vista/insertarAmigos.php');
+                require_once('../vista/componentes/footer.html');
+                return;
+            }
+            if(isset($_POST["nombreAmigo"]) && isset($_POST["plataforma"])){
+
+            }
+        }
+        
     }
 
     // CERRAR SESION
@@ -426,6 +463,7 @@
         if($action == "Insertar Juegos") $action = "insertJuegos";
         if($action == "Añadir juego") $action = "añadirJuego";
         if($action == "Insertar Prestamos") $action = "InsertarPrestamo";
+        if($action == "Añadir prestamo") $action = "añadirPrestamo";
         $action(); // Ejecutamos la accion
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe

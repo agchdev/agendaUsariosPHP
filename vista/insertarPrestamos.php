@@ -30,7 +30,7 @@
             ?>
             </select>
             <input class="busca" type="file" name="img" required>
-            <input class="busca" type="number" name="anio" value="2025" required>
+            <input class="busca" type="date" name="fech" required>
             <input type="submit" class="btn" name="action" value="Añadir prestamo">
             <input type="hidden" name="usuario" value="<?php echo $usuario ?>">
         </form>
