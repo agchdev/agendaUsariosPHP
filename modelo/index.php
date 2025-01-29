@@ -411,7 +411,7 @@
                 $amiUsuID = $amiUsu->getIDAmigo($usuario, $nomAmigo);
 
                 $prestamo = new prestamo();
-                if($prestamo->insertarPrestamo($usuID , $amiUsuID, $amiUsuID, $fecha->format('Y-m-d'))){
+                if($prestamo->insertarPrestamo($usuID , $juegoID, $amiUsuID, $fecha->format('Y-m-d'))){
                     $msg = "<p class='msg'>Prestamo realizado con exito</p>";
                     prestamos();
                 }else{

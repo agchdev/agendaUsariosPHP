@@ -23,7 +23,7 @@ require_once('class.db.php');
         public function insertarPrestamo($idUsu, $idAmi, $idJuego, $fechaPrestamo){
             $consulta = "INSERT INTO prestamos (id_usuario, id_juego, id_ami, fecha_inicio) VALUES (?, ?, ?, ?)";
             $sentencia = $this->conn->getConn()->prepare($consulta);
-            $sentencia->bind_param('iiis', $idUsu, $idAmi, $idJuego, $fechaPrestamo);
+            $sentencia->bind_param('iiis', $idUsu, $idJuego, $idAmi, $fechaPrestamo);
             if($sentencia->execute()) return true;
             else return false;
         }
