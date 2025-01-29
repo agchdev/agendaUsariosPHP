@@ -308,6 +308,9 @@
         $destino = $ruta.$nuevoNom;
         $origen = "";
         if(!empty($_FILES["img"]["tmp_name"])){
+            $formato = $_FILES["img"]["type"];
+            $formato = explode("/", $formato);
+            $destino = $destino.$formato[1];
             $origen = $_FILES["img"]["tmp_name"];
             move_uploaded_file($origen, $destino);
         }else{
