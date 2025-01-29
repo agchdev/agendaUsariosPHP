@@ -290,6 +290,7 @@ input[type="checkbox"] {
 }
 /* dsadsd */
 .amigos{
+    margin-top: 1rem;
     border: 1px solid #3aff7f;
     background-color: #313131;
     padding: 2rem;
@@ -322,6 +323,34 @@ input[type="checkbox"] {
     background-color: #313131;
     border-radius: 1rem;
     filter: drop-shadow(0 0 10px black);
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+    max-height: 600px;
+}
+.amigos tbody{
+    width: 100%;
+    height: 100%;
+}
+/* Estilización del scroll */
+.amigos table::-webkit-scrollbar {
+    width: 10px;
+}
+
+.amigos table::-webkit-scrollbar-track {
+    background: #212121;
+    border-radius: 5px;
+}
+
+.amigos table::-webkit-scrollbar-thumb {
+    background: #3aff7f;
+    border-radius: 5px;
+}
+
+.amigos table::-webkit-scrollbar-thumb:hover {
+    background: #2bd964;
 }
 .amigos tr{
     margin: auto;

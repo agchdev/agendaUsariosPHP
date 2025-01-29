@@ -391,8 +391,10 @@
             if(isset($_POST["nombreAmigo"]) && isset($_POST["juego"]) && isset($_POST["fech"])){
                 require_once('../controlador/class.prestamo.php');
 
-                $nomAmigo = $_POST["nombreAmigo"];
-                $juegoNom = $_POST["juego"];
+                $amiUsuID = $_POST["nombreAmigo"];
+                $juegoID = $_POST["juego"];
+                $amiUsuID = intval($amiUsuID);
+                $juegoID = intval($juegoID);
                 $fecha = new DateTime($_POST["fech"]); // Asume formato YYYY-MM-DD del input type="date"
                 
                 // Extraer ID del usuario
@@ -400,18 +402,8 @@
                 $usu = new usuario(0,$usuario);
                 $usuID = $usu->getIdUsu();
 
-                // Extraer ID del juego
-                require_once('../controlador/class.juego.php');
-                $juego = new juego();
-                $juegoID = $juego->getIDJuego($usuario,$juegoNom );
-
-                // Extraer ID del amigo
-                require_once('../controlador/class.amisusu.php');
-                $amiUsu = new amiUsus();
-                $amiUsuID = $amiUsu->getIDAmigo($usuario, $nomAmigo);
-
                 $prestamo = new prestamo();
-                if($prestamo->insertarPrestamo($usuID , $juegoID, $amiUsuID, $fecha->format('Y-m-d'))){
+                if($prestamo->insertarPrestamo($usuID , $amiUsuID, $juegoID, $fecha->format('Y-m-d'))){
                     $msg = "<p class='msg'>Prestamo realizado con exito</p>";
                     prestamos();
                 }else{
