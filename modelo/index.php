@@ -356,19 +356,16 @@
         require_once('../vista/componentes/footer.html');
     }
 
+    /**
+     * Funcion que se encarga de agregar un prestamo a la base de datos.
+     * Comprueba si se ha proporcionado una fecha y si es valida, si no muestra un mensaje de error.
+     * Comprueba si se han proporcionado los campos necesarios para insertar el prestamo, si no muestra un mensaje de error.
+     * Extrae el ID del usuario, el ID del juego y el ID del amigo y los utiliza para insertar el prestamo en la base de datos.
+     * Si el prestamo se ha realizado con exito muestra un mensaje de exito y redirige a la pagina principal, si no muestra un mensaje de error.
+     */
     function añadirPrestamo(){
         $usuario = $_POST["usuario"];
-        if(!isset($_FILES["img"]["tmp_name"])){
-            $msg = "<p class='msg'>Debes insertar una imagen</p>";
-            require_once('../vista/componentes/header.php');
-            require_once('../vista/insertarPrestamos.php');
-            require_once('../vista/componentes/footer.html');
-        }elseif(($_FILES["img"]["size"]/(2**20)) >= 2){
-            $msg = "<p class='msg'>La imagen debe pesar menos de 2MB</p>";
-            require_once('../vista/componentes/header.php');
-            require_once('../vista/insertarPrestamos.php');
-            require_once('../vista/componentes/footer.html');
-        }elseif(isset($_POST["fech"])){
+        if(!isset($_POST["fech"])){
             $msg = "<p class='msg'>Debes insertar una fecha</p>";
             require_once('../vista/componentes/header.php');
             require_once('../vista/insertarPrestamos.php');
@@ -381,43 +378,54 @@
             // Comprobar si la fecha es válida y anterior a hoy
             if ($fechaUsuario >= $fechaHoy) {
                 $msg = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
+                $amiUsu = new amiUsus();
+                $juegos = new juego();
+
+                $amigosdeUsuario = $amiUsu->getAmigos($usuario);
+                $juegosdeUsuario = $juegos->getJuegos($usuario);
+
                 require_once('../vista/componentes/header.php');
-                require_once('../vista/insertarAmigos.php');
+                require_once('../vista/insertarPrestamos.php');
                 require_once('../vista/componentes/footer.html');
             }
             if(isset($_POST["nombreAmigo"]) && isset($_POST["juego"]) && isset($_POST["fech"])){
                 require_once('../controlador/class.prestamo.php');
 
                 $nomAmigo = $_POST["nombreAmigo"];
-                $juego = $_POST["juego"];
-                $fecha = $_POST["fech"];
-                $ruta = "../img/";
-                if(!file_exists($ruta)){
-                    mkdir($ruta);
-                }
-                $img = $_FILES["img"]["type"];
-                $img = explode("/", $img);
-                $destino = $ruta.$juego.".".$img[1];
-                $origen = $_FILES["img"]["tmp_name"];
-                move_uploaded_file($origen, $destino);
-
+                $juegoNom = $_POST["juego"];
+                $fecha = new DateTime($_POST["fech"]); // Asume formato YYYY-MM-DD del input type="date"
+                
                 // Extraer ID del usuario
                 require_once('../controlador/class.usuario.php');
                 $usu = new usuario(0,$usuario);
-                $usuID = $usu->getIDUsu();
+                $usuID = $usu->getIdUsu();
 
                 // Extraer ID del juego
                 require_once('../controlador/class.juego.php');
                 $juego = new juego();
-                $juegoID = $juego->getIDJuego($usuario,$juego );
+                $juegoID = $juego->getIDJuego($usuario,$juegoNom );
 
                 // Extraer ID del amigo
                 require_once('../controlador/class.amisusu.php');
                 $amiUsu = new amiUsus();
-                $amiUsuID = $amiUsu->getIDAmigo($nomAmigo, $usuario);
+                $amiUsuID = $amiUsu->getIDAmigo($usuario, $nomAmigo);
 
                 $prestamo = new prestamo();
-                $prestamo->insertarPrestamo($usuID , $amiUsuID, $juegoID, $destino, $fecha);
+                if($prestamo->insertarPrestamo($usuID , $amiUsuID, $amiUsuID, $fecha->format('Y-m-d'))){
+                    $msg = "<p class='msg'>Prestamo realizado con exito</p>";
+                    prestamos();
+                }else{
+                    $msg = "<p class='msg'>Error al realizar el prestamo</p>";
+                    $amiUsu = new amiUsus();
+                    $juegos = new juego();
+
+                    $amigosdeUsuario = $amiUsu->getAmigos($usuario);
+                    $juegosdeUsuario = $juegos->getJuegos($usuario);
+
+                    require_once('../vista/componentes/header.php');
+                    require_once('../vista/insertarPrestamos.php');
+                    require_once('../vista/componentes/footer.html');
+                };
 
 
             }

@@ -20,8 +20,12 @@ require_once('class.db.php');
             $this->devuelto = $d;
         }
 
-        public function insertarPrestamo($nombreAmigo, $nombreJuego, $urlFoto, $fechaPrestamo) {
-            
+        public function insertarPrestamo($idUsu, $idAmi, $idJuego, $fechaPrestamo){
+            $consulta = "INSERT INTO prestamos (id_usuario, id_juego, id_ami, fecha_inicio) VALUES (?, ?, ?, ?)";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('iiis', $idUsu, $idAmi, $idJuego, $fechaPrestamo);
+            if($sentencia->execute()) return true;
+            else return false;
         }
 
         public function getPrestamo($usuario, $buscador=""){
