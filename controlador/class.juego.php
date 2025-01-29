@@ -49,6 +49,16 @@
             return $juegos;
         }
 
+        public function getIDJuego($usuario, $juego) {
+            $consulta = "SELECT juegos.id FROM juegos, usuarios WHERE juegos.id_usuario = usuarios.id AND usuarios.usuario = ? AND juegos.juego = ?;";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('ss', $usuario, $juego);
+            $sentencia->bind_result($this->id);
+            $sentencia->execute();
+            $sentencia->fetch();
+            return $this->id;
+        }
+
         public function insertarJuego() {
             $consulta = "INSERT INTO juegos (juego, plataforma, urlFoto, anio_lanzamiento, id_usuario) VALUES (?,?,?,?,?)";
             $sentencia = $this->conn->getConn()->prepare($consulta);

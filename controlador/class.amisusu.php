@@ -75,6 +75,16 @@
             return $amigoUsu;
         }
 
+        public function getIDAmigo($usuario, $amigo) {
+            $consulta = "SELECT amisusuarios.id FROM amisusuarios, usuarios WHERE amisusuarios.id_usuario = usuarios.id AND usuarios.usuario = ? AND amisusuarios.id = ?;"; 
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('ss', $usuario, $amigo);
+            $sentencia->bind_result($this->id);
+            $sentencia->execute();
+            $sentencia->fetch();
+            return $this->id;
+        }
+
         public function modificarAmigo($n, $ap, $fn, $id, $iu) {
             $consulta = "UPDATE amisusuarios
                         SET nombre = ?, apellido = ?, fecha_nac = ?

@@ -20,6 +20,10 @@ require_once('class.db.php');
             $this->devuelto = $d;
         }
 
+        public function insertarPrestamo($nombreAmigo, $nombreJuego, $urlFoto, $fechaPrestamo) {
+            
+        }
+
         public function getPrestamo($usuario, $buscador=""){
             $nombreAmigo="";
             $nombreJuego ="";

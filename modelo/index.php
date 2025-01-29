@@ -375,7 +375,7 @@
             require_once('../vista/componentes/footer.html');
         }else{
             // Obtener la fecha proporcionada y la fecha actual
-            $fechaUsuario = new DateTime($_POST["fecha"]); // Asume formato YYYY-MM-DD del input type="date"
+            $fechaUsuario = new DateTime($_POST["fech"]); // Asume formato YYYY-MM-DD del input type="date"
             $fechaHoy = new DateTime();
     
             // Comprobar si la fecha es válida y anterior a hoy
@@ -384,9 +384,36 @@
                 require_once('../vista/componentes/header.php');
                 require_once('../vista/insertarAmigos.php');
                 require_once('../vista/componentes/footer.html');
-                return;
             }
-            if(isset($_POST["nombreAmigo"]) && isset($_POST["plataforma"])){
+            if(isset($_POST["nombreAmigo"]) && isset($_POST["juego"]) && isset($_POST["fech"])){
+                require_once('../controlador/class.prestamo.php');
+
+                $nomAmigo = $_POST["nombreAmigo"];
+                $juego = $_POST["juego"];
+                $fecha = $_POST["fech"];
+                $ruta = "../img/";
+                if(!file_exists($ruta)){
+                    mkdir($ruta);
+                }
+                $img = $_FILES["img"]["type"];
+                $img = explode("/", $img);
+                $destino = $ruta.$juego.".".$img[1];
+                $origen = $_FILES["img"]["tmp_name"];
+                move_uploaded_file($origen, $destino);
+
+                // Extraer ID del juego
+                require_once('../controlador/class.juego.php');
+                $juego = new juego();
+                $juegoID = $juego->getIDJuego($usuario,$juego );
+
+                // Extraer ID del amigo
+                require_once('../controlador/class.amisusu.php');
+                $amiUsu = new amiUsus();
+                $amiUsuID = $amiUsu->getIDAmigo($nomAmigo, $usuario);
+
+                $prestamo = new prestamo();
+                $prestamo->insertarPrestamo($nomAmigo, $juegoID, $destino, $fecha, $usuario);
+
 
             }
         }

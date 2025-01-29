@@ -22,7 +22,7 @@
                 }
             ?>
             </select>
-            <select name="plataforma" id="">
+            <select name="juego" id="">
             <?php
                 foreach ($juegosdeUsuario as $juego) {
                     echo "<option value=".$juego["id"].">".$juego["juego"]."</option>";
