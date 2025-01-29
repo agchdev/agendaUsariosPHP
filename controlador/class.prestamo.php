@@ -33,7 +33,7 @@ require_once('class.db.php');
             $nombreJuego ="";
             $urlFoto = "";
             if ($buscador != "") {
-                $consulta = "SELECT prestamos.id, usuarios.id , amisusuarios.nombre, juegos.juego, juegos.urlFoto, prestamos.fecha_inicio, prestamos.devuelta
+                $consulta = "SELECT prestamos.id, prestamos.id_usuario, prestamos.id_ami, amisusuarios.nombre, juegos.juego, juegos.urlFoto, prestamos.fecha_inicio, prestamos.devuelta
                              FROM amisusuarios, juegos, prestamos, usuarios
                              WHERE prestamos.id_usuario = usuarios.id AND prestamos.id_ami = amisusuarios.id AND prestamos.id_juego = juegos.id AND usuarios.usuario = ? AND 
                              (amisusuarios.nombre LIKE ? OR juegos.juego LIKE ?)";

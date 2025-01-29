@@ -34,7 +34,7 @@
                     }
                 echo "</table>";
             }
-                echo "<div style= 'display:flex; gap:1rem;margin-top: 1.5rem;'> <input type='submit' class='btn' name='action' value='Buscar Juegos'>
+                echo "<div style= 'display:flex; gap:1rem;margin-top: 1.5rem;'> <input type='submit' class='btn' name='action' value='Buscar prestamos'>
                     <input type='hidden' name='usuario' value='".$usuario."'>";
                 echo "<input type='submit' class='btn' name='action' value='Insertar Prestamos'>";
                 echo "</div></form>";

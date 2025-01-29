@@ -224,6 +224,12 @@
         require_once('../vista/buscarJuegos.php');
         require_once('../vista/componentes/footer.html');
     }
+    function buscarPrestamo(){
+        $usuario = $_POST["usuario"];
+        require_once('../vista/componentes/header.php');
+        require_once('../vista/buscarPresupuesto.php');
+        require_once('../vista/componentes/footer.html');
+    }
 
     function añadirJuego(){
         if(!isset($_POST["juego"])){
@@ -424,7 +430,6 @@
         }
         
     }
-
     function modificarPrestamo(){
         $contador = $_REQUEST["action"];
         $contador = explode(" ", $contador);
@@ -518,6 +523,7 @@
         if($action == "Añadir juego") $action = "añadirJuego";
         if($action == "Insertar Prestamos") $action = "InsertarPrestamo";
         if($action == "Añadir prestamo") $action = "añadirPrestamo";
+        if($action == "Buscar prestamos") $action = "buscarPrestamo";
         $action(); // Ejecutamos la accion
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe
