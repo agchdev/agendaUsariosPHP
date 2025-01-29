@@ -401,6 +401,11 @@
                 $origen = $_FILES["img"]["tmp_name"];
                 move_uploaded_file($origen, $destino);
 
+                // Extraer ID del usuario
+                require_once('../controlador/class.usuario.php');
+                $usu = new usuario(0,$usuario);
+                $usuID = $usu->getIDUsu();
+
                 // Extraer ID del juego
                 require_once('../controlador/class.juego.php');
                 $juego = new juego();
@@ -412,7 +417,7 @@
                 $amiUsuID = $amiUsu->getIDAmigo($nomAmigo, $usuario);
 
                 $prestamo = new prestamo();
-                $prestamo->insertarPrestamo($nomAmigo, $juegoID, $destino, $fecha, $usuario);
+                $prestamo->insertarPrestamo($usuID , $amiUsuID, $juegoID, $destino, $fecha);
 
 
             }
