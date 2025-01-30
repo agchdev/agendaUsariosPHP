@@ -29,6 +29,9 @@
                 } 
                 
                 set_session("usuario", $usuario); // Establecemos la sesion
+                if($usuario == "admin"){
+
+                }
                 require_once('../vista/home.php'); // Mostramos la pagina
 
             } // Si el login es correcto
@@ -524,6 +527,9 @@
         if($action == "Insertar Prestamos") $action = "InsertarPrestamo";
         if($action == "Añadir prestamo") $action = "añadirPrestamo";
         if($action == "Buscar prestamos") $action = "buscarPrestamo";
+        if($action == "Amigos ADMIN") $action = "amigosAdmin";
+        if($action == "Juegos ADMIN") $action = "juegosAdmin";
+        if($action == "Prestamos ADMIN") $action = "prestamosAdmin";
         $action(); // Ejecutamos la accion
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe

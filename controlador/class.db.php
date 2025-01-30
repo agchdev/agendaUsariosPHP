@@ -4,7 +4,7 @@
 
         public function __construct(){
             require_once('../../../cred.php');
-            $this->conn = new mysqli("Localhost", USU_CONN, PSW_CONN, "agenda");
+            $this->conn = new mysqli("Localhost", USU_CONN, PSW_CONN, "agenda2");
         }
 
         // Método para obtener la conexión mysqli
