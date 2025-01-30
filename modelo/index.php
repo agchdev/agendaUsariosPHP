@@ -169,9 +169,19 @@
             $amigoUsu = $amis->getAmigosID($id, $id_usario);
             $usuario = $_POST["usuario"];
 
-            require_once('../vista/componentes/header.php');
-            require_once('../vista/modificarAmigos.php');
-            require_once('../vista/componentes/footer.html');
+            if($usuario == "admin"){
+                $amiUsu = new amiUsus();
+
+                $amigosdeUsuario = $amiUsu->getAmigosAdmin($usuario);
+                require_once('../vista/componentes/header.php');
+                require_once('../vista/modificarAmigosAdmin.php');
+                require_once('../vista/componentes/footer.html');
+            }else{
+                require_once('../vista/componentes/header.php');
+                require_once('../vista/modificarAmigos.php');
+                require_once('../vista/componentes/footer.html');
+            }
+
         }
     }
 
