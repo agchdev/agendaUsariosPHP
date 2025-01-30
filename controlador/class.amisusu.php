@@ -53,6 +53,43 @@
             return $amigosUsu;
         }
 
+        public function getAmigosAdmin($buscador = "") {
+            $usuario = "";
+            if ($buscador != "") {
+                $consulta = "SELECT usuarios.usuario, amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac 
+                             FROM amisusuarios, usuarios 
+                             WHERE id_usuario = usuarios.id AND 
+                             (amisusuarios.nombre LIKE ? OR amisusuarios.apellido LIKE ? OR usuarios.usuario LIKE ?)";
+                $sentencia = $this->conn->getConn()->prepare($consulta);
+        
+                // Añade los comodines '%' al valor del buscador
+                $buscador = "%" . $buscador . "%";
+                $sentencia->bind_param('sss', $buscador, $buscador, $buscador);
+            } else {
+                $consulta = "SELECT usuarios.usuario, amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac 
+                             FROM amisusuarios, usuarios 
+                             WHERE id_usuario = usuarios.id";
+                $sentencia = $this->conn->getConn()->prepare($consulta);
+            }
+        
+            $sentencia->execute();
+            $sentencia->bind_result($usuario, $this->id, $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac);
+        
+            $amigosUsu = array();
+            while ($sentencia->fetch()) {
+                $amigosUsu[] = array(
+                    "id" => $this->id,
+                    "id_usuario" => $this->id_usuario,
+                    "nombre" => $this->nombre,
+                    "apellidos" => $this->apellidos,
+                    "fecha_nac" => $this->fecha_nac,
+                    "usuario" => $usuario
+                );
+            }
+            $sentencia->close();
+            return $amigosUsu;
+        }
+
         public function getAmigosID($idU, $idAmi) {
             echo $idAmi;
             echo "<br>".$idU;

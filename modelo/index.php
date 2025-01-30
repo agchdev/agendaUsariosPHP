@@ -30,7 +30,7 @@
                 
                 set_session("usuario", $usuario); // Establecemos la sesion
                 if($usuario == "admin"){
-
+                    require_once('../vista/homeAdmin.php'); // Mostramos la pagina
                 }
                 require_once('../vista/home.php'); // Mostramos la pagina
 
@@ -454,6 +454,28 @@
         }
     }
 
+    /////////////////////////////////// INICIO /////////////////////////////////////////
+    /////////////////////////////////// ADMIN /////////////////////////////////////////
+
+    function amigosAdmin(){
+        $usuario = $_POST["usuario"];
+        require_once('../controlador/class.amisusu.php');
+        $buscador = "";
+        if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
+        $amiUsu = new amiUsus();
+        $amigos = $amiUsu->getAmigosAdmin($buscador);
+        require_once('../vista/componentes/header.php');
+        require_once('../vista/amigosAdmin.php');
+        require_once('../vista/componentes/footer.html');
+    }
+
+    function buscarAmigosAdmin(){
+        $usuario = $_POST["usuario"];
+        require_once('../vista/componentes/header.php');
+        require_once('../vista/buscarAmigosAdmin.php');
+        require_once('../vista/componentes/footer.html');
+    }
+
     // CERRAR SESION
     function cerrarSesion(){
         unset_session("usuario");
@@ -530,6 +552,7 @@
         if($action == "Amigos ADMIN") $action = "amigosAdmin";
         if($action == "Juegos ADMIN") $action = "juegosAdmin";
         if($action == "Prestamos ADMIN") $action = "prestamosAdmin";
+        if($action == "Buscar Amigos Admin") $action = "buscarAmigosAdmin";
         $action(); // Ejecutamos la accion
     }else{
         if (is_session("usuario")) { // Si la sesion de usuario existe
