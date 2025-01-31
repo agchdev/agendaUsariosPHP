@@ -368,7 +368,7 @@
         $juegos = new juego();
 
         $amigosdeUsuario = $amiUsu->getAmigos($usuario);
-        $juegosdeUsuario = $juegos->getJuegos($usuario);
+        $juegosdeUsuario = $juegos->getJuegosLibres($usuario);
 
         require_once('../vista/componentes/header.php');
         require_once('../vista/insertarPrestamos.php');

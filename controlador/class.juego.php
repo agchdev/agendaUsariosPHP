@@ -49,6 +49,49 @@
             return $juegos;
         }
 
+        public function getJuegosLibres($usuario, $buscador = "") {
+            if ($buscador != "") {
+                $consulta = "SELECT j.id, j.juego, j.plataforma, j.urlFoto, j.anio_lanzamiento, j.id_usuario 
+                            FROM juegos j, usuarios u 
+                            WHERE j.id_usuario = u.id 
+                            AND u.usuario = ? 
+                            AND j.id NOT IN (SELECT id_juego 
+                                            FROM prestamos 
+                                            WHERE devuelta = 0)) 
+                            AND (j.juego LIKE ? OR j.plataforma LIKE ?)";
+                
+                $sentencia = $this->conn->getConn()->prepare($consulta);
+        
+                // Añade los comodines '%' al valor del buscador
+                $buscador = "%" . $buscador . "%";
+                $sentencia->bind_param('sss', $usuario, $buscador, $buscador);
+            }else{
+                $consulta = "SELECT j.id, j.juego, j.plataforma, j.urlFoto, j.anio_lanzamiento, j.id_usuario 
+                            FROM juegos j, usuarios u 
+                            WHERE j.id_usuario = u.id 
+                            AND u.usuario = ? 
+                            AND j.id NOT IN (SELECT id_juego 
+                                            FROM prestamos 
+                                            WHERE devuelta = 0)";
+                $sentencia = $this->conn->getConn()->prepare($consulta);
+                $sentencia->bind_param('s', $usuario);
+            }
+            $sentencia->bind_result($this->id, $this->juego, $this->plataforma, $this->urlFoto, $this->anio_lanzamiento, $this->idUsuario);
+            $sentencia->execute();
+            $juegos = array();
+            while ($sentencia->fetch()) {
+                $juegos[] = array(
+                    "id" => $this->id,
+                    "juego" => $this->juego,
+                    "plataforma" => $this->plataforma,
+                    "url" => $this->urlFoto,
+                    "anio" => $this->anio_lanzamiento,
+                    "id_usuario" => $this->idUsuario,
+                );
+            }
+            return $juegos;
+        }
+
         public function getIDJuego($usuario, $juego) {
             $consulta = "SELECT juegos.id FROM juegos, usuarios WHERE juegos.id_usuario = usuarios.id AND usuarios.usuario = ? AND juegos.juego = ?;";
             $sentencia = $this->conn->getConn()->prepare($consulta);
