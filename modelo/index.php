@@ -31,9 +31,8 @@
                 set_session("usuario", $usuario); // Establecemos la sesion
                 if($usuario == "admin"){
                     require_once('../vista/homeAdmin.php'); // Mostramos la pagina
-                }
-                require_once('../vista/home.php'); // Mostramos la pagina
-
+                }else require_once('../vista/home.php'); // Mostramos la pagina 
+                
             } // Si el login es correcto
             else{ // Si el login es incorrecto
                 $msg = "<p>Usuario o contraseña incorrectos</p>"; // Mostramos un mensaje
@@ -268,7 +267,8 @@
             require_once('../vista/componentes/footer.html');
             return;
         }else{
-            $ruta = "../img/".$usuario;
+            $usuario = $_POST["usuario"];
+            $ruta = "../img/".$usuario."/";
             if(!file_exists($ruta)){
                 mkdir($ruta);
             }
@@ -323,7 +323,8 @@
         $nuevoNom = $_POST["nuevoNom"];
         $nuevoAnio = $_POST["nuevoAnio"];
         $nuevoPlataforma = $_POST["plataforma"];
-        $ruta = "../img/".$usuario;
+        $usuario = $_POST["usuario"];
+        $ruta = "../img/".$usuario."/";
         $destino = $ruta.$nuevoNom;
         $origen = "";
         if(!empty($_FILES["img"]["tmp_name"])){
@@ -340,7 +341,6 @@
         $juego = new juego();
 
         $juego->modificarJuego($nuevoNom, $nuevoPlataforma, $destino, $nuevoAnio, $id, $id_usario);
-        $usuario = $_POST["usuario"];
         juegos();
     }
 
@@ -395,8 +395,10 @@
             $fechaHoy = new DateTime();
     
             // Comprobar si la fecha es válida y anterior a hoy
-            if ($fechaUsuario >= $fechaHoy) {
-                $msg = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
+            if ($fechaUsuario <= $fechaHoy) {
+                $msg = "<p class='msg'>La fecha no debe ser anterior a hoy.</p>";
+                require_once('../controlador/class.amisusu.php');
+                require_once('../controlador/class.juego.php');
                 $amiUsu = new amiUsus();
                 $juegos = new juego();
 
@@ -486,6 +488,38 @@
         require_once('../vista/componentes/footer.html');
     }
 
+    // CAMBIAR A LOS NUEVOS DATOS DEL AMIGO
+    function modificarAmiAdmin(){
+        $contador = $_REQUEST["action"];
+        $contador = explode(" ", $contador);
+        $i = "id";
+        $i = $i.$contador[1]; 
+
+        if(isset($_POST[$i])){
+            $id = $_POST[$i];
+            $id_usario = $_POST[$iU];
+
+            require_once('../controlador/class.amisusu.php');
+            $amis = new amiUsus();
+            $amigoUsu = $amis->getAmigosID($id, $id_usario);
+            $usuario = $_POST["usuario"];
+
+            if($usuario == "admin"){
+                $amiUsu = new amiUsus();
+
+                $amigosdeUsuario = $amiUsu->getAmigosAdmin($usuario);
+                require_once('../vista/componentes/header.php');
+                require_once('../vista/modificarAmigosAdmin.php');
+                require_once('../vista/componentes/footer.html');
+            }else{
+                require_once('../vista/componentes/header.php');
+                require_once('../vista/modificarAmigos.php');
+                require_once('../vista/componentes/footer.html');
+            }
+
+        }
+    }
+
     // CERRAR SESION
     function cerrarSesion(){
         unset_session("usuario");
@@ -551,6 +585,7 @@
         if($action == "Añadir amigo") $action = "añadirAmigos";
         if (strpos($action, "ModificarAmigo") !== false) $action = "modificarAmi";
         if (strpos($action, "ModificarJuego") !== false) $action = "modificarJuego";
+        if (strpos($action, "ModificarJuego") !== false) $action = "modificarAmiAdmin";
         if (strpos($action, "Devolver") !== false) $action = "modificarPrestamo";
         if($action == "Guardar Cambios") $action = "modificarAmigo";
         if($action == "Buscar Juegos") $action = "buscarJuegos";
