@@ -170,9 +170,9 @@
 
             if($usuario == "admin"){
                 $amiUsu = new amiUsus();
-                require_once('../controlador/class.usario.php');
+                require_once('../controlador/class.usuario.php');
                 $usu = new usuario();
-                $usuarios = $usu->getIdUsuarios()
+                $usuarios = $usu->getIdUsuarios();
                 $amigosdeUsuario = $amiUsu->getAmigosAdmin($usuario);
                 require_once('../vista/componentes/header.php');
                 require_once('../vista/modificarAmigosAdmin.php');
