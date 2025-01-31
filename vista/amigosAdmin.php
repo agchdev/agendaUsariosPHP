@@ -13,13 +13,14 @@
                     
                     foreach ($amigos as $amig) {
                         echo "<tr>";
+                        echo "<input type='hidden' name='id_usuario".$cont."' value='" . $amig["id_usuario"] . "'>";
                         echo "<input type='hidden' name='id".$cont."' value='" . $amig["id"] . "'>"; 
                         echo "<input type='hidden' name='" . $cont . "' value='" . $cont . "'>"; 
                         echo "<td>" . $amig["nombre"] . "</td>";
                         echo "<td>" . $amig["apellidos"] . "</td>";
                         echo "<td>" . $amig["fecha_nac"] . "</td>";
                         echo "<td>" . $amig["usuario"] . "</td>";
-                        echo "<td><button type='submit' class='btn off' name='action' value='ModificarAmigoAdmin ".$cont."'>Modificar</button></td>";
+                        echo "<td><button type='submit' class='btn off' name='action' value='ModificarAmigo ".$cont."'>Modificar</button></td>";
                         echo "</tr>";
                         $cont++;
                     }

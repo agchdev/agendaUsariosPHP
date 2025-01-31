@@ -170,7 +170,9 @@
 
             if($usuario == "admin"){
                 $amiUsu = new amiUsus();
-
+                require_once('../controlador/class.usario.php');
+                $usu = new usuario();
+                $usuarios = $usu->getIdUsuarios()
                 $amigosdeUsuario = $amiUsu->getAmigosAdmin($usuario);
                 require_once('../vista/componentes/header.php');
                 require_once('../vista/modificarAmigosAdmin.php');
@@ -488,38 +490,6 @@
         require_once('../vista/componentes/footer.html');
     }
 
-    // CAMBIAR A LOS NUEVOS DATOS DEL AMIGO
-    function modificarAmiAdmin(){
-        $contador = $_REQUEST["action"];
-        $contador = explode(" ", $contador);
-        $i = "id";
-        $i = $i.$contador[1]; 
-
-        if(isset($_POST[$i])){
-            $id = $_POST[$i];
-            $id_usario = $_POST[$iU];
-
-            require_once('../controlador/class.amisusu.php');
-            $amis = new amiUsus();
-            $amigoUsu = $amis->getAmigosID($id, $id_usario);
-            $usuario = $_POST["usuario"];
-
-            if($usuario == "admin"){
-                $amiUsu = new amiUsus();
-
-                $amigosdeUsuario = $amiUsu->getAmigosAdmin($usuario);
-                require_once('../vista/componentes/header.php');
-                require_once('../vista/modificarAmigosAdmin.php');
-                require_once('../vista/componentes/footer.html');
-            }else{
-                require_once('../vista/componentes/header.php');
-                require_once('../vista/modificarAmigos.php');
-                require_once('../vista/componentes/footer.html');
-            }
-
-        }
-    }
-
     // CERRAR SESION
     function cerrarSesion(){
         unset_session("usuario");
@@ -585,7 +555,6 @@
         if($action == "Añadir amigo") $action = "añadirAmigos";
         if (strpos($action, "ModificarAmigo") !== false) $action = "modificarAmi";
         if (strpos($action, "ModificarJuego") !== false) $action = "modificarJuego";
-        if (strpos($action, "ModificarJuego") !== false) $action = "modificarAmiAdmin";
         if (strpos($action, "Devolver") !== false) $action = "modificarPrestamo";
         if($action == "Guardar Cambios") $action = "modificarAmigo";
         if($action == "Buscar Juegos") $action = "buscarJuegos";

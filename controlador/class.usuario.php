@@ -32,6 +32,22 @@ class usuario{
         $sentencia->fetch();
         return $this->id;
     }
+    public function getIdUsuarios(){
+        $consulta = "SELECT id, usuario 
+                    FROM usuarios";
+        $sentencia = $this->conn->getConn()->prepare($consulta);
+        $sentencia->execute();
+        $sentencia->bind_result($this->id, $this->usuario);
+        $ids = array();
+        while($sentencia->fetch()){
+            $ids[] = array(
+                "id" => $this->id,
+                "usuario" => $this->usuario
+            );
+        }
+        return $ids;
+        
+    }
     public function registrarUsuario(){
         $consulta = "INSERT INTO usuarios (usuario, contrasenia) VALUES (?,?);";
         $sentencia = $this->conn->getConn()->prepare($consulta);
