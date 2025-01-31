@@ -268,7 +268,7 @@
             require_once('../vista/componentes/footer.html');
             return;
         }else{
-            $ruta = "../imgs/";
+            $ruta = "../img/".$usuario;
             if(!file_exists($ruta)){
                 mkdir($ruta);
             }
@@ -323,7 +323,7 @@
         $nuevoNom = $_POST["nuevoNom"];
         $nuevoAnio = $_POST["nuevoAnio"];
         $nuevoPlataforma = $_POST["plataforma"];
-        $ruta = "../img/";
+        $ruta = "../img/".$usuario;
         $destino = $ruta.$nuevoNom;
         $origen = "";
         if(!empty($_FILES["img"]["tmp_name"])){
