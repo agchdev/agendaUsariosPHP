@@ -502,6 +502,7 @@
         $idAmi = $_POST["idAmi"];
         $idUsu = $_POST["idUsu"];
         $idNewUser = $_POST["user"];
+        $usuario = $_POST["usuario"];
 
         // Obtener la fecha proporcionada y la fecha actual
         $fechaUsuario = new DateTime($_POST["nuevaFech"]); // Asume formato YYYY-MM-DD del input type="date"
