@@ -47,5 +47,6 @@
             <form class="buscador" action="index.php" method='post'>    
             </form>
     </section>
+    <script src="../scripts/main.js"></script>
     
 </div>

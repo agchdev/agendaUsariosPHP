@@ -511,18 +511,15 @@
         // Comprobar si la fecha es válida y anterior a hoy
         if ($fechaUsuario >= $fechaHoy) {
             $msg = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
-            require_once('../vista/componentes/headerAdmin.php');
-            require_once('../vista/insertarAmigosAdmin.php');
-            require_once('../vista/componentes/footer.html');
-            return;
+            amigosAdmin();
+        }else{
+            require_once('../controlador/class.amisusu.php');
+            $amis = new amiUsus();
+            $amigoUsu = $amis->modificarAmigoAdmin($nuevoNom, $nuevoApe, $fechaUsuario->format('Y-m-d'), $idAmi, $idUsu, $idNewUser);
+            $usuario = $_POST["usuario"];
+            // Mostrar vista de amigos
+            amigosAdmin();
         }
-
-        require_once('../controlador/class.amisusu.php');
-        $amis = new amiUsus();
-        $amigoUsu = $amis->modificarAmigoAdmin($nuevoNom, $nuevoApe, $fechaUsuario->format('Y-m-d'), $idAmi, $idUsu, $idNewUser);
-        $usuario = $_POST["usuario"];
-        // Mostrar vista de amigos
-        amigosAdmin();
     }
 
     function insertAmiAdmin(){
