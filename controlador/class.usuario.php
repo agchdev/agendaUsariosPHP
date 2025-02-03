@@ -89,6 +89,33 @@ class usuario{
 
         return $usuarios;
     }
+
+    public function getUsu($i){
+        $consulta = "SELECT *
+                    FROM usuarios
+                    WHERE id = ?";
+        $sentencia = $this->conn->getConn()->prepare($consulta);
+        $sentencia->bind_param("i", $i);
+        $sentencia->execute();
+        $sentencia->bind_result($this->id, $this->usuario, $this->contrasenia);
+        $usuarios = array();
+        $sentencia->fetch();
+        $usuarios["id"] = $this->id;
+        $usuarios["usuario"] = $this->usuario;
+        $usuarios["contrasenia"] = $this->contrasenia;
+
+        return $usuarios;
+    }
+
+    function modificarUsuario($usu, $con, $i){
+        $consulta = "UPDATE usuarios
+                    SET usuario = ?, contrasenia = ?
+                    WHERE id = ?";
+        $sentencia = $this->conn->getConn()->prepare($consulta);
+        $sentencia->bind_param('ssi', $usu, $con, $i);
+        if($sentencia->execute()) return true;
+        else return false;
+    }
 }
 
 ?>

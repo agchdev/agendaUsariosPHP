@@ -16,10 +16,10 @@
             </div>
             <div>
                 <form action="index.php" method="post">
-                    <input type="submit" name="action" value="amigos" class="btn off"></input>
-                    <input type="submit" name="action" value="juegos" class="btn off"></input>
-                    <input type="submit" name="action" value="prestamos" class="btn off"></input>
-                    <input type="submit" name="action" value="cerrarSesion" class="btn off red"></input>
+                    <button type="submit" name="action" value="amigos" class="btn off">Amigos</button>
+                    <button type="submit" name="action" value="juegos" class="btn off">Juegos</button>
+                    <button type="submit" name="action" value="prestamos" class="btn off">Prestamos</button>
+                    <button type="submit" name="action" value="cerrarSesion" class="btn off red">Cerrar Sesión</button>
                     <input type="hidden" name="usuario" value="<?php echo $usuario; ?>">
                 </form>
             </div>

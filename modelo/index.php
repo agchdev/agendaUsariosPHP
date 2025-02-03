@@ -584,6 +584,50 @@
         require_once('../vista/usuariosAdmin.php');
         require_once('../vista/componentes/footer.html');
     }
+
+    function ModificarUsuario(){
+        $contador = $_REQUEST["action"];
+        $contador = explode(" ", $contador);
+        $i = "id";
+        $i = $i.$contador[1]; 
+
+        if(isset($_POST[$i])){
+            $id = $_POST[$i];
+
+            require_once('../controlador/class.usuario.php');
+            $usu = new usuario();
+            $usuario = $_POST["usuario"];
+            $user = $usu->getUsu($id);
+            require_once('../vista/componentes/headerAdmin.php');
+            require_once('../vista/modificarUsuariosAdmin.php');
+            require_once('../vista/componentes/footer.html');
+        }
+    }
+    function guardarCambiosUsu(){
+        $usuario = $_POST["usuario"];
+        if(isset($_POST["nuevoUsu"], $_POST["oldCon"], $_POST["nuevaCon"])){
+            $nuevoUsu = $_POST["nuevoUsu"];
+            $oldCon = $_POST["oldCon"];
+            $nuevaCon = $_POST["nuevaCon"];
+            $idUsu = $_POST["idUsu"];
+    
+            require_once('../controlador/class.usuario.php');
+            $usu = new usuario();
+            if($amigoUsu = $usu->modificarUsuario($nuevoUsu, $nuevaCon, $idUsu)){
+                $usuario = $_POST["usuario"];
+                // Mostrar vista de amigos
+                usuariosAdmin();
+            }else{
+                $msg = "<p class='msg'>no se han hecho los cambios debido a un error</p>";
+                usuariosAdmin();
+            }
+            
+        }else{
+            $msg = "<p class='msg'>Has tratado de mandar datos vacios</p>";
+            usuariosAdmin();
+        }
+        
+    }
     /////////////////////////////////// INICIO /////////////////////////////////////////
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////
     function unsetCookie(String $nom) { // Esta funcion elimina una cookie
@@ -644,6 +688,7 @@
         if($action == "Añadir amigo") $action = "añadirAmigos";
         if (strpos($action, "ModificarAmigo") !== false) $action = "modificarAmi";
         if (strpos($action, "ModificarJuego") !== false) $action = "modificarJuego";
+        if (strpos($action, "ModificarUsuario") !== false) $action = "ModificarUsuario";
         if (strpos($action, "Devolver") !== false) $action = "modificarPrestamo";
         if($action == "Guardar Cambios") $action = "modificarAmigo";
         if($action == "Buscar Juegos") $action = "buscarJuegos";

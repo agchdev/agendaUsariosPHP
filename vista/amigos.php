@@ -19,7 +19,7 @@
                         echo "<td>" . $amig["nombre"] . "</td>";
                         echo "<td>" . $amig["apellidos"] . "</td>";
                         echo "<td>" . $amig["fecha_nac"] . "</td>";
-                        echo "<td><input type='submit' class='btn off' name='action' value='ModificarAmigo ".$cont."'></td>";
+                        echo "<td><button type='submit' class='btn off' name='action' value='ModificarAmigo ".$cont."'>Modificar</button></td>";
                         echo "</tr>";
                         $cont++;
                     }
