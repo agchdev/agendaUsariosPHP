@@ -23,7 +23,7 @@ class usuario{
         else return false;
     }
 
-    public function compContra($con, $usu){
+    public function compContra($usu, $con){
         $consulta = "SELECT * FROM usuarios WHERE usuario = ? AND contrasenia = ?";
         $sentencia = $this->conn->getConn()->prepare($consulta);
         $sentencia->bind_param("ss", $usu, $con);

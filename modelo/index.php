@@ -614,8 +614,10 @@
             require_once('../controlador/class.usuario.php');
             $usu = new usuario();
 
-            if($usu->compContra($oldCon, $usuario)){
+            if($usu->compContra($usuario, $oldCon)){
+                echo "<p>COMPcONTRA</p>";
                 if($amigoUsu = $usu->modificarUsuario($nuevoUsu, $nuevaCon, $idUsu)){
+                    echo "<p>CAMBIOS HECHOS</p>";
                     // Mostrar vista de amigos
                     usuariosAdmin();
                 }else{
