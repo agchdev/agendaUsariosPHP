@@ -605,7 +605,7 @@
     }
     function guardarCambiosUsu(){
         $usuario = $_POST["usuario"];
-        if(isset($_POST["nuevoUsu"], $_POST["oldCon"], $_POST["nuevaCon"])){
+        if(isset($_POST["nuevoUsu"], $_POST["nuevaCon"])){
             $nuevoUsu = $_POST["nuevoUsu"];
             $nuevaCon = $_POST["nuevaCon"];
             $idUsu = $_POST["idUsu"];
