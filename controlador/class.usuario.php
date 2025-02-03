@@ -55,6 +55,35 @@ class usuario{
         if($sentencia->execute()) return true;
         else return false;
     }
+
+    public function getUsuarios($buscador = ""){
+        $usuario = "";
+        if($buscador != ""){
+            $consulta = "SELECT *
+                    FROM usuarios
+                    WHERE usuario LIKE ?";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $buscador = "%" . $buscador . "%";
+            $sentencia->bind_param('s', $buscador);
+        }else{
+            $consulta = "SELECT *
+                        FROM usuarios";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+        }
+        $sentencia->execute();
+        $sentencia->bind_result($this->id, $this->usuario, $this->contrasenia);
+
+        $usuarios = array();
+        while($sentencia->fetch()){
+            $usuarios[] = array(
+                "id" => $this->id,
+                "usuario" => $this->usuario,
+                "contrasenia" => $this->contrasenia
+            );
+        }
+
+        return $usuarios;
+    }
 }
 
 ?>

@@ -572,6 +572,18 @@
             require_once('../vista/componentes/footer.html');
         }
     }
+
+    function usuariosAdmin(){
+        $usuario = $_POST["usuario"];
+        require_once('../controlador/class.usuario.php');
+        $buscador = "";
+        if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
+        $usu = new usario();
+        $usarios = $usu->getUsuarios($buscador);
+        require_once('../vista/componentes/headerAdmin.php');
+        require_once('../vista/usuariosAdmin.php');
+        require_once('../vista/componentes/footer.html');
+    }
     /////////////////////////////////// INICIO /////////////////////////////////////////
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////
     function unsetCookie(String $nom) { // Esta funcion elimina una cookie

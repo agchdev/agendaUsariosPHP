@@ -16,6 +16,7 @@
             </div>
             <div>
                 <form action="index.php" method="post">
+                    <button type="submit" name="action" value="usuariosAdmin" class="btn off">Usuarios</button>
                     <button type="submit" name="action" value="amigosAdmin" class="btn off">Amigos</button>
                     <button type="submit" name="action" value="cerrarSesion" class="btn off red">Cerrar Sesión</button>
                     <input type="hidden" name="usuario" value="<?php echo $usuario; ?>">
