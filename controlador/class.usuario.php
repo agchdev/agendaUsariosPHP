@@ -75,10 +75,15 @@ class usuario{
 
         $usuarios = array();
         while($sentencia->fetch()){
+            $contrasenia = "";
+            $cantAsteriscos =strlen($this->contrasenia);
+            for ($i=0; $i < $cantAsteriscos; $i++) { 
+                $contrasenia.="*";
+            }
             $usuarios[] = array(
                 "id" => $this->id,
                 "usuario" => $this->usuario,
-                "contrasenia" => $this->contrasenia
+                "contrasenia" => $contrasenia
             );
         }
 

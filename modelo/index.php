@@ -578,8 +578,8 @@
         require_once('../controlador/class.usuario.php');
         $buscador = "";
         if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
-        $usu = new usario();
-        $usarios = $usu->getUsuarios($buscador);
+        $usu = new usuario();
+        $usuarios = $usu->getUsuarios($buscador);
         require_once('../vista/componentes/headerAdmin.php');
         require_once('../vista/usuariosAdmin.php');
         require_once('../vista/componentes/footer.html');
