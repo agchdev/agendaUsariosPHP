@@ -23,6 +23,16 @@ class usuario{
         else return false;
     }
 
+    public function compContra($con, $usu){
+        $consulta = "SELECT * FROM usuarios WHERE usuario = ? AND contrasenia = ?";
+        $sentencia = $this->conn->getConn()->prepare($consulta);
+        $sentencia->bind_param("ss", $usu, $con);
+        $sentencia->execute();
+        $resultado = $sentencia->get_result();
+        if($resultado->num_rows > 0) return true;
+        else return false;
+    }
+
     public function getIdUsu(){
         $consulta = "SELECT id FROM usuarios WHERE usuario = ?";
         $sentencia = $this->conn->getConn()->prepare($consulta);

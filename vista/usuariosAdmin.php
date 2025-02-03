@@ -1,5 +1,17 @@
 <!-- VISTA DE AMIGOS :) -->
 <div id="bodyAmigos">
+    <?php
+        if(isset($msg)){
+            ?>
+            <div class="popup">
+                <?php
+                    echo $msg;
+                ?>
+                <button class="btn">Cerrar</button>
+            </div>
+            <?php
+        }
+    ?>
     <section class="amigos">
         <h2>Amigos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
         <?php
