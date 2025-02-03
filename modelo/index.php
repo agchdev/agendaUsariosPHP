@@ -607,23 +607,13 @@
         $usuario = $_POST["usuario"];
         if(isset($_POST["nuevoUsu"], $_POST["oldCon"], $_POST["nuevaCon"])){
             $nuevoUsu = $_POST["nuevoUsu"];
-            $oldCon = $_POST["oldCon"];
             $nuevaCon = $_POST["nuevaCon"];
             $idUsu = $_POST["idUsu"];
 
             require_once('../controlador/class.usuario.php');
             $usu = new usuario();
-
-            if($usu->compContra($usuario, $oldCon)){
-                echo "<p>COMPcONTRA</p>";
-                if($amigoUsu = $usu->modificarUsuario($nuevoUsu, $nuevaCon, $idUsu)){
-                    echo "<p>CAMBIOS HECHOS</p>";
-                    // Mostrar vista de amigos
-                    usuariosAdmin();
-                }else{
-                    $msg = "<p class='msg'>no se han hecho los cambios debido a un error</p>";
-                    usuariosAdmin();
-                }
+            if($amigoUsu = $usu->modificarUsuario($nuevoUsu, $nuevaCon, $idUsu)){
+                usuariosAdmin();
             }else{
                 $msg = "<p class='msg'>no se han hecho los cambios debido a un error</p>";
                 usuariosAdmin();
