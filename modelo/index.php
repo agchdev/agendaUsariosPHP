@@ -511,6 +511,67 @@
         // Mostrar vista de amigos
         amigosAdmin();
     }
+
+    function insertAmiAdmin(){
+        require_once('../controlador/class.usuario.php');
+        $usu = new usuario();
+        $usuarios = $usu->getIdUsuarios();
+
+        require_once('../controlador/class.amisusu.php');
+        $usuario = $_POST["usuario"];
+        $amis = new amiUsus();
+
+        require_once('../vista/componentes/header.php');
+        require_once('../vista/insertarAmigosAdmin.php');
+        require_once('../vista/componentes/footer.html');
+    }
+
+    function añadirAmigosAdmin() {
+        
+        $usuario = $_POST["usuario"];
+        if (isset($_POST["nombre"], $_POST["apellido"], $_POST["fecha"], $_POST["user"])) {
+            // Validar que los campos no estén vacíos
+            if (empty($_POST["nombre"]) || empty($_POST["apellido"]) || empty($_POST["fecha"])) {
+                $msg = "<p class='msg'>Todos los campos son obligatorios.</p>";
+                require_once('../vista/componentes/header.php');
+                require_once('../vista/insertarAmigos.php');
+                require_once('../vista/componentes/footer.html');
+                return;
+            }
+    
+            // Obtener la fecha proporcionada y la fecha actual
+            $fechaUsuario = new DateTime($_POST["fecha"]); // Asume formato YYYY-MM-DD del input type="date"
+            $fechaHoy = new DateTime();
+    
+            // Comprobar si la fecha es válida y anterior a hoy
+            if ($fechaUsuario >= $fechaHoy) {
+                $msg = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
+                require_once('../vista/componentes/header.php');
+                require_once('../vista/insertarAmigos.php');
+                require_once('../vista/componentes/footer.html');
+                return;
+            }
+    
+            // Insertar amigo en la base de datos
+            require_once('../controlador/class.amisusu.php');
+            require_once('../controlador/class.usuario.php');
+    
+            $usuario = $_POST["usuario"];
+            $usu = new usuario(0, $usuario);
+            $amis = new amiUsus(0, $_POST["user"], $_POST["nombre"], $_POST["apellido"], $fechaUsuario->format('Y-m-d'));
+            $amis->insertarAmigo();
+            $amisUsu = $amis->getAmigos($usuario);
+    
+            // Mostrar vista de amigos
+            amigos();
+        } else {
+            // Mostrar msg si faltan datos
+            $msg = "<p class='msg'>Error al rellenar todos los campos</p>";
+            require_once('../vista/componentes/header.php');
+            require_once('../vista/insertarAmigos.php');
+            require_once('../vista/componentes/footer.html');
+        }
+    }
     /////////////////////////////////// INICIO /////////////////////////////////////////
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////
     function unsetCookie(String $nom) { // Esta funcion elimina una cookie

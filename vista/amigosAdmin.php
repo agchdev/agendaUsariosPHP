@@ -27,7 +27,7 @@
                 echo "</table>";
                 echo "<div style= 'display:flex; gap:1rem;margin-top: 1.5rem;'> <input type='submit' class='btn' name='action' value='Buscar Amigos Admin'>
                     <input type='hidden' name='usuario' value='".$usuario."'>";
-                echo "<input type='submit' class='btn' name='action' value='Insertar Amigo'>";
+                echo "<button type='submit' class='btn' name='action' value='insertAmiAdmin'>Insertar Amigo</button>";
                 echo "</div></form>";
             }
             
