@@ -132,6 +132,16 @@
             else return false;
         }
 
+        public function modificarAmigoAdmin($n, $ap, $fn, $id, $iu, $inu) {
+            $consulta = "UPDATE amisusuarios
+                        SET nombre = ?, apellido = ?, fecha_nac = ?, id_usuario=?
+                        WHERE id = ? AND id_usuario = ?;";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('sssiii', $n, $ap, $fn, $inu, $id, $iu);
+            if($sentencia->execute()) return true;
+            else return false;
+        }
+
         public function insertarAmigo() {
             $consulta = "INSERT INTO amisusuarios (id_usuario, nombre, apellido, fecha_nac) VALUES (?, ?, ?, ?)";
             $sentencia = $this->conn->getConn()->prepare($consulta);

@@ -495,6 +495,22 @@
         unset_session("usuario");
         require_once('../vista/login.php');
     }
+
+    function confirmarCambiosAdmin(){
+        $nuevoNom = $_POST["nuevoNom"];
+        $nuevoApe = $_POST["nuevoApe"];
+        $nuevaFech = $_POST["nuevaFech"];
+        $idAmi = $_POST["idAmi"];
+        $idUsu = $_POST["idUsu"];
+        $idNewUser = $_POST["user"];
+
+        require_once('../controlador/class.amisusu.php');
+        $amis = new amiUsus();
+        $amigoUsu = $amis->modificarAmigoAdmin($nuevoNom, $nuevoApe, $nuevaFech, $idAmi, $idUsu, $idNewUser);
+        $usuario = $_POST["usuario"];
+        // Mostrar vista de amigos
+        amigosAdmin();
+    }
     /////////////////////////////////// INICIO /////////////////////////////////////////
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////
     function unsetCookie(String $nom) { // Esta funcion elimina una cookie
