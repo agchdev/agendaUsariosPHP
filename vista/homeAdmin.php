@@ -12,9 +12,6 @@
         <form action="index.php" method="post">
             <input type="hidden" name="usuario" value="<?php echo $usuario ?>">
             <input type="submit" class="btn" name="action" value="Amigos ADMIN">
-            <input type="submit" class="btn" name="action" value="Juegos ADMIN">
-            <input type="submit" class="btn" name="action" value="Prestamos ADMIN">
-            <input type="submit" class="btn red" name="action" value="Cerrar Sesion">
         </form>
     </section>
 </body>

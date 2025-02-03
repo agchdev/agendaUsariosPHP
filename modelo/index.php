@@ -478,14 +478,14 @@
         if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
         $amiUsu = new amiUsus();
         $amigos = $amiUsu->getAmigosAdmin($buscador);
-        require_once('../vista/componentes/header.php');
+        require_once('../vista/componentes/headerAdmin.php');
         require_once('../vista/amigosAdmin.php');
         require_once('../vista/componentes/footer.html');
     }
 
     function buscarAmigosAdmin(){
         $usuario = $_POST["usuario"];
-        require_once('../vista/componentes/header.php');
+        require_once('../vista/componentes/headerAdmin.php');
         require_once('../vista/buscarAmigosAdmin.php');
         require_once('../vista/componentes/footer.html');
     }
@@ -521,7 +521,7 @@
         $usuario = $_POST["usuario"];
         $amis = new amiUsus();
 
-        require_once('../vista/componentes/header.php');
+        require_once('../vista/componentes/headerAdmin.php');
         require_once('../vista/insertarAmigosAdmin.php');
         require_once('../vista/componentes/footer.html');
     }
@@ -533,8 +533,8 @@
             // Validar que los campos no estén vacíos
             if (empty($_POST["nombre"]) || empty($_POST["apellido"]) || empty($_POST["fecha"])) {
                 $msg = "<p class='msg'>Todos los campos son obligatorios.</p>";
-                require_once('../vista/componentes/header.php');
-                require_once('../vista/insertarAmigos.php');
+                require_once('../vista/componentes/headerAdmin.php');
+                require_once('../vista/insertarAmigosAdmin.php');
                 require_once('../vista/componentes/footer.html');
                 return;
             }
@@ -546,8 +546,8 @@
             // Comprobar si la fecha es válida y anterior a hoy
             if ($fechaUsuario >= $fechaHoy) {
                 $msg = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
-                require_once('../vista/componentes/header.php');
-                require_once('../vista/insertarAmigos.php');
+                require_once('../vista/componentes/headerAdmin.php');
+                require_once('../vista/insertarAmigosAdmin.php');
                 require_once('../vista/componentes/footer.html');
                 return;
             }
@@ -555,7 +555,7 @@
             // Insertar amigo en la base de datos
             require_once('../controlador/class.amisusu.php');
             require_once('../controlador/class.usuario.php');
-    
+
             $usuario = $_POST["usuario"];
             $usu = new usuario(0, $usuario);
             $amis = new amiUsus(0, $_POST["user"], $_POST["nombre"], $_POST["apellido"], $fechaUsuario->format('Y-m-d'));
@@ -563,12 +563,12 @@
             $amisUsu = $amis->getAmigos($usuario);
     
             // Mostrar vista de amigos
-            amigos();
+            amigosAdmin();
         } else {
             // Mostrar msg si faltan datos
             $msg = "<p class='msg'>Error al rellenar todos los campos</p>";
             require_once('../vista/componentes/header.php');
-            require_once('../vista/insertarAmigos.php');
+            require_once('../vista/insertarAmigosAdmin.php');
             require_once('../vista/componentes/footer.html');
         }
     }
