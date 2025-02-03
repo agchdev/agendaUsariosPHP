@@ -499,14 +499,26 @@
     function confirmarCambiosAdmin(){
         $nuevoNom = $_POST["nuevoNom"];
         $nuevoApe = $_POST["nuevoApe"];
-        $nuevaFech = $_POST["nuevaFech"];
         $idAmi = $_POST["idAmi"];
         $idUsu = $_POST["idUsu"];
         $idNewUser = $_POST["user"];
 
+        // Obtener la fecha proporcionada y la fecha actual
+        $fechaUsuario = new DateTime($_POST["nuevaFech"]); // Asume formato YYYY-MM-DD del input type="date"
+        $fechaHoy = new DateTime();
+
+        // Comprobar si la fecha es válida y anterior a hoy
+        if ($fechaUsuario >= $fechaHoy) {
+            $msg = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
+            require_once('../vista/componentes/headerAdmin.php');
+            require_once('../vista/insertarAmigosAdmin.php');
+            require_once('../vista/componentes/footer.html');
+            return;
+        }
+
         require_once('../controlador/class.amisusu.php');
         $amis = new amiUsus();
-        $amigoUsu = $amis->modificarAmigoAdmin($nuevoNom, $nuevoApe, $nuevaFech, $idAmi, $idUsu, $idNewUser);
+        $amigoUsu = $amis->modificarAmigoAdmin($nuevoNom, $nuevoApe, $fechaUsuario->format('Y-m-d'), $idAmi, $idUsu, $idNewUser);
         $usuario = $_POST["usuario"];
         // Mostrar vista de amigos
         amigosAdmin();
