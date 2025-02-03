@@ -625,6 +625,13 @@
         }
         
     }
+
+    function buscaUsuario(){
+        $usuario = $_POST["usuario"];
+        require_once('../vista/componentes/headerAdmin.php');
+        require_once('../vista/buscaUsuario.php');
+        require_once('../vista/componentes/footer.html');
+    }
     /////////////////////////////////// INICIO /////////////////////////////////////////
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////
     function unsetCookie(String $nom) { // Esta funcion elimina una cookie
