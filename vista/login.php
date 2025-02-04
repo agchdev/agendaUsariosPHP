@@ -35,8 +35,6 @@
             
             <input type="submit" class="btn" value="Iniciar sesión">
             <input type="hidden" name="action" value="login">
-            
-            <p>No tienes cuenta? <a href="index.php?action=register">Regístrate</a></p>
         </form>
     </main>
     <script src="../scripts/main.js"></script>

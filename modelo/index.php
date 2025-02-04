@@ -200,9 +200,17 @@
     function modificarAmigo(){
         $nuevoNom = $_POST["nuevoNom"];
         $nuevoApe = $_POST["nuevoApe"];
-        $nuevaFech = $_POST["nuevaFech"];
         $idAmi = $_POST["idAmi"];
         $idUsu = $_POST["idUsu"];
+
+        $fechaUsuario = new DateTime($_POST["nuevaFech"]); // Asume formato YYYY-MM-DD del input type="date"
+        $fechaHoy = new DateTime();
+
+        // Comprobar si la fecha es válida y anterior a hoy
+        if ($fechaUsuario >= $fechaHoy) {
+            $msg = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
+            amigos();
+        }
 
         require_once('../controlador/class.amisusu.php');
         $amis = new amiUsus();
@@ -415,13 +423,12 @@
                 $juegos = new juego();
 
                 $amigosdeUsuario = $amiUsu->getAmigos($usuario);
-                $juegosdeUsuario = $juegos->getJuegos($usuario);
+                $juegosdeUsuario = $juegos->getJuegosLibres($usuario);
 
                 require_once('../vista/componentes/header.php');
                 require_once('../vista/insertarPrestamos.php');
                 require_once('../vista/componentes/footer.html');
-            }
-            if(isset($_POST["nombreAmigo"]) && isset($_POST["juego"]) && isset($_POST["fech"])){
+            }else if(isset($_POST["nombreAmigo"]) && isset($_POST["juego"]) && isset($_POST["fech"])){
                 require_once('../controlador/class.prestamo.php');
 
                 $amiUsuID = $_POST["nombreAmigo"];
