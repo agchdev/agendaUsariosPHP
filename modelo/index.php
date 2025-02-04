@@ -62,7 +62,7 @@
             $user = new usuario(0, $u, $c1);
             if($user->registrarUsuario()){
                 $msg = "<p class='msg'>Usuario creado con éxito</p>";
-                require_once('../vista/login.php');
+                usuariosAdmin();
             }
         }
     }
@@ -82,7 +82,7 @@
     function amigos(){
         require_once('../controlador/class.usuario.php');
         require_once('../controlador/class.amisusu.php');
-        $user = $_POST["usuario"];
+        $user = get_session("usuario");
         $usu = new usuario(0, 0, $user);
         $idUsu = $usu->getIdUsu();
         $usuario = get_session("usuario");
@@ -96,7 +96,7 @@
     }
     function insertAmigo(){
         require_once('../controlador/class.amisusu.php');
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         $amis = new amiUsus();
         require_once('../vista/componentes/header.php');
         require_once('../vista/insertarAmigos.php');
@@ -104,7 +104,7 @@
         
     }
     function añadirAmigos() {
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         if (isset($_POST["nombre"], $_POST["apellido"], $_POST["fecha"])) {
             // Validar que los campos no estén vacíos
             if (empty($_POST["nombre"]) || empty($_POST["apellido"]) || empty($_POST["fecha"])) {
@@ -132,7 +132,7 @@
             require_once('../controlador/class.amisusu.php');
             require_once('../controlador/class.usuario.php');
     
-            $usuario = $_POST["usuario"];
+            $usuario = get_session("usuario");
             $usu = new usuario(0, $usuario);
             $idUsu = $usu->getIdUsu();
             $amis = new amiUsus(0, $idUsu, $_POST["nombre"], $_POST["apellido"], $fechaUsuario->format('Y-m-d'));
@@ -148,6 +148,16 @@
             require_once('../vista/insertarAmigos.php');
             require_once('../vista/componentes/footer.html');
         }
+    }
+
+    function volverAmigos(){
+        $usuario = get_session("usuario");
+        amigos();
+    }
+
+    function volverAmigosAdmin(){
+        $usuario = get_session("usuario");
+        amigosAdmin();
     }
 
     // MODIFICAR AMIGOS
@@ -166,7 +176,7 @@
             require_once('../controlador/class.amisusu.php');
             $amis = new amiUsus();
             $amigoUsu = $amis->getAmigosID($id, $id_usario);
-            $usuario = $_POST["usuario"];
+            $usuario = get_session("usuario");
 
             if($usuario == "admin"){
                 $amiUsu = new amiUsus();
@@ -174,7 +184,7 @@
                 $usu = new usuario();
                 $usuarios = $usu->getIdUsuarios();
                 $amigosdeUsuario = $amiUsu->getAmigosAdmin($usuario);
-                require_once('../vista/componentes/header.php');
+                require_once('../vista/componentes/headerAdmin.php');
                 require_once('../vista/modificarAmigosAdmin.php');
                 require_once('../vista/componentes/footer.html');
             }else{
@@ -197,14 +207,14 @@
         require_once('../controlador/class.amisusu.php');
         $amis = new amiUsus();
         $amigoUsu = $amis->modificarAmigo($nuevoNom, $nuevoApe, $nuevaFech, $idAmi, $idUsu);
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         // Mostrar vista de amigos
         amigos();
     }
     
     // BUSCAR AMIGOS
     function buscarAmigos(){
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         require_once('../vista/componentes/header.php');
         require_once('../vista/buscarAmigos.php');
         require_once('../vista/componentes/footer.html');
@@ -212,7 +222,7 @@
 
     // JUEGOS
     function juegos(){
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         require_once('../controlador/class.juego.php');
         $buscador = "";
         if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
@@ -225,7 +235,7 @@
 
     // INSERTAR JUEGOS
     function insertJuegos(){
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         require_once('../vista/componentes/header.php');
         require_once('../vista/insertarJuegos.php');
         require_once('../vista/componentes/footer.html');
@@ -233,13 +243,13 @@
 
     // BUSCAR JUEGOS
     function buscarJuegos(){
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         require_once('../vista/componentes/header.php');
         require_once('../vista/buscarJuegos.php');
         require_once('../vista/componentes/footer.html');
     }
     function buscarPrestamo(){
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         require_once('../vista/componentes/header.php');
         require_once('../vista/buscarPresupuesto.php');
         require_once('../vista/componentes/footer.html');
@@ -269,7 +279,7 @@
             require_once('../vista/componentes/footer.html');
             return;
         }else{
-            $usuario = $_POST["usuario"];
+            $usuario = get_session("usuario");
             $ruta = "../img/".$usuario."/";
             if(!file_exists($ruta)){
                 mkdir($ruta);
@@ -283,7 +293,7 @@
         }
         require_once('../controlador/class.juego.php');
         require_once('../controlador/class.usuario.php');
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         $usu = new usuario(0, $usuario);
         $idUsu = $usu->getIdUsu();
         $tit = $_POST["juego"];
@@ -310,7 +320,7 @@
             require_once('../controlador/class.juego.php');
             $juegos = new juego();
             $juego = $juegos->getJuegoID($id, $id_usario);
-            $usuario = $_POST["usuario"];
+            $usuario = get_session("usuario");
 
             require_once('../vista/componentes/header.php');
             require_once('../vista/modificarJuego.php');
@@ -325,7 +335,7 @@
         $nuevoNom = $_POST["nuevoNom"];
         $nuevoAnio = $_POST["nuevoAnio"];
         $nuevoPlataforma = $_POST["plataforma"];
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         $ruta = "../img/".$usuario."/";
         $destino = $ruta.$nuevoNom;
         $origen = "";
@@ -349,7 +359,7 @@
     // PRESTAMOS
 
     function prestamos(){
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         require_once('../controlador/class.prestamo.php');
         $buscador = "";
         if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
@@ -365,7 +375,7 @@
         require_once('../controlador/class.juego.php');
         require_once('../controlador/class.usuario.php');
         
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         $amiUsu = new amiUsus();
         $juegos = new juego();
 
@@ -385,7 +395,7 @@
      * Si el prestamo se ha realizado con exito muestra un mensaje de exito y redirige a la pagina principal, si no muestra un mensaje de error.
      */
     function añadirPrestamo(){
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         if(!isset($_POST["fech"])){
             $msg = "<p class='msg'>Debes insertar una fecha</p>";
             require_once('../vista/componentes/header.php');
@@ -472,7 +482,7 @@
     /////////////////////////////////// ADMIN /////////////////////////////////////////
 
     function amigosAdmin(){
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         require_once('../controlador/class.amisusu.php');
         $buscador = "";
         if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
@@ -484,7 +494,7 @@
     }
 
     function buscarAmigosAdmin(){
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         require_once('../vista/componentes/headerAdmin.php');
         require_once('../vista/buscarAmigosAdmin.php');
         require_once('../vista/componentes/footer.html');
@@ -502,7 +512,7 @@
         $idAmi = $_POST["idAmi"];
         $idUsu = $_POST["idUsu"];
         $idNewUser = $_POST["user"];
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
 
         // Obtener la fecha proporcionada y la fecha actual
         $fechaUsuario = new DateTime($_POST["nuevaFech"]); // Asume formato YYYY-MM-DD del input type="date"
@@ -516,7 +526,7 @@
             require_once('../controlador/class.amisusu.php');
             $amis = new amiUsus();
             $amigoUsu = $amis->modificarAmigoAdmin($nuevoNom, $nuevoApe, $fechaUsuario->format('Y-m-d'), $idAmi, $idUsu, $idNewUser);
-            $usuario = $_POST["usuario"];
+            $usuario = get_session("usuario");
             // Mostrar vista de amigos
             amigosAdmin();
         }
@@ -528,7 +538,7 @@
         $usuarios = $usu->getIdUsuarios();
 
         require_once('../controlador/class.amisusu.php');
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         $amis = new amiUsus();
 
         require_once('../vista/componentes/headerAdmin.php');
@@ -537,7 +547,7 @@
     }
 
     function usuariosAdmin(){
-        $usuario = $_POST["usuario"];
+        $usuario = get_session("usuario");
         require_once('../controlador/class.usuario.php');
         $buscador = "";
         if(isset($_POST["buscador"])) $buscador = $_POST["buscador"];
@@ -642,6 +652,12 @@
             require_once('../vista/componentes/footer.html');
         }
     }
+
+    function insertUsu(){
+        // require_once('../vista/componentes/headerAdmin.php');
+        require_once('../vista/register.php');
+        // require_once('../vista/componentes/footer.html');
+    }
     /////////////////////////////////// INICIO /////////////////////////////////////////
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////
     function unsetCookie(String $nom) { // Esta funcion elimina una cookie
@@ -686,9 +702,6 @@
     }
     //////////////////////////// COOKIES // SESSIONES //////////////////////////////////
     /////////////////////////////////// FIN ////////////////////////////////////////////
-    function hola(){
-        echo "hola";
-    }
     // INICIO
     if(isset($_REQUEST["action"])) { // Si se ha pulsado algun boton
         $action = $_REQUEST["action"]; // Guardamos la accion

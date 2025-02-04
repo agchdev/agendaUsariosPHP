@@ -21,7 +21,7 @@
                         echo "<td>" . $juego["juego"] . "</td>";
                         echo "<td>" . $juego["plataforma"] . "</td>";
                         echo "<td>" . $juego["anio"] . "</td>";
-                        echo "<td><input type='submit' class='btn off' name='action' value='ModificarJuego ".$cont."'></td>";
+                        echo "<td><button type='submit' class='btn off' name='action' value='ModificarJuego ".$cont."'>Modificar</button></td>";
                         echo "</tr>";
                         $cont++;
                     }

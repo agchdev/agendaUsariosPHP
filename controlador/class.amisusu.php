@@ -58,7 +58,7 @@
             if ($buscador != "") {
                 $consulta = "SELECT usuarios.usuario, amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac 
                              FROM amisusuarios, usuarios 
-                             WHERE id_usuario = usuarios.id AND 
+                             WHERE id_usuario = usuarios.id AND usuarios.usuario != 'admin' AND
                              (amisusuarios.nombre LIKE ? OR amisusuarios.apellido LIKE ? OR usuarios.usuario LIKE ?)";
                 $sentencia = $this->conn->getConn()->prepare($consulta);
         
@@ -68,7 +68,7 @@
             } else {
                 $consulta = "SELECT usuarios.usuario, amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac 
                              FROM amisusuarios, usuarios 
-                             WHERE id_usuario = usuarios.id";
+                             WHERE id_usuario = usuarios.id AND usuarios.usuario != 'admin'";
                 $sentencia = $this->conn->getConn()->prepare($consulta);
             }
         
@@ -91,8 +91,6 @@
         }
 
         public function getAmigosID($idU, $idAmi) {
-            echo $idAmi;
-            echo "<br>".$idU;
             $consulta = "SELECT * 
                         FROM amisusuarios 
                         WHERE id = ? AND id_usuario = ? ";

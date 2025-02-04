@@ -21,6 +21,10 @@
                 <button type="submit" class="btn" name="action" value="guardarCambiosUsu">Guardar Cambios</button>
                 <input type="hidden" name="usuario" value="<?php echo $usuario ?>">
             </form>
+            
+            <form class="insertar" action="index.php" method='post'>    
+                <button style="margin-top:1rem" class="btn" type="submit" name="action" value="usuariosAdmin">Volver</button>
+            </form>
     </section>
 </div>
 </body>

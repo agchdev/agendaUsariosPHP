@@ -44,7 +44,8 @@ class usuario{
     }
     public function getIdUsuarios(){
         $consulta = "SELECT id, usuario 
-                    FROM usuarios";
+                    FROM usuarios
+                    WHERE usuario != 'admin'";
         $sentencia = $this->conn->getConn()->prepare($consulta);
         $sentencia->execute();
         $sentencia->bind_result($this->id, $this->usuario);

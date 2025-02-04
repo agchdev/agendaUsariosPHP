@@ -4,7 +4,7 @@
         <h2>Amigos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
         <?php
             if (count($amigosUsu) == 0) {
-                echo "NO TIENE AMIGOS ACTUALMENTE";
+                echo "<p style='margin-bottom:1rem'>NO TIENE AMIGOS :(</p>";
             }else{
                 $cont = 0;
                 echo "<form action='index.php' method='post'>"; 
@@ -23,12 +23,15 @@
                         echo "</tr>";
                         $cont++;
                     }
-                echo "</table>";
-                echo "<div style= 'display:flex; gap:1rem;margin-top: 1.5rem;'> <input type='submit' class='btn' name='action' value='Buscar Amigos'>
+                echo "</table></form>";
+            }
+                echo "<form action='index.php' method='post'><div style= 'display:flex; gap:1rem;margin-top: 1.5rem;'> <input type='submit' class='btn' name='action' value='Buscar Amigos'>
                     <input type='hidden' name='usuario' value='".$usuario."'>";
+                
                 echo "<input type='submit' class='btn' name='action' value='Insertar Amigo'>";
                 echo "</div></form>";
-            }
+            
+            
             
             ?>
             <form class="buscador" action="index.php" method='post'>    

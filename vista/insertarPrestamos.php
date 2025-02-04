@@ -15,14 +15,14 @@
     <section class="amigos">
         <h2>Insertar prestamo de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
         <form class="insertar" action="index.php" method='post'>    
-            <select name="nombreAmigo" id="">
+            <select class="select" name="nombreAmigo" id="">
             <?php
                 foreach ($amigosdeUsuario as $amigo) {
                     echo "<option value=".$amigo["id"].">".$amigo["nombre"]."</option>";
                 }
             ?>
             </select>
-            <select name="juego" id="">
+            <select class="select" name="juego" id="">
             <?php
                 foreach ($juegosdeUsuario as $juego) {
                     echo "<option value=".$juego["id"].">".$juego["juego"]."</option>";
@@ -32,6 +32,9 @@
             <input class="busca" type="date" name="fech" required>
             <input type="submit" class="btn" name="action" value="Añadir prestamo">
             <input type="hidden" name="usuario" value="<?php echo $usuario ?>">
+        </form>
+        <form class="insertar" action="index.php" method='post'>    
+            <button style="margin-top:1rem" class="btn" type="submit" name="action" value="prestamos">Volver</button>
         </form>
     </section>
 </div>

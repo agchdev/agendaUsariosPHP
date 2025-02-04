@@ -11,7 +11,8 @@
         <h2>Bienvenid@ <?php if(isset($usuario)) echo $usuario ?></h2>
         <form action="index.php" method="post">
             <input type="hidden" name="usuario" value="<?php echo $usuario ?>">
-            <input type="submit" class="btn" name="action" value="Amigos ADMIN">
+            <button type="submit" class="btn off" name="action" value="Amigos ADMIN">Amigos</button>
+            <button type="submit" name="action" value="usuariosAdmin" class="btn off">Usuarios</button>
         </form>
     </section>
 </body>

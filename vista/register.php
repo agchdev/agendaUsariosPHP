@@ -27,9 +27,10 @@
             <label for="contrasenia">Contraseña:</label>
             <input type="password" name="contrasenia" placeholder="Introduce tu contraseña" required>
             <input type="password" name="contrasenia2" placeholder="Repite tu contraseña" required>
-            <input type="submit" class="btn" value="Registrarse">
-            <input type="hidden" name="action" value="registarUsuario">
-            <p>Ya tienes cuenta? <a href="index.php">Inicia sesión</a></p>
+            <button  class="btn" type="submit" name="action" value="registarUsuario">Registrarse</button>
+        </form>
+        <form class="insertar" action="index.php" method='post'>    
+            <button style="margin-top:1rem" class="btn" type="submit" name="action" value="usuariosAdmin">Volver</button>
         </form>
     </main>
     <script src="../scripts/main.js"></script>
