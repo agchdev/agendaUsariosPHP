@@ -18,14 +18,14 @@
             <input class="busca" type="text" name="nombre" placeholder="nombre de usuario..." required>
             <input class="busca" type="text" name="apellido" placeholder="apellido del usuario..." required>
             <input class="busca" type="date" name="fecha" required>
-            <select name="user">
+            <select class="select" name="user">
                 <?php
                     foreach ($usuarios as $usu) {
-                        echo "<option value=".$usu["id"].">".$usu["usuario"]."</option>";
+                        echo "<option class='opt' value=".$usu["id"].">".$usu["usuario"]."</option>";
                     }
                 ?>
             </select>
-            <input type="submit" class="btn" name="action" value="Añadir amigo">
+            <button type="submit" class="btn" name="action" value="añadirAmigosAdmin">Añadir amigo</button>
             <input type="hidden" name="usuario" value="<?php echo $usuario ?>">
         </form>
     </section>
