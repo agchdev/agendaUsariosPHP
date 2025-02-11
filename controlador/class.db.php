@@ -3,8 +3,8 @@
         private $conn;
 
         public function __construct(){
-            require_once('../../../cred.php');
-            $this->conn = new mysqli("Localhost", USU_CONN, PSW_CONN, "agenda2");
+            require_once('../../../creed.php');
+            $this->conn = new mysqli("Localhost", USU_CONN, PSW_CONN, "agenda");
         }
 
         // Método para obtener la conexión mysqli
