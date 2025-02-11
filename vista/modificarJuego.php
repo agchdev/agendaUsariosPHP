@@ -7,7 +7,7 @@
         <h2>Amigos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
             <form class="buscador" action="index.php" method='post' enctype="multipart/form-data">    
                 <input class="busca" type="text" name="nuevoNom" placeholder="nombre..." value="<?php echo $juego["juego"] ?>">
-                <select name="plataforma" id="">
+                <select class="select" name="plataforma" id="">
                     <option value="PC" default>PC</option>
                     <option value="PS5">PS5</option>
                     <option value="XBOX">XBOX</option>

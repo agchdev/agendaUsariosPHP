@@ -417,6 +417,9 @@
             // Obtener la fecha proporcionada y la fecha actual
             $fechaUsuario = new DateTime($_POST["fech"]); // Asume formato YYYY-MM-DD del input type="date"
             $fechaHoy = new DateTime();
+
+            // Comprobar si la fecha es válida, no es anterior a hoy y no supera 30 días
+            $fechaMaxima = (clone $fechaHoy)->modify('+30 days');
     
             // Comprobar si la fecha es válida y anterior a hoy
             if ($fechaUsuario <= $fechaHoy) {
@@ -432,6 +435,8 @@
                 require_once('../vista/componentes/header.php');
                 require_once('../vista/insertarPrestamos.php');
                 require_once('../vista/componentes/footer.html');
+            }else if ($fechaUsuario > $fechaMaxima) {
+                $msg = "<p class='msg'>La fecha no debe ser superior a 30 días desde hoy.</p>";
             }else if(isset($_POST["nombreAmigo"]) && isset($_POST["juego"]) && isset($_POST["fech"])){
                 require_once('../controlador/class.prestamo.php');
 
@@ -462,8 +467,6 @@
                     require_once('../vista/insertarPrestamos.php');
                     require_once('../vista/componentes/footer.html');
                 };
-
-
             }
         }
         
