@@ -9,6 +9,15 @@
         private $anio_lanzamiento;
         private $idUsuario;
 
+        /**
+         * Constructor de la clase juego.
+         * @param int $i ID del juego. Por defecto 0.
+         * @param string $ju Titulo del juego. Por defecto cadena vacia.
+         * @param string $pl Plataforma donde se juega. Por defecto cadena vacia.
+         * @param string $urlFoto URL de la portada del juego. Por defecto cadena vacia.
+         * @param string $anio Anio de lanzamiento del juego. Por defecto cadena vacia.
+         * @param int $idUsu ID del usuario al que pertenece el juego. Por defecto 0.
+         */
         public function __construct($i=0 ,String $ju="", String $pl="", String $url="", String $anio="", $idUsu="") {
             $this->conn = new db(); 
             $this->id = $i;

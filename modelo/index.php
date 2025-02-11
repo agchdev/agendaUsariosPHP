@@ -535,13 +535,6 @@ function cambiosJuego(){
         }
         
     }
-/*************  ✨ Codeium Command ⭐  *************/
-/**
- * Modifica el prestamo en la base de datos y vuelve a mostrar la vista de prestamos
- * 
- * @return void
- */
-/******  54c0d8e3-19db-49c1-b8b8-d7ce8e6d9a79  *******/
     function modificarPrestamo(){
         $contador = $_REQUEST["action"];
         $contador = explode(" ", $contador);
