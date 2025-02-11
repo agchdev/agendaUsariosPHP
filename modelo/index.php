@@ -79,6 +79,12 @@
     }
 
     // AMIGOS.PHP
+    
+    /**
+     * Funcion para mostrar la pagina de amigos
+     * Muestra la pagina con todos los amigos del usuario logueado
+     * Si se ha pulsado el boton de buscar muestra la pagina con los resultados de la busqueda
+     */
     function amigos(){
         require_once('../controlador/class.usuario.php');
         require_once('../controlador/class.amisusu.php');
@@ -94,6 +100,10 @@
         require_once('../vista/amigos.php');
         require_once('../vista/componentes/footer.html');
     }
+    /**
+     * Funcion para mostrar la pagina de insertar amigos
+     * Muestra la pagina con un formulario para insertar un nuevo amigo
+     */
     function insertAmigo(){
         require_once('../controlador/class.amisusu.php');
         $usuario = get_session("usuario");
@@ -103,6 +113,15 @@
         require_once('../vista/componentes/footer.html');
         
     }
+/**
+ * Funcion para añadir un nuevo amigo al usuario logueado.
+ * Comprueba si se han proporcionado los datos requeridos (nombre, apellido, fecha).
+ * Valida que los campos no estén vacíos y que la fecha proporcionada sea anterior a la actual.
+ * Si la validación es exitosa, inserta al amigo en la base de datos.
+ * Si falta algún dato o la fecha es incorrecta, muestra un mensaje de error y recarga la página de inserción.
+ */
+
+
     function añadirAmigos() {
         $usuario = get_session("usuario");
         if (isset($_POST["nombre"], $_POST["apellido"], $_POST["fecha"])) {
@@ -149,7 +168,6 @@
             require_once('../vista/componentes/footer.html');
         }
     }
-
     function volverAmigos(){
         $usuario = get_session("usuario");
         amigos();
@@ -161,6 +179,19 @@
     }
 
     // MODIFICAR AMIGOS
+    
+/**
+ * Modifica la información de un amigo en la base de datos.
+ * 
+ * La función utiliza el parámetro "action" de la solicitud para determinar qué amigo
+ * se va a modificar, recuperando su ID y el ID del usuario. Luego, obtiene los datos
+ * del amigo de la base de datos. Dependiendo de si el usuario actual es un administrador
+ * o no, carga diferentes vistas para permitir la modificación de los detalles del amigo.
+ * 
+ * Requiere que estén definidas las clases amiUsus y usuario, y que existan las vistas
+ * correspondientes para la modificación de amigos.
+ */
+
     function modificarAmi(){
         $contador = $_REQUEST["action"];
         $contador = explode(" ", $contador);
@@ -195,9 +226,13 @@
 
         }
     }
-
     // CAMBIAR A LOS NUEVOS DATOS DEL AMIGO
-    function modificarAmigo(){
+    /**
+     * Funcion que se encarga de modificar un amigo en la base de datos.
+     * Comprueba si la fecha proporcionada es valida y anterior a hoy, si no muestra un mensaje de error.
+     * Modifica el amigo en la base de datos y luego muestra la vista de amigos.
+     */
+function modificarAmigo(){
         $nuevoNom = $_POST["nuevoNom"];
         $nuevoApe = $_POST["nuevoApe"];
         $idAmi = $_POST["idAmi"];
@@ -229,6 +264,12 @@
     }
 
     // JUEGOS
+    
+    /**
+     * Funcion que se encarga de mostrar los juegos de un usuario.
+     * Recibe un parametro opcional que es el buscador de juegos.
+     * Muestra la vista de juegos con los juegos del usuario.
+     */
     function juegos(){
         $usuario = get_session("usuario");
         require_once('../controlador/class.juego.php');
@@ -263,6 +304,15 @@
         require_once('../vista/componentes/footer.html');
     }
 
+    /**
+     * Funcion que se encarga de agregar un juego a la base de datos.
+     * Comprueba si se ha proporcionado un nombre de juego, si no muestra un mensaje de error.
+     * Comprueba si se ha proporcionado un año, si no muestra un mensaje de error.
+     * Comprueba si se ha proporcionado una imagen, si no muestra un mensaje de error.
+     * Comprueba si la imagen pesa menos de 2MB, si no muestra un mensaje de error.
+     * Si se han proporcionado todos los campos necesarios, se inserta el juego en la base de datos.
+     * Si el juego se ha insertado con exito, muestra un mensaje de exito y redirige a la pagina principal, si no muestra un mensaje de error.
+     */
     function añadirJuego(){
         if(!isset($_POST["juego"])){
             $msg = "<p class='msg'>Inserta un nombre de juego</p>";
@@ -336,7 +386,14 @@
         }
     }
 
-    function cambiosJuego(){
+// CAMBIOS DE JUEGO
+/**
+ *  LA FUNCION DE CAMBIOS DE JUEGO SE ENCARGA DE MODIFICAR UN JUEGO EN LA BASE DE DATOS
+ *  RECIBE UN PARAMETRO OPCIONAL QUE ES EL BUSCADOR DE JUEGOS
+ *  MUESTRA LA VISTA DE JUEGOS CON LOS JUEGOS DEL USUARIO
+ */
+
+function cambiosJuego(){
         require_once('../controlador/class.juego.php');
         $juego = new juego();
         
@@ -370,6 +427,12 @@
 
     // PRESTAMOS
 
+/**
+ * La funcion prestamos se encarga de mostrar la vista de prestamos,
+ * mostrando los prestamos del usuario logueado.
+ * Recibe un parametro opcional que es el buscador de prestamos.
+ * Muestra la vista de prestamos con los prestamos del usuario.
+ */
     function prestamos(){
         $usuario = get_session("usuario");
         require_once('../controlador/class.prestamo.php');
@@ -472,6 +535,13 @@
         }
         
     }
+/*************  ✨ Codeium Command ⭐  *************/
+/**
+ * Modifica el prestamo en la base de datos y vuelve a mostrar la vista de prestamos
+ * 
+ * @return void
+ */
+/******  54c0d8e3-19db-49c1-b8b8-d7ce8e6d9a79  *******/
     function modificarPrestamo(){
         $contador = $_REQUEST["action"];
         $contador = explode(" ", $contador);
@@ -496,6 +566,11 @@
     /////////////////////////////////// INICIO /////////////////////////////////////////
     /////////////////////////////////// ADMIN /////////////////////////////////////////
 
+    /**
+     * Funcion para mostrar la pagina de amigos de un administrador
+     * Muestra la pagina con todos los amigos de los usuarios
+     * Si se ha pulsado el boton de buscar muestra la pagina con los resultados de la busqueda
+     */
     function amigosAdmin(){
         $usuario = get_session("usuario");
         require_once('../controlador/class.amisusu.php');
@@ -508,6 +583,11 @@
         require_once('../vista/componentes/footer.html');
     }
 
+
+    /**
+     * Funcion para mostrar la pagina de buscar amigos de un administrador
+     * Muestra la pagina con un formulario para buscar amigos
+     */
     function buscarAmigosAdmin(){
         $usuario = get_session("usuario");
         require_once('../vista/componentes/headerAdmin.php');
@@ -521,6 +601,11 @@
         require_once('../vista/login.php');
     }
 
+    /**
+     * Funcion para modificar un amigo en la base de datos.
+     * Comprueba si la fecha proporcionada es valida y anterior a hoy, si no muestra un mensaje de error.
+     * Modifica el amigo en la base de datos y luego muestra la vista de amigos.
+     */
     function confirmarCambiosAdmin(){
         $nuevoNom = $_POST["nuevoNom"];
         $nuevoApe = $_POST["nuevoApe"];
@@ -547,6 +632,11 @@
         }
     }
 
+    /**
+     * Funcion para mostrar la pagina de insertar amigos de un administrador
+     * Muestra la pagina con un formulario para insertar un nuevo amigo
+     * Si se ha pulsado el boton de buscar muestra la pagina con los resultados de la busqueda
+     */
     function insertAmiAdmin(){
         require_once('../controlador/class.usuario.php');
         $usu = new usuario();
@@ -561,6 +651,11 @@
         require_once('../vista/componentes/footer.html');
     }
 
+    /**
+     * Funcion para mostrar la pagina de usuarios de un administrador
+     * Muestra la pagina con todos los usuarios de la base de datos
+     * Si se ha pulsado el boton de buscar muestra la pagina con los resultados de la busqueda
+     */
     function usuariosAdmin(){
         $usuario = get_session("usuario");
         require_once('../controlador/class.usuario.php');
@@ -573,6 +668,13 @@
         require_once('../vista/componentes/footer.html');
     }
 
+    /**
+     * Funcion para mostrar la pagina de modificar un usuario
+     * Muestra la pagina con los datos del usuario a modificar
+     * Si se ha pulsado el boton de guardar cambios muestra la pagina con los datos actualizados
+     * @param int $id id del usuario a modificar
+     * @return void
+     */
     function ModificarUsuario(){
         $contador = $_REQUEST["action"];
         $contador = explode(" ", $contador);
@@ -591,6 +693,12 @@
             require_once('../vista/componentes/footer.html');
         }
     }
+    /**
+     * Funcion para guardar los cambios en un usuario
+     * Comprueba si se han proporcionado los campos necesarios para modificar el usuario, si no muestra un mensaje de error.
+     * Modifica el usuario en la base de datos y luego muestra la vista de usuarios.
+     * @return void
+     */
     function guardarCambiosUsu(){
         $usuario = $_POST["usuario"];
         if(isset($_POST["nuevoUsu"], $_POST["nuevaCon"])){
@@ -621,6 +729,12 @@
         require_once('../vista/componentes/footer.html');
     }
 
+    /**
+     * Funcion para mostrar la pagina de insertar amigos de un administrador
+     * Muestra la pagina con un formulario para insertar un nuevo amigo
+     * Si se ha pulsado el boton de buscar muestra la pagina con los resultados de la busqueda
+     * @return void
+     */
     function añadirAmigosAdmin() {
         $usuario = $_POST["usuario"];
         if (isset($_POST["nombre"], $_POST["apellido"], $_POST["fecha"])) {
