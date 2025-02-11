@@ -330,9 +330,6 @@
             $juego = $juegos->getJuegoID($id, $id_usario);
             $usuario = get_session("usuario");
 
-            // $nomJuego = $_POST["nomJuego"];
-            // $rutaElim = "../img/".$usuario."/".$nomJuego;
-
             require_once('../vista/componentes/header.php');
             require_once('../vista/modificarJuego.php');
             require_once('../vista/componentes/footer.html');
@@ -340,6 +337,8 @@
     }
 
     function cambiosJuego(){
+        require_once('../controlador/class.juego.php');
+        $juego = new juego();
         
         $id = $_POST["idJuego"];
         $id_usario = $_POST["idUsu"];
@@ -351,6 +350,11 @@
         $destino = $ruta.$nuevoNom;
         $origen = "";
         if(!empty($_FILES["img"]["tmp_name"])){
+            
+            $urlFoto = $juego->getRuta($id);
+            // Verificar si el archivo existe
+            if (file_exists($urlFoto)) unlink($urlFoto);
+
             $formato = $_FILES["img"]["type"];
             $formato = explode("/", $formato);
             $destino = $destino.".".$formato[1];
@@ -359,9 +363,6 @@
         }else{
             $destino = $_POST["url"];
         }
-        
-        require_once('../controlador/class.juego.php');
-        $juego = new juego();
 
         $juego->modificarJuego($nuevoNom, $nuevoPlataforma, $destino, $nuevoAnio, $id, $id_usario);
         juegos();
