@@ -330,6 +330,9 @@
             $juego = $juegos->getJuegoID($id, $id_usario);
             $usuario = get_session("usuario");
 
+            // $nomJuego = $_POST["nomJuego"];
+            // $rutaElim = "../img/".$usuario."/".$nomJuego;
+
             require_once('../vista/componentes/header.php');
             require_once('../vista/modificarJuego.php');
             require_once('../vista/componentes/footer.html');

@@ -110,6 +110,16 @@
             else return false;
         }
 
+        public function getRuta($id){
+            $consulta = "SELECT urlFoto FROM juegos WHERE id = ?";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param("i", $id);
+            $sentencia->execute();
+            $sentencia->bind_result($this->urlFoto);
+            $sentencia->fetch();
+            return $this->urlFoto;
+        }
+
         public function getJuegoID($id, $idUsu) {
             $consulta = "SELECT juegos.id, juegos.juego, juegos.plataforma, juegos.urlFoto, juegos.anio_lanzamiento, juegos.id_usuario FROM juegos WHERE juegos.id = ? AND juegos.id_usuario = ?;";
             $sentencia = $this->conn->getConn()->prepare($consulta);
@@ -117,7 +127,7 @@
             $sentencia->bind_result($this->id, $this->juego, $this->plataforma, $this->urlFoto, $this->anio_lanzamiento, $this->idUsuario);
             $sentencia->execute();
 
-            $juegos = array();
+            $juegos = array(); //Cosillas
             $sentencia->fetch();
             $juegos["id"] = $this->id;
             $juegos["juego"] = $this->juego;
