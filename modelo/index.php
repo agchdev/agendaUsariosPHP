@@ -424,17 +424,6 @@
             // Comprobar si la fecha es válida y anterior a hoy
             if ($fechaUsuario <= $fechaHoy) {
                 $msg = "<p class='msg'>La fecha no debe ser anterior a hoy.</p>";
-                require_once('../controlador/class.amisusu.php');
-                require_once('../controlador/class.juego.php');
-                $amiUsu = new amiUsus();
-                $juegos = new juego();
-
-                $amigosdeUsuario = $amiUsu->getAmigos($usuario);
-                $juegosdeUsuario = $juegos->getJuegosLibres($usuario);
-
-                require_once('../vista/componentes/header.php');
-                require_once('../vista/insertarPrestamos.php');
-                require_once('../vista/componentes/footer.html');
             }else if ($fechaUsuario > $fechaMaxima) {
                 $msg = "<p class='msg'>La fecha no debe ser superior a 30 días desde hoy.</p>";
             }else if(isset($_POST["nombreAmigo"]) && isset($_POST["juego"]) && isset($_POST["fech"])){
@@ -468,6 +457,18 @@
                     require_once('../vista/componentes/footer.html');
                 };
             }
+            
+            require_once('../controlador/class.amisusu.php');
+            require_once('../controlador/class.juego.php');
+            $amiUsu = new amiUsus();
+            $juegos = new juego();
+
+            $amigosdeUsuario = $amiUsu->getAmigos($usuario);
+            $juegosdeUsuario = $juegos->getJuegosLibres($usuario);
+
+            require_once('../vista/componentes/header.php');
+            require_once('../vista/insertarPrestamos.php');
+            require_once('../vista/componentes/footer.html');
         }
         
     }
