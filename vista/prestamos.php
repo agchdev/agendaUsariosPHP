@@ -3,11 +3,21 @@
     <section class="amigos">
         <h2>Prestamos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
         <?php
+            if(isset($msg)){
+                ?>
+                <div class="popup">
+                    <?php
+                        echo $msg;
+                    ?>
+                    <button class="btn">Cerrar</button>
+                </div>
+                <?php
+            }
             
             $cont = 0;
             echo "<form action='index.php' method='post'>"; 
             if (count($prestamos) == 0) {
-                echo "NO TIENE JUEGOS ACTUALMENTE";
+                echo "NO TIENE PRESTAMOS ACTUALMENTE";
             }else{
                 echo "<table class='table'>";
                     echo "<tr><th>AMIGO</th><th>JUEGO</th><th>IMG</th><th>FECHA</th><th>DEVUELTO</th><th></th></tr>";

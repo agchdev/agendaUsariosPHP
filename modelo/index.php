@@ -214,7 +214,7 @@
 
         require_once('../controlador/class.amisusu.php');
         $amis = new amiUsus();
-        $amigoUsu = $amis->modificarAmigo($nuevoNom, $nuevoApe, $nuevaFech, $idAmi, $idUsu);
+        $amigoUsu = $amis->modificarAmigo($nuevoNom, $nuevoApe, $fechaUsuario->format('Y-m-d'), $idAmi, $idUsu);
         $usuario = get_session("usuario");
         // Mostrar vista de amigos
         amigos();
@@ -457,7 +457,7 @@
                     require_once('../vista/componentes/footer.html');
                 };
             }
-            
+
             require_once('../controlador/class.amisusu.php');
             require_once('../controlador/class.juego.php');
             $amiUsu = new amiUsus();

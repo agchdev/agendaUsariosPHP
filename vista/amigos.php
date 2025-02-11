@@ -3,6 +3,16 @@
     <section class="amigos">
         <h2>Amigos de <span><?php if(isset($usuario)) echo $usuario ?></span></h2>
         <?php
+            if(isset($msg)){
+                ?>
+                <div class="popup">
+                    <?php
+                        echo $msg;
+                    ?>
+                    <button class="btn">Cerrar</button>
+                </div>
+                <?php
+            }
             if (count($amigosUsu) == 0) {
                 echo "<p style='margin-bottom:1rem'>NO TIENE AMIGOS :(</p>";
             }else{
