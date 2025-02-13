@@ -222,7 +222,7 @@
                         WHERE id = ? AND id_usuario = ?;";
             $sentencia = $this->conn->getConn()->prepare($consulta);
             $sentencia->bind_param('sssiii', $n, $ap, $fn, $inu, $id, $iu);
-            if($sentencia->execute()) return true;
+            if($sentencia->execute()) return true; 
             else return false;
         }
 
@@ -235,12 +235,12 @@
          * 
          * @return bool True si se ha podido insertar el amigo, false en caso contrario.
          */
-        public function insertarAmigo() {
+        public function insertarAmigo() { //
             $consulta = "INSERT INTO amisusuarios (id_usuario, nombre, apellido, fecha_nac) VALUES (?, ?, ?, ?)";
             $sentencia = $this->conn->getConn()->prepare($consulta);
-            $sentencia->bind_param('ssss', $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac);
-            if($sentencia->execute()) return true;
-            else return false;
+            $sentencia->bind_param('isss', $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac);
+            $sentencia->execute();
+            
         }
     }
 

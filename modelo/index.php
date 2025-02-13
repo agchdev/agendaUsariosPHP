@@ -733,6 +733,13 @@ function cambiosJuego(){
         if (isset($_POST["nombre"], $_POST["apellido"], $_POST["fecha"])) {
             // Validar que los campos no estén vacíos
             if (empty($_POST["nombre"]) || empty($_POST["apellido"]) || empty($_POST["fecha"])) {
+                require_once('../controlador/class.usuario.php');
+                $usu = new usuario();
+                $usuarios = $usu->getIdUsuarios();
+
+                require_once('../controlador/class.amisusu.php');
+                $usuario = get_session("usuario");
+                $amis = new amiUsus();
                 $msg = "<p class='msg'>Todos los campos son obligatorios.</p>";
                 require_once('../vista/componentes/headerAdmin.php');
                 require_once('../vista/insertarAmigosAdmin.php');
@@ -747,6 +754,13 @@ function cambiosJuego(){
             // Comprobar si la fecha es válida y anterior a hoy
             if ($fechaUsuario >= $fechaHoy) {
                 $msg = "<p class='msg'>La fecha debe ser anterior a hoy.</p>";
+                require_once('../controlador/class.usuario.php');
+                $usu = new usuario();
+                $usuarios = $usu->getIdUsuarios();
+
+                require_once('../controlador/class.amisusu.php');
+                $usuario = get_session("usuario");
+                $amis = new amiUsus();
                 require_once('../vista/componentes/headerAdmin.php');
                 require_once('../vista/insertarAmigosAdmin.php');
                 require_once('../vista/componentes/footer.html');
@@ -757,12 +771,13 @@ function cambiosJuego(){
             require_once('../controlador/class.amisusu.php');
             require_once('../controlador/class.usuario.php');
     
-            $usuario = $_POST["usuario"];
-            $usu = new usuario(0, $usuario);
-            $idUsu = $usu->getIdUsu();
+            $idUsu = $_POST["user"];
+            // $usu = new usuario(0, $usuario);
+            // $idUsu = $usu->getIdUsu();
             $amis = new amiUsus(0, $idUsu, $_POST["nombre"], $_POST["apellido"], $fechaUsuario->format('Y-m-d'));
             $amis->insertarAmigo();
-            $amisUsu = $amis->getAmigos($usuario);
+            $usuario = get_session("usuario");
+            $amisUsu = $amis->getAmigosAdmin(""); //
     
             // Mostrar vista de amigos
             amigosAdmin();
