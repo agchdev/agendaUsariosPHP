@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-02-2025 a las 14:22:33
+-- Tiempo de generación: 13-02-2025 a las 11:02:19
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -79,11 +79,11 @@ CREATE TABLE `juegos` (
 --
 
 INSERT INTO `juegos` (`id`, `juego`, `plataforma`, `urlFoto`, `anio_lanzamiento`, `id_usuario`) VALUES
-(1, 'Fortnite OG', 'PC', '../img/agch/Fortnite OG.jpeg', 2017, 2),
+(1, 'Fortnite OG', 'PC', '../img/agch/Fortnite OG.webp', 2017, 2),
 (2, 'GTAV', 'PC', '../img/agch/GTAV.webp', 2013, 2),
 (3, 'MINECRAFT', 'PC', '../img/agch/MINECRAFT.jpeg', 2009, 2),
 (7, 'FIFA 25', 'PC', '../img/agch/FIFA 25.avif', 2025, 2),
-(8, 'Roblox', 'PC', '../img/agch/Roblox', 2017, 2),
+(8, 'Roblox', 'PC', '../img/agch/Roblox', 2029, 2),
 (9, 'PES 2012', 'PC', '../img/agch/PES 2012', 2012, 2);
 
 -- --------------------------------------------------------
@@ -123,7 +123,7 @@ INSERT INTO `prestamos` (`id`, `id_usuario`, `id_juego`, `id_ami`, `fecha_inicio
 (15, 2, 3, 2, '2025-01-28', 1),
 (16, 2, 1, 2, '2025-01-27', 1),
 (17, 2, 7, 2, '2025-01-28', 1),
-(19, 2, 1, 2, '2025-02-13', 0);
+(19, 2, 1, 2, '2025-02-13', 1);
 
 -- --------------------------------------------------------
 
