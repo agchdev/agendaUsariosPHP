@@ -56,13 +56,15 @@
         if(isset($_POST["usuario"]) && isset($_POST["contrasenia"]) && isset($_POST["contrasenia2"])){
             $c1 = $_POST["contrasenia"];
             $c2 = $_POST["contrasenia2"];
-            compContraseñaRegister($c1, $c2);
-            $u = $_POST["usuario"];
-            require_once('../controlador/class.usuario.php');
-            $user = new usuario(0, $u, $c1);
-            if($user->registrarUsuario()){
-                $msg = "<p class='msg'>Usuario creado con éxito</p>";
-                usuariosAdmin();
+            
+            if(compContraseñaRegister($c1, $c2)){
+                $u = $_POST["usuario"];
+                require_once('../controlador/class.usuario.php');
+                $user = new usuario(0, $u, $c1);
+                if($user->registrarUsuario()){
+                    $msg = "<p class='msg'>Usuario creado con éxito</p>";
+                    usuariosAdmin();
+                }
             }
         }
     }
@@ -71,7 +73,9 @@
         if ($c1 != $c2) { // Si las contraseñas no coinciden
             $msg = "<p class='msg'>Las contraseñas no coinciden</p>"; // Si las contraseñas no coinciden
             require_once('../vista/register.php'); // Mostramos la pagina de registro
+            return false;
         }
+        return true;
     }
 
     function register(){ // Funcion para mostrar la pagina de registro
