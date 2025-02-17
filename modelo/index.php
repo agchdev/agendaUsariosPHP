@@ -75,6 +75,14 @@
             require_once('../vista/register.php'); // Mostramos la pagina de registro
             return false;
         }
+        $patronEmail = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+        $email = 'correo@example.com';
+
+        if (preg_match($patronEmail, $email)) {
+            echo "El correo es válido.";
+        } else {
+            echo "El correo no es válido.";
+        }
         return true;
     }
 
