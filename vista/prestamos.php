@@ -31,9 +31,9 @@
                         echo "<td>" . $prestamo["nombreJuego"] . "</td>";
                         echo "<td><div class='divImg'><img src='" . $prestamo["urlFoto"] . "'></div></td>";
                         echo "<td>" . $prestamo["fecha_prestamo"] . "</td>";
-                        if($prestamo    ["devuelto"] == 1){ 
+                        if($prestamo["devuelto"] == 1){ 
                             echo "<td>SI</td>";
-                            echo "<td>DEVUELTO!</td>";
+                            echo "<td>".$prestamo["puntuacion"]."</td>";
                         }else{
                             echo "<td>NO</td>";
                             echo "<td><input type='submit' class='btn off' name='action' value='Devolver ".$cont."'></td>";

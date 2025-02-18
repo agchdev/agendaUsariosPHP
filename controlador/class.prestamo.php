@@ -9,6 +9,7 @@ require_once('class.db.php');
         private $id_amisusu;
         private $fecha_prestamo;
         private $devuelto;
+        private $puntuacion;
 
 /**
  * Constructor de la clase prestamo.
@@ -21,7 +22,7 @@ require_once('class.db.php');
  * @param bool $d [Opcional] Estado del prestamo, si ha sido devuelto o no. Por defecto es false.
  */
 
-        public function __construct(int $i=0, int $iu=0, int $ij=0, int $ia=0, String $fp="", bool $d=false) {
+        public function __construct(int $i=0, int $iu=0, int $ij=0, int $ia=0, String $fp="", bool $d=false, int $p = 0) {
             $this->conn = new db();
             $this->id = $i;
             $this->id_usuario = $iu;
@@ -29,6 +30,7 @@ require_once('class.db.php');
             $this->id_amisusu = $ia;
             $this->fecha_prestamo = $fp;
             $this->devuelto = $d;
+            $this->puntuacion = $p;
         }
 
         /**
@@ -85,7 +87,7 @@ require_once('class.db.php');
             $nombreJuego ="";
             $urlFoto = "";
             if ($buscador != "") {
-                $consulta = "SELECT prestamos.id, prestamos.id_usuario, prestamos.id_ami, amisusuarios.nombre, juegos.juego, juegos.urlFoto, prestamos.fecha_inicio, prestamos.devuelta
+                $consulta = "SELECT prestamos.id, prestamos.id_usuario, prestamos.id_ami, amisusuarios.nombre, juegos.juego, juegos.urlFoto, prestamos.fecha_inicio, prestamos.devuelta, prestamos.puntuacion
                              FROM amisusuarios, juegos, prestamos, usuarios
                              WHERE prestamos.id_usuario = usuarios.id AND prestamos.id_ami = amisusuarios.id AND prestamos.id_juego = juegos.id AND usuarios.usuario = ? AND 
                              (amisusuarios.nombre LIKE ? OR juegos.juego LIKE ?)";
@@ -95,15 +97,15 @@ require_once('class.db.php');
                 $buscador = "%" . $buscador . "%";
                 $sentencia->bind_param('sss', $usuario, $buscador, $buscador);
             } else {
-                $consulta = "SELECT prestamos.id, prestamos.id_usuario, prestamos.id_ami, amisusuarios.nombre, juegos.juego, juegos.urlFoto, prestamos.fecha_inicio, prestamos.devuelta
+                $consulta = "SELECT prestamos.id, prestamos.id_usuario, prestamos.id_ami, amisusuarios.nombre, juegos.juego, juegos.urlFoto, prestamos.fecha_inicio, prestamos.devuelta, prestamos.puntuacion
                              FROM amisusuarios, juegos, prestamos, usuarios
-                             WHERE prestamos.id_usuario = usuarios.id AND prestamos.id_ami = amisusuarios.id AND prestamos.id_juego = juegos.id AND usuarios.usuario = ?";
+                             WHERE prestamos.id_usuario = usuarios.id AND prestamos.id_ami = amisusuarios.id AND prestamos.id_juego = juegos.id AND usuarios.usuario = ? ORDER BY prestamos.devuelta ASC";
                 $sentencia = $this->conn->getConn()->prepare($consulta);
                 $sentencia->bind_param('s', $usuario);
             }
         
             $sentencia->execute();
-            $sentencia->bind_result($this->id, $this->id_usuario, $this->id_amisusu, $nombreAmigo, $nombreJuego, $urlFoto, $this->fecha_prestamo, $this->devuelto);
+            $sentencia->bind_result($this->id, $this->id_usuario, $this->id_amisusu, $nombreAmigo, $nombreJuego, $urlFoto, $this->fecha_prestamo, $this->devuelto, $this->puntuacion);
         
             $prestamos = array();
             while ($sentencia->fetch()) {
@@ -116,6 +118,7 @@ require_once('class.db.php');
                     "urlFoto" => $urlFoto,
                     "fecha_prestamo" => $this->fecha_prestamo,
                     "devuelto" => $this->devuelto,
+                    "puntuacion" => $this->puntuacion
                 );
             }
             $sentencia->close();
@@ -131,6 +134,14 @@ require_once('class.db.php');
             $consulta = "UPDATE prestamos SET devuelta = 1 WHERE id = ?";
             $sentencia = $this->conn->getConn()->prepare($consulta);
             $sentencia->bind_param("i", $id);
+            if($sentencia->execute()) return true;
+            else return false;
+        }
+
+        public function modificarPuntuacion($id, $puntuacion){
+            $consulta = "UPDATE prestamos SET puntuacion = ? WHERE id = ?";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param("di", $puntuacion, $id);
             if($sentencia->execute()) return true;
             else return false;
         }

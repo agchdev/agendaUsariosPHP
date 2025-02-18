@@ -112,6 +112,62 @@
         require_once('../vista/amigos.php');
         require_once('../vista/componentes/footer.html');
     }
+    function ordenarNom(){
+        require_once('../controlador/class.usuario.php');
+        require_once('../controlador/class.amisusu.php');
+        $user = get_session("usuario");
+        $usu = new usuario(0, 0, $user);
+        $idUsu = $usu->getIdUsu();
+        $usuario = get_session("usuario");
+        $amis = new amiUsus();
+
+        $amigosUsu = $amis->getAmigosNom($usuario);
+        require_once('../vista/componentes/header.php');
+        require_once('../vista/amigos.php');
+        require_once('../vista/componentes/footer.html');
+    }
+    function ordenarFech(){
+        require_once('../controlador/class.usuario.php');
+        require_once('../controlador/class.amisusu.php');
+        $user = get_session("usuario");
+        $usu = new usuario(0, 0, $user);
+        $idUsu = $usu->getIdUsu();
+        $usuario = get_session("usuario");
+        $amis = new amiUsus();
+
+        $amigosUsu = $amis->getAmigosFech($usuario);
+        require_once('../vista/componentes/header.php');
+        require_once('../vista/amigos.php');
+        require_once('../vista/componentes/footer.html');
+    }
+    function ordenarNomInv(){
+        require_once('../controlador/class.usuario.php');
+        require_once('../controlador/class.amisusu.php');
+        $user = get_session("usuario");
+        $usu = new usuario(0, 0, $user);
+        $idUsu = $usu->getIdUsu();
+        $usuario = get_session("usuario");
+        $amis = new amiUsus();
+
+        $amigosUsu = $amis->getAmigosNomInv($usuario);
+        require_once('../vista/componentes/header.php');
+        require_once('../vista/amigos.php');
+        require_once('../vista/componentes/footer.html');
+    }
+    function ordenarFechInv(){
+        require_once('../controlador/class.usuario.php');
+        require_once('../controlador/class.amisusu.php');
+        $user = get_session("usuario");
+        $usu = new usuario(0, 0, $user);
+        $idUsu = $usu->getIdUsu();
+        $usuario = get_session("usuario");
+        $amis = new amiUsus();
+
+        $amigosUsu = $amis->getAmigosFechInv($usuario);
+        require_once('../vista/componentes/header.php');
+        require_once('../vista/amigos.php');
+        require_once('../vista/componentes/footer.html');
+    }
     /**
      * Funcion para mostrar la pagina de insertar amigos
      * Muestra la pagina con un formulario para insertar un nuevo amigo
@@ -547,6 +603,14 @@ function cambiosJuego(){
         }
         
     }
+    function puntuarPrestamo(){
+        $id = $_POST["id"];
+        $nota = $_POST["puntuacion"];
+        require_once('../controlador/class.prestamo.php');
+        $pres = new prestamo();
+        $pres->modificarPuntuacion($id, $nota);
+        prestamos();
+    }
     function modificarPrestamo(){
         $contador = $_REQUEST["action"];
         $contador = explode(" ", $contador);
@@ -558,7 +622,9 @@ function cambiosJuego(){
             require_once('../controlador/class.prestamo.php');
             $prestamo = new prestamo();
             if($prestamo->modificarPrestamo($id)){
-                prestamos();
+                require_once('../vista/componentes/header.php');
+                require_once('../vista/puntuarPrestamos.php');
+                require_once('../vista/componentes/footer.html');
             }else{
                 $msg = "<p class='msg'>Error al realizar el prestamo</p>";
                 prestamos(); 
@@ -802,6 +868,25 @@ function cambiosJuego(){
         }
     }
 
+    function verificar(){
+        $contador = $_REQUEST["action"];
+        $contador = explode(" ", $contador);
+        $i = "id";
+        $i = $i.$contador[1]; 
+        $iU = "id_usuario";
+        $iU = $iU.$contador[1];
+        if(isset($_POST[$i])){
+            $id = $_POST[$i];
+            $id_usario = $_POST[$iU];
+
+            require_once('../controlador/class.amisusu.php');
+            $amis = new amiUsus();
+            $amigoUsu = $amis->verificarAmi($id, $id_usario);
+            $usuario = get_session("usuario");
+            amigosAdmin();
+        }
+    }
+
     function insertUsu(){
         // require_once('../vista/componentes/headerAdmin.php');
         require_once('../vista/register.php');
@@ -865,7 +950,9 @@ function cambiosJuego(){
         if (strpos($action, "ModificarAmigo") !== false) $action = "modificarAmi";
         if (strpos($action, "ModificarJuego") !== false) $action = "modificarJuego";
         if (strpos($action, "ModificarUsuario") !== false) $action = "ModificarUsuario";
+        if (strpos($action, "ModificarUsuario") !== false) $action = "ModificarUsuario";
         if (strpos($action, "Devolver") !== false) $action = "modificarPrestamo";
+        if (strpos($action, "verificar") !== false) $action = "verificar";
         if($action == "Guardar Cambios") $action = "modificarAmigo";
         if($action == "Buscar Juegos") $action = "buscarJuegos";
         if($action == "Insertar Juegos") $action = "insertJuegos";
@@ -886,4 +973,4 @@ function cambiosJuego(){
             require_once('../vista/login.php'); // Redirigimos al login
         }
     }
-?>
+    ?>

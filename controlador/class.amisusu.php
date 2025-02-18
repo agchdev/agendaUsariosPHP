@@ -7,6 +7,7 @@
         private $nombre;
         private $apellidos;
         private $fecha_nac;
+        private $verificado;
 
         /**
          * Constructor de la clase.
@@ -17,13 +18,14 @@
          * @param String $ap [Opcional] Apellidos del amigo. Por defecto es "".
          * @param String $fn [Opcional] Fecha de nacimiento del amigo. Por defecto es "".
          */
-        public function __construct(int $id=0, int $iu=0, String $n="", String $ap="", String $fn="") {
+        public function __construct(int $id=0, int $iu=0, String $n="", String $ap="", String $fn="", bool $v = false) {
             $this->conn = new db();
             $this->id = $id;
             $this->id_usuario = $iu;
             $this->nombre = $n;
             $this->apellidos = $ap;
             $this->fecha_nac = $fn;
+            $this->verificado = $v;
         }
 
      
@@ -38,11 +40,22 @@
          * @param String $buscador [Opcional] Cadena de texto para buscar a los amigos. Por defecto es "".
          * @return array Un array de arrays, donde cada sub-array contiene los datos de cada amigo.
          */
+
+         // LA ASQUEROSA CONSULTA QUE NO HE PODIDO IMPLEMENTAR PERO ME DARIA LA ASQUEROSA MEDIA DE CADA USUARIO
+        // $media = 0;
+        // $consulta2 = "SELECT avg(prestamos.puntuacion) FROM amisusuarios, prestamos WHERE amisusuarios.id = prestamos.id_usu AND amisusuarios.id = ?";
+        // $sentencia2 = $this->conn->getConn()->prepare($consulta2);
+        // $sentencia2->bind_param('i', $this->id);
+        // $sentencia2->execute();
+        // $sentencia2->bind_result($media);
+        // $sentencia2->fetch();
+        // $sentencia2->close();
+
         public function getAmigos($usuario, $buscador = "") {
             if ($buscador != "") {
-                $consulta = "SELECT amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac 
-                             FROM amisusuarios, usuarios 
-                             WHERE id_usuario = usuarios.id AND usuarios.usuario = ? AND 
+                $consulta = "SELECT amisusuarios.id, amisusuarios.id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac, amisusuarios.verificado
+                             FROM amisusuarios, usuarios
+                             WHERE amisusuarios.id_usuario = usuarios.id AND usuarios.usuario = ? AND amisusuarios.verificado = 1 AND
                              (amisusuarios.nombre LIKE ? OR amisusuarios.apellido LIKE ?)";
                 $sentencia = $this->conn->getConn()->prepare($consulta);
         
@@ -50,15 +63,15 @@
                 $buscador = "%" . $buscador . "%";
                 $sentencia->bind_param('sss', $usuario, $buscador, $buscador);
             } else {
-                $consulta = "SELECT amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac 
-                             FROM amisusuarios, usuarios 
-                             WHERE id_usuario = usuarios.id AND usuarios.usuario = ?";
+                $consulta = "SELECT amisusuarios.id, amisusuarios.id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac, amisusuarios.verificado
+                             FROM amisusuarios, usuarios
+                             WHERE amisusuarios.id_usuario = usuarios.id AND usuarios.usuario = ? AND amisusuarios.verificado = 1";
                 $sentencia = $this->conn->getConn()->prepare($consulta);
                 $sentencia->bind_param('s', $usuario);
             }
         
             $sentencia->execute();
-            $sentencia->bind_result($this->id, $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac);
+            $sentencia->bind_result($this->id, $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac, $this->verificado);
         
             $amigosUsu = array();
             while ($sentencia->fetch()) {
@@ -67,13 +80,129 @@
                     "id_usuario" => $this->id_usuario,
                     "nombre" => $this->nombre,
                     "apellidos" => $this->apellidos,
-                    "fecha_nac" => $this->fecha_nac
+                    "fecha_nac" => $this->fecha_nac,
+                    "verificado" => $this->verificado
+                );
+            }
+            $sentencia->close();
+
+            return $amigosUsu;
+        }
+
+        public function getAmigosFech($usuario){
+            
+            $consulta = "SELECT amisusuarios.id, amisusuarios.id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac, amisusuarios.verificado
+            FROM amisusuarios, usuarios  
+            WHERE amisusuarios.id_usuario = usuarios.id  AND usuarios.usuario = ? AND amisusuarios.verificado = 1 ORDER BY amisusuarios.fecha_nac DESC";
+            
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('s', $usuario);
+
+            $sentencia->execute();
+            $sentencia->bind_result($this->id, $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac, $this->verificado);
+        
+            $amigosUsu = array();
+            while ($sentencia->fetch()) {
+                
+                $amigosUsu[] = array(
+                    "id" => $this->id,
+                    "id_usuario" => $this->id_usuario,
+                    "nombre" => $this->nombre,
+                    "apellidos" => $this->apellidos,
+                    "fecha_nac" => $this->fecha_nac,
+                    "verificado" => $this->verificado
                 );
             }
             $sentencia->close();
             return $amigosUsu;
         }
 
+        public function getAmigosNom($usuario){
+            $consulta = "SELECT amisusuarios.id, amisusuarios.id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac, amisusuarios.verificado
+            FROM amisusuarios, usuarios  
+            WHERE amisusuarios.id_usuario = usuarios.id AND usuarios.usuario = ? AND amisusuarios.verificado = 1 ORDER BY amisusuarios.nombre DESC";
+            
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('s', $usuario);
+
+            $sentencia->execute();
+            $sentencia->bind_result($this->id, $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac, $this->verificado);
+        
+            $amigosUsu = array();
+            while ($sentencia->fetch()) {
+                $amigosUsu[] = array(
+                    "id" => $this->id,
+                    "id_usuario" => $this->id_usuario,
+                    "nombre" => $this->nombre,
+                    "apellidos" => $this->apellidos,
+                    "fecha_nac" => $this->fecha_nac,
+                    "verificado" => $this->verificado
+                );
+            }
+            $sentencia->close();
+            return $amigosUsu;
+        }
+        public function getAmigosFechInv($usuario){
+            $consulta = "SELECT amisusuarios.id, amisusuarios.id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac, amisusuarios.verificado
+            FROM amisusuarios, usuarios  
+            WHERE amisusuarios.id_usuario = usuarios.id AND usuarios.usuario = ? AND amisusuarios.verificado = 1 ORDER BY amisusuarios.fecha_nac ASC";
+            
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('s', $usuario);
+
+            $sentencia->execute();
+            $sentencia->bind_result($this->id, $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac, $this->verificado);
+        
+            $amigosUsu = array();
+            while ($sentencia->fetch()) {
+                $amigosUsu[] = array(
+                    "id" => $this->id,
+                    "id_usuario" => $this->id_usuario,
+                    "nombre" => $this->nombre,
+                    "apellidos" => $this->apellidos,
+                    "fecha_nac" => $this->fecha_nac,
+                    "verificado" => $this->verificado
+                );
+            }
+            $sentencia->close();
+            return $amigosUsu;
+        }
+
+        public function getAmigosNomInv($usuario){
+            $consulta = "SELECT amisusuarios.id, amisusuarios.id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac, amisusuarios.verificado
+            FROM amisusuarios, usuarios 
+            WHERE amisusuarios.id_usuario = usuarios.id AND usuarios.usuario = ? AND amisusuarios.verificado = 1 ORDER BY amisusuarios.nombre ASC";
+            
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('s', $usuario);
+
+            $sentencia->execute();
+            $sentencia->bind_result($this->id, $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac, $this->verificado);
+        
+            $amigosUsu = array();
+            while ($sentencia->fetch()) {
+                $amigosUsu[] = array(
+                    "id" => $this->id,
+                    "id_usuario" => $this->id_usuario,
+                    "nombre" => $this->nombre,
+                    "apellidos" => $this->apellidos,
+                    "fecha_nac" => $this->fecha_nac,
+                    "verificado" => $this->verificado
+                );
+            }
+            $sentencia->close();
+
+
+            return $amigosUsu;
+        }
+
+        public function verificarAmi($id, $id_usario){
+            
+            $consulta = "UPDATE amisusuarios SET verificado = 1 WHERE id = ? AND id_usuario = ?";
+            $sentencia = $this->conn->getConn()->prepare($consulta);
+            $sentencia->bind_param('ii', $id, $id_usario);
+            $sentencia->execute();
+        }
         /**
          * Devuelve un array de amigos de todos los usuarios, excepto del administrador.
          * 
@@ -91,7 +220,7 @@
         public function getAmigosAdmin($buscador = "") {
             $usuario = "";
             if ($buscador != "") {
-                $consulta = "SELECT usuarios.usuario, amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac 
+                $consulta = "SELECT usuarios.usuario, amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac, amisusuarios.verificado  
                              FROM amisusuarios, usuarios 
                              WHERE id_usuario = usuarios.id AND usuarios.usuario != 'admin' AND
                              (amisusuarios.nombre LIKE ? OR amisusuarios.apellido LIKE ? OR usuarios.usuario LIKE ?)";
@@ -101,14 +230,14 @@
                 $buscador = "%" . $buscador . "%";
                 $sentencia->bind_param('sss', $buscador, $buscador, $buscador);
             } else {
-                $consulta = "SELECT usuarios.usuario, amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac 
+                $consulta = "SELECT usuarios.usuario, amisusuarios.id, id_usuario, amisusuarios.nombre, amisusuarios.apellido, amisusuarios.fecha_nac, amisusuarios.verificado  
                              FROM amisusuarios, usuarios 
                              WHERE id_usuario = usuarios.id AND usuarios.usuario != 'admin'";
                 $sentencia = $this->conn->getConn()->prepare($consulta);
             }
         
             $sentencia->execute();
-            $sentencia->bind_result($usuario, $this->id, $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac);
+            $sentencia->bind_result($usuario, $this->id, $this->id_usuario, $this->nombre, $this->apellidos, $this->fecha_nac, $this->verificado);
         
             $amigosUsu = array();
             while ($sentencia->fetch()) {
@@ -118,7 +247,8 @@
                     "nombre" => $this->nombre,
                     "apellidos" => $this->apellidos,
                     "fecha_nac" => $this->fecha_nac,
-                    "usuario" => $usuario
+                    "usuario" => $usuario,
+                    "verificado" => $this->verificado
                 );
             }
             $sentencia->close();

@@ -19,7 +19,7 @@
                 $cont = 0;
                 echo "<form action='index.php' method='post'>"; 
                 echo "<table class='table'>";
-                    echo "<tr><th>NOMBRE</th><th>APELLIDOS</th><th>FECHA NACIMIENTO</th><th></th></tr>";
+                    echo "<tr><th>NOMBRE</th><th>APELLIDOS</th><th>FECHA NACIMIENTO</th><th>VERIFICADO</th><th>MEDIA</th><th></th></tr>";
                     
                     foreach ($amigosUsu as $amig) {
                         echo "<tr>";
@@ -29,13 +29,25 @@
                         echo "<td>" . $amig["nombre"] . "</td>";
                         echo "<td>" . $amig["apellidos"] . "</td>";
                         echo "<td>" . $amig["fecha_nac"] . "</td>";
+                        // echo "<td>" . $amig["verificado"] . "</td>";
+                        if($amig["verificado"] == 1){ 
+                            echo "<td> SI </td>";
+                        }else{   
+                            echo "<td> NO </td>";
+                        }
+                        // echo "<td>" . $amig["media"] . "</td>";
                         echo "<td><button type='submit' class='btn off' name='action' value='ModificarAmigo ".$cont."'>Modificar</button></td>";
                         echo "</tr>";
                         $cont++;
                     }
                 echo "</table></form>";
             }
-                echo "<form action='index.php' method='post'><div style= 'display:flex; gap:1rem;margin-top: 1.5rem;'> <input type='submit' class='btn' name='action' value='Buscar Amigos'>
+                echo "<form action='index.php' method='post'><div style= 'display:flex; gap:1rem;margin-top: 1.5rem;'>
+                    <input type='submit' class='btn' name='action' value='Buscar Amigos'>
+                    <button type='submit' class='btn' name='action' value='ordenarNom'>Ordenador Nombre</button>
+                    <button type='submit' class='btn' name='action' value='ordenarNomInv'>Ordenador Nombre inv</button>
+                    <button type='submit' class='btn' name='action' value='ordenarFech'>Ordenador Fecha</button>
+                    <button type='submit' class='btn' name='action' value='ordenarFechInv'>Ordenador Fecha inv</button>
                     <input type='hidden' name='usuario' value='".$usuario."'>";
                 
                 echo "<input type='submit' class='btn' name='action' value='Insertar Amigo'>";
